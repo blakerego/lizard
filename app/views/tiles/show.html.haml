@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @tile.name
+%p
+  %b Media type:
+  = @tile.media_type
+%p
+  %b Position:
+  = @tile.position
+%p
+  %b Published:
+  = @tile.published
+
+= link_to 'Edit', edit_tile_path(@tile)
+\|
+= link_to 'Back', tiles_path

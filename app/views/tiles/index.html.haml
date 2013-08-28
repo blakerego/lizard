@@ -1,0 +1,25 @@
+%h1 Listing tiles
+
+%table
+  %tr
+    %th Name
+    %th Media type
+    %th Position
+    %th Published
+    %th
+    %th
+    %th
+
+  - @tiles.each do |tile|
+    %tr
+      %td= tile.name
+      %td= tile.media_type
+      %td= tile.position
+      %td= tile.published
+      %td= link_to 'Show', tile
+      %td= link_to 'Edit', edit_tile_path(tile)
+      %td= link_to 'Destroy', tile, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Tile', new_tile_path

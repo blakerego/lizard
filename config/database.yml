@@ -1,0 +1,11 @@
+development: &development
+  adapter: postgresql
+  host: localhost
+  database: zereptiles_dev
+  encoding: unicode
+  
+test: &test
+  adapter: postgresql
+  host: localhost
+  database: zereptiles_test
+  encoding: unicode

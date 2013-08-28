@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  media_type: MyString
+  position: 1
+  published: 
+
+two:
+  name: MyString
+  media_type: MyString
+  position: 1
+  published: 
