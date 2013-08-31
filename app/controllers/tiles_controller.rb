@@ -1,5 +1,5 @@
 class TilesController < ApplicationController
-  before_action :set_tile, only: [:show, :edit, :update, :destroy]
+  before_action :set_tile, only: [:show, :edit, :update, :destroy, :publish]
 
   # GET /tiles
   # GET /tiles.json
@@ -56,7 +56,6 @@ class TilesController < ApplicationController
 
   def publish
     @tile.published = true
-    binding.pry
     if (@tile.save)
       redirect_to @tile, notice: 'Tile was successfully updated.'
     end
