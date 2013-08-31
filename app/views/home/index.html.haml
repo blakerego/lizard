@@ -1,2 +1,19 @@
 %h1
-	Hello World!
+	zeReptiles
+
+
+.tiles_area
+
+:javascript
+	$(function() {
+		var tiles = JSON.parse('#{@tiles.to_a.to_json}');
+		var markup = "";
+		$.each(tiles, function(index, tile)
+		{
+			var c = "tile span" + tile.size.toString();
+			markup += "<div class='" + c + "''>" + tile.name + "</div>"; 
+			
+		});
+		$('.tiles_area').html(markup);
+
+	})
