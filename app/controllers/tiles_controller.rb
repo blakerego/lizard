@@ -24,7 +24,10 @@ class TilesController < ApplicationController
   # POST /tiles
   # POST /tiles.json
   def create
+    vimeo_id = tile_params.delete :vimeo_id
+    binding.pry
     @tile = Tile.new(tile_params)
+    @tile.media_url = 'http://player.vimeo.com/video/' + vimeo_id
 
     respond_to do |format|
       if @tile.save
@@ -51,6 +54,14 @@ class TilesController < ApplicationController
     end
   end
 
+  def publish
+    @tile.published = true
+    binding.pry
+    if (@tile.save)
+      redirect_to @tile, notice: 'Tile was successfully updated.'
+    end
+  end
+
   # DELETE /tiles/1
   # DELETE /tiles/1.json
   def destroy
@@ -69,6 +80,6 @@ class TilesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def tile_params
-      params.require(:tile).permit(:name, :media_type, :position, :published)
+      params.require(:tile).permit(:name, :media_type, :position, :published, :vimeo_id, :size)
     end
 end

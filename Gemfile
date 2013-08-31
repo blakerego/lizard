@@ -20,7 +20,8 @@ gem "simple_form"
 gem 'awesome_print'
 gem 'debugger'
 gem 'pry'
-
+gem 'better_errors'
+gem 'binding_of_caller'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'

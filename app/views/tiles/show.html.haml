@@ -1,17 +1,35 @@
 %p#notice= notice
 
 %p
-  %b Name:
-  = @tile.name
+	%b Name:
+	= @tile.name
 %p
-  %b Media type:
-  = @tile.media_type
-%p
-  %b Position:
-  = @tile.position
-%p
-  %b Published:
-  = @tile.published
+	%b Media type:
+	= @tile.media_type
+
+
+%p 
+	%b Media Url
+	%a{:href => "#{@tile.media_url}"}
+		= @tile.media_url
+
+
+- if @tile.published
+	%p
+		This tile is public
+- else 
+	%p
+		This has not yet been published. 
+
+%p 
+	- if @tile.size.present?
+		%b Size
+		= @tile.size
+
+
+= simple_form_for @tile, :url => publish_tile_path do |f|
+	= f.submit
+
 
 = link_to 'Edit', edit_tile_path(@tile)
 \|
