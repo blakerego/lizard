@@ -11,7 +11,7 @@
 		$.each(tiles, function(index, tile)
 		{
 			var c = "tile span" + tile.size.toString();
-			markup += "<div class='" + c + "''>" + tile.name + "</div>"; 
+			markup += "<div class='" + c + "''>" + tile.name + " " + tile.size + "</div>"; 
 			
 		});
 		$('.tiles_area').html(markup);
