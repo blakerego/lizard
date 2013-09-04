@@ -4,6 +4,10 @@ Zereptiles::Application.routes.draw do
     member do 
       post 'publish'
     end
+
+    collection do
+      post 'reorder'
+    end
   end
 
   root 'home#index'

@@ -1,25 +1,31 @@
-%h1 Listing tiles
+.tile_admin
+  %h1 Listing tiles
 
-%table
-  %tr
-    %th Name
-    %th Media type
-    %th Position
-    %th Published
-    %th
-    %th
-    %th
+  %ul.sortable
+    - @tiles.each do |tile|
+      %li.ui-state-default.tile{"data-tile-id" => "#{tile.id}"}
+        %h3
+          = link_to tile.name, tile
+        = link_to 'Edit', edit_tile_path(tile)
+        = link_to 'Destroy', tile, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
-  - @tiles.each do |tile|
-    %tr
-      %td= tile.name
-      %td= tile.media_type
-      %td= tile.position
-      %td= tile.published
-      %td= link_to 'Show', tile
-      %td= link_to 'Edit', edit_tile_path(tile)
-      %td= link_to 'Destroy', tile, :method => :delete, :data => { :confirm => 'Are you sure?' }
+  %br
 
-%br
+  = link_to 'New Tile', new_tile_path
 
-= link_to 'New Tile', new_tile_path
+
+:javascript
+  $('.sortable').sortable(
+  {
+    update: function(event, ui)
+    {
+      var ordered = {};
+      $.each($('.sortable li'), function(rank, tile)
+      {
+        ordered[$(tile).data('tile-id')] = rank;
+      });
+
+      $.post('/tiles/reorder', {"tiles": ordered});
+
+    }
+  });
