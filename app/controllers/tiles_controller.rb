@@ -25,7 +25,6 @@ class TilesController < ApplicationController
   # POST /tiles.json
   def create
     vimeo_id = tile_params.delete :vimeo_id
-    binding.pry
     @tile = Tile.new(tile_params)
     @tile.media_url = 'http://player.vimeo.com/video/' + vimeo_id
 
