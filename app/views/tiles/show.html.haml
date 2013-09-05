@@ -24,6 +24,7 @@
 		= f.submit "Publish Tile"
 
 
+= image_tag @tile.image_url(:thumb)
 
 %p 
 	- if @tile.size.present?

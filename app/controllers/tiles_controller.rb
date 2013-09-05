@@ -88,6 +88,7 @@ class TilesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def tile_params
-      params.require(:tile).permit(:name, :media_type, :position, :published, :vimeo_id, :size)
+      binding.pry
+      params.require(:tile).permit(:name, :media_type, :position, :published, :vimeo_id, :size, :image)
     end
 end
