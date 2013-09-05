@@ -29,17 +29,23 @@ body.body
 	.tiles_area
 	{
 		// width: 1200px;
-		margin-left: 36px;
-		.tile
+		margin: 0 36px 0 36px;
+		.row-fluid
 		{
+			.tile:first-child
+			{
+				margin-left: 0;
+			}
+			.tile
+			{
+				font-size: 13px;
+				border: solid #bbb 1px;
+				padding: 20px;
+				margin-bottom: 3px;
+				height: 200px;
+				display: inline-block;
 
-			font-size: 13px;
-			border: solid #bbb 1px;
-			padding: 20px;
-			margin: 3px;
-			height: 200px;
-			display: inline-block;
-
+			}
 		}
 	}
 }
