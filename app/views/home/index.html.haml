@@ -1,22 +1,47 @@
 
-.row.header
+.row-fluid.header
 	= image_tag "logo.png", :class => "logo span4"
-	= image_tag "play_placeholder.png", :class => "play span7"
-	%form{:class => "form-search"}
-		%input{:class => "input-medium search", :type => "text"}
+	= image_tag "play_placeholder.png", :class => "play span6"
+	.span1
+		%form{:class => "form-search"}
+			%input{:class => "input-medium search", :type => "text"}
 .tiles_area
 
 
 :javascript
 	$(function() {
-		var tiles = JSON.parse('#{@tiles.to_a.to_json}');
-		var markup = "";
-		$.each(tiles, function(index, tile)
-		{
-			var c = "tile span" + tile.size.toString();
-			markup += "<div class='" + c + "''>" + tile.name + " " + tile.size + "</div>"; 
-			
-		});
-		$('.tiles_area').html(markup);
 
+		window.TILE_LAYOUT = function() {}
+		TILE_LAYOUT.prototype = {
+			init: function()
+			{
+				var tiles = JSON.parse('#{@tiles.to_a.to_json}');
+				var markup = "<div class='row-fluid'>";
+				
+				var current_row_size = 0; 
+				$.each(tiles, function(index, tile)
+				{
+					if (current_row_size + tile.size <= 12)
+					{
+						var c = "tile span" + tile.size.toString();
+						markup += "<div class='" + c + "''>" + tile.name + " " + tile.size + "</div>";
+						current_row_size += tile.size;
+					}
+					else 
+					{
+						var c = "tile span" + tile.size.toString();
+						markup += "</div><div class='row-fluid'><div class='" + c + "''>" + tile.name + " " + tile.size + "</div>";
+						current_row_size += tile.size - 12;
+					}
+
+				});
+
+				$('.tiles_area').html(markup + "</div>");
+			}
+
+
+		}
+
+		var tiles = new TILE_LAYOUT();
+		tiles.init();
 	})

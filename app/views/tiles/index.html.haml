@@ -15,17 +15,31 @@
 
 
 :javascript
-  $('.sortable').sortable(
+  $(function()
   {
-    update: function(event, ui)
-    {
-      var ordered = {};
-      $.each($('.sortable li'), function(rank, tile)
+    window.TILE_ADMIN = function(){ }
+
+    TILE_ADMIN.prototype = {
+      init: function() 
       {
-        ordered[$(tile).data('tile-id')] = rank;
-      });
+        $('.sortable').sortable(
+        {
+          update: function(event, ui)
+          {
+            var ordered = {};
+            $.each($('.sortable li'), function(rank, tile)
+            {
+              ordered[$(tile).data('tile-id')] = rank;
+            });
 
-      $.post('/tiles/reorder', {"tiles": ordered});
+            $.post('/tiles/reorder', {"tiles": ordered});
 
+          }
+        });
+      }
     }
-  });
+
+    var admin = new TILE_ADMIN();
+    admin.init();
+  })
+
