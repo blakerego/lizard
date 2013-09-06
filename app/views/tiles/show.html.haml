@@ -3,7 +3,8 @@
 
 %h1= @tile.name
 
-= image_tag @tile.image_url(:thumb)
+/ = image_tag @tile.image_url(:thumb)
+= image_tag @tile.image_url
 
 %p
 	%b Media type:

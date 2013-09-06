@@ -3,6 +3,7 @@ Zereptiles::Application.routes.draw do
   resources :tiles do 
     member do 
       post 'publish'
+      get 'aws_success_action'
     end
 
     collection do

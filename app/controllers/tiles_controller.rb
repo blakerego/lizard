@@ -1,5 +1,5 @@
 class TilesController < ApplicationController
-  before_action :set_tile, only: [:show, :edit, :update, :destroy, :publish]
+  before_action :set_tile, only: [:show, :edit, :update, :destroy, :publish, :aws_success_action]
 
   # GET /tiles
   # GET /tiles.json
@@ -10,13 +10,13 @@ class TilesController < ApplicationController
   # GET /tiles/1
   # GET /tiles/1.json
   def show
-    if params[:key].present?
-      binding.pry
-      Tile.update_attributes(:key => params[:key])
-      binding.pry
-    end
     @uploader = @tile.image
-    @uploader.success_action_redirect = tile_path(@tile)
+    @uploader.success_action_redirect = aws_success_action_tile_url(@tile)
+  end
+
+  def aws_success_action
+    @tile.update_attributes(:key => params[:key])
+    redirect_to @tile
   end
 
   # GET /tiles/new
