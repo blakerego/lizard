@@ -34,9 +34,12 @@ group :doc do
   gem 'sdoc', require: false
 end
 
-# Image Processing
-gem "carrierwave"
-gem "rmagick"
+# Photo Upload Gems
+gem 'carrierwave'
+gem 'rmagick'
+gem 'fog'
+gem 'carrierwave_direct'
+gem 'sidekiq'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
