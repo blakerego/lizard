@@ -16,7 +16,7 @@
 			init: function()
 			{
 				var tiles = JSON.parse('#{@tiles.to_a.to_json}');
-				var markup = "<div class='row-fluid'>";
+				var markup = "<div class='row-fluid tile-row'>";
 				
 				var current_row_size = 0; 
 				$.each(tiles, function(index, tile)
@@ -30,7 +30,7 @@
 					else 
 					{
 						var c = "tile span" + tile.size.toString();
-						markup += "</div><div class='row-fluid'><div class='" + c + "''>" + tile.name + " " + tile.size + "</div>";
+						markup += "</div><div class='row-fluid tile-row'><div class='" + c + "''>" + tile.name + " " + tile.size + "</div>";
 						current_row_size += tile.size - 12;
 					}
 
