@@ -10,6 +10,13 @@ class TilesController < ApplicationController
   # GET /tiles/1
   # GET /tiles/1.json
   def show
+    if params[:key].present?
+      binding.pry
+      Tile.update_attributes(:key => params[:key])
+      binding.pry
+    end
+    @uploader = @tile.image
+    @uploader.success_action_redirect = tile_path(@tile)
   end
 
   # GET /tiles/new
@@ -33,6 +40,7 @@ class TilesController < ApplicationController
         format.html { redirect_to @tile, notice: 'Tile was successfully created.' }
         format.json { render action: 'show', status: :created, location: @tile }
       else
+        binding.pry
         format.html { render action: 'new' }
         format.json { render json: @tile.errors, status: :unprocessable_entity }
       end
