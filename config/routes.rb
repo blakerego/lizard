@@ -1,5 +1,6 @@
 Zereptiles::Application.routes.draw do
   
+  devise_for :users
   resources :tiles do 
     member do 
       post 'publish'
