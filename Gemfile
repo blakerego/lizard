@@ -42,6 +42,8 @@ gem 'carrierwave_direct'
 # gem 'sidekiq'
 
 gem 'devise'
+gem  "declarative_authorization"
+
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
