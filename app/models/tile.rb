@@ -13,10 +13,10 @@ class Tile < ActiveRecord::Base
   end	
 
   def enqueue_image
-    # ImageWorker.perform_async(id, key) if key.present? && !skip_image_processing 
-    
+    # ImageWorker.perform_async(id, key) if has_image_upload? && !skip_image_processing 
     # Leave in foreground for now.
-    if key.present? && !skip_image_processing
+
+    if has_image_upload? && !skip_image_processing
 	    tile = Tile.find(id)
 	    if (tile.key != key)
 	    	tile.key = key
