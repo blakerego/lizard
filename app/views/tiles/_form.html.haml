@@ -9,7 +9,9 @@
   = f.input :media_type, :as => :select, :collection => Tile.media_types
   = f.input :vimeo_id, :label => "Vimeo ID"
   = f.input :size, :as => :select, :collection => (1..12), :default => "3"
-  = f.file_field :image
+  
+  - if @tile.id.present?
+    = f.file_field :image
 
   .actions
     = f.submit 'Save'
