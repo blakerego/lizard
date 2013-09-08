@@ -13,19 +13,43 @@ class Tile < ActiveRecord::Base
   end	
 
   def enqueue_image
-    ImageWorker.perform_async(id, key) if key.present?
-  end
-
-  class ImageWorker
-    include Sidekiq::Worker
+    # ImageWorker.perform_async(id, key) if key.present? && !skip_image_processing 
     
-    def perform(id, key)
-      tile = Tile.find(id)
-      # binding.pry
-      tile.key = key
-      tile.remote_image_url = tile.image.direct_fog_url(with_path: true)
-      tile.save!
-      tile.update_column(:image_processed, true)
+    # Leave in foreground for now.
+    if key.present? && !skip_image_processing
+	    tile = Tile.find(id)
+	    if (tile.key != key)
+	    	tile.key = key
+	      tile.remote_image_url = tile.image.direct_fog_url(with_path: true)
+	      tile.skip_image_processing = true
+	      begin
+	      	tile.save!
+	      rescue Exception => e
+	      	puts "********************************"
+	      	puts e.message	      	
+	      end
+	    	# tile.update_column(:image_processed, true)
+	    end
     end
   end
+
+  # class ImageWorker
+  #   include Sidekiq::Worker
+    
+  #   def perform(id, key)
+	 #    tile = Tile.find(id)
+	 #    if (tile.key != key)
+	 #    	tile.key = key
+	 #      tile.remote_image_url = tile.image.direct_fog_url(with_path: true)
+	 #      tile.skip_image_processing = true
+	 #      begin
+	 #      	tile.save!
+	 #      rescue Exception => e
+	 #      	puts "********************************"
+	 #      	puts e.message
+	 #      end
+	 #    	# tile.update_column(:image_processed, true)
+	 #    end
+  #   end
+  # end
 end

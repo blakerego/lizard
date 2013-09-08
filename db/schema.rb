@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130905140102) do
+ActiveRecord::Schema.define(version: 20130908063654) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20130905140102) do
     t.string   "media_url"
     t.integer  "size"
     t.string   "image"
+    t.boolean  "skip_image_processing"
   end
 
 end

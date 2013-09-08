@@ -39,7 +39,7 @@ gem 'carrierwave'
 gem 'rmagick'
 gem 'fog'
 gem 'carrierwave_direct'
-gem 'sidekiq'
+# gem 'sidekiq'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

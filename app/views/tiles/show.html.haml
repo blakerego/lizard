@@ -3,9 +3,8 @@
 
 %h1= @tile.name
 
-/ = image_tag @tile.image_url(:thumb)
 = image_tag @tile.image_url
-
+= image_tag @tile.image_url(:thumb)
 %p
 	%b Media type:
 	= @tile.media_type

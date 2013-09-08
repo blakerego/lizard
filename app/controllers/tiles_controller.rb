@@ -12,6 +12,7 @@ class TilesController < ApplicationController
   def show
     @uploader = @tile.image
     @uploader.success_action_redirect = aws_success_action_tile_url(@tile)
+    # @uploader.success_action_redirect = tile_url(@tile)
   end
 
   def aws_success_action
@@ -40,7 +41,6 @@ class TilesController < ApplicationController
         format.html { redirect_to @tile, notice: 'Tile was successfully created.' }
         format.json { render action: 'show', status: :created, location: @tile }
       else
-        binding.pry
         format.html { render action: 'new' }
         format.json { render json: @tile.errors, status: :unprocessable_entity }
       end
