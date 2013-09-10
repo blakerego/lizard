@@ -15,7 +15,7 @@
 		TILE_LAYOUT.prototype = {
 			init: function()
 			{
-				var tiles = JSON.parse('#{@tiles.to_a.to_json}');
+				var tiles = JSON.parse('#{@tiles.to_a.to_json(:methods => :image_url)}');
 				var markup = "<div class='row-fluid tile-row'>";
 				
 				var current_row_size = 0; 
@@ -24,13 +24,18 @@
 					if (current_row_size + tile.size <= 12)
 					{
 						var c = "tile span" + tile.size.toString();
-						markup += "<div class='" + c + "''>" + tile.name + " " + tile.size + "</div>";
+
+						markup += "<div class='" + c + "' data-id=" + tile.id + " style='background-image: url(\"" + tile.image_url+ "\")'></div>";
+
+						// markup += "<div class='" + c + "' style='background-image: url(\"" + tile.image_url+ "\")'>" + tile.name + " " + tile.size + "</div>";
 						current_row_size += tile.size;
 					}
 					else 
 					{
 						var c = "tile span" + tile.size.toString();
-						markup += "</div><div class='row-fluid tile-row'><div class='" + c + "''>" + tile.name + " " + tile.size + "</div>";
+						markup += "</div><div class='row-fluid tile-row'><div class='" + c + "''></div>";
+
+						// markup += "</div><div class='row-fluid tile-row'><div class='" + c + "''>" + tile.name + " " + tile.size + "</div>";
 						current_row_size += tile.size - 12;
 					}
 
