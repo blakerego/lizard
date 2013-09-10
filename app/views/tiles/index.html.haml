@@ -1,14 +1,23 @@
 .tile_admin
-  %h1 Listing tiles
+  %h1 Live Tiles
 
-  %ul.sortable
+  %ul.sortable.tiles
     - @tiles.each do |tile|
-      %li.ui-state-default.tile{"data-tile-id" => "#{tile.id}"}
+      %li.ui-state-default.live.tile{"data-tile-id" => "#{tile.id}"}
         %h3
           = link_to tile.name, tile
         = link_to 'Edit', edit_tile_path(tile)
         = link_to 'Destroy', tile, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
+
+  %h1 Top Secret Tiles
+  %ul.tiles
+    - @secret_tiles.each do |tile|
+      %li.tile.secret
+        %h3
+          = link_to tile.name, tile
+        = link_to 'Edit', edit_tile_path(tile)
+        = link_to 'Destroy', tile, :method => :delete, :data => { :confirm => 'Are you sure?' }
   %br
 
   = link_to 'New Tile', new_tile_path

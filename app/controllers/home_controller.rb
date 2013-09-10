@@ -1,7 +1,7 @@
 class HomeController < ApplicationController
 
 	def index
-		@tiles = Tile.where(:published => true)
+		@tiles = Tile.published
 	end
 
 end

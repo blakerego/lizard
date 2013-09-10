@@ -6,15 +6,23 @@
 {
 	margin: 36px;
 	font-size: 13px;
-	ul.sortable
+	ul.tiles
 	{
 		list-style: none;
-		li 
+		li.live
 		{
 			height: 100%;
 			padding: 5px;
 			margin: 2px 0 2px 0;
 			width: 300px;
+		}
+		li.secret
+		{
+			background-color: #FEFFCD;
+			height: 100%;
+			padding: 5px;
+			margin: 2px 0 2px 0;
+			width: 300px;			
 		}
 	}
 }

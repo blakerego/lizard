@@ -6,7 +6,8 @@ class TilesController < ApplicationController
   # GET /tiles
   # GET /tiles.json
   def index
-    @tiles = Tile.all
+    @tiles = Tile.published
+    @secret_tiles = Tile.secret
   end
 
   # GET /tiles/1

@@ -8,6 +8,14 @@ class Tile < ActiveRecord::Base
 		return ['video', 'audio', 'image']
 	end
 
+  def self.published
+    return Tile.where(:published => true)
+  end
+
+  def self.secret
+    return Tile.where("published is null OR published is false")
+  end
+
   def image_name
     File.basename(image.path || image.filename) if image
   end	
