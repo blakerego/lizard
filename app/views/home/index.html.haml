@@ -2,7 +2,7 @@
 .row.header
 	= image_tag "logo.png", :class => "logo col-md-4"
 	= image_tag "play_placeholder.png", :class => "play col-md-6"
-	.col-md-2
+	.col-md-2.col-xs-12
 		%form{:class => "form-search"}
 			%input{:class => "input-medium search", :type => "text"}
 .tiles_area
@@ -40,7 +40,7 @@
 
 			add_tile: function(tile, new_row)
 			{
-				var c = "tile col-md-" + tile.size.toString();
+				var c = "tile col-xs-12 col-md-" + tile.size.toString();
 				var markup = "";
 
 				if (new_row)
