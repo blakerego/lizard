@@ -19,29 +19,41 @@
 				var markup = "<div class='row-fluid tile-row'>";
 				
 				var current_row_size = 0; 
+				var current_inst = this;
 				$.each(tiles, function(index, tile)
 				{
 					if (current_row_size + tile.size <= 12)
 					{
-						var c = "tile span" + tile.size.toString();
-
-						markup += "<div class='" + c + "' data-id=" + tile.id + " style='background-image: url(\"" + tile.image_url+ "\")'></div>";
-
-						// markup += "<div class='" + c + "' style='background-image: url(\"" + tile.image_url+ "\")'>" + tile.name + " " + tile.size + "</div>";
+						markup += current_inst.add_tile(tile, false);
 						current_row_size += tile.size;
 					}
 					else 
 					{
-						var c = "tile span" + tile.size.toString();
-						markup += "</div><div class='row-fluid tile-row'><div class='" + c + "''></div>";
-
-						// markup += "</div><div class='row-fluid tile-row'><div class='" + c + "''>" + tile.name + " " + tile.size + "</div>";
+						markup += current_inst.add_tile(tile, true);
 						current_row_size += tile.size - 12;
 					}
 
 				});
 
 				$('.tiles_area').html(markup + "</div>");
+			},
+
+			add_tile: function(tile, new_row)
+			{
+				var c = "tile span" + tile.size.toString();
+				var markup = "";
+
+				if (new_row)
+				{
+					markup += "</div><div class='row-fluid tile-row'>"
+				}
+				markup += "<div class='" + c + "' data-id=" + tile.id + " style='background-image: url(\"" + tile.image_url+ "\")'></div>";
+				return markup;
+			},
+
+			image_style_from_tile: function(tile)
+			{
+
 			}
 
 
