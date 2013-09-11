@@ -25,7 +25,6 @@ class TilesController < ApplicationController
 
   # GET /tiles/new
   def new
-    @tile = Tile.new
   end
 
   # GET /tiles/1/edit
@@ -95,6 +94,14 @@ class TilesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_tile
       @tile = Tile.find(params[:id])
+    end
+
+    def new_tile_from_params
+      if params[:tile].present?
+        @tile = Tile.new(tile_params)
+      else 
+        @tile = Tile.new
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
