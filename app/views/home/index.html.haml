@@ -1,11 +1,12 @@
 
-.row.header
-	= image_tag "logo.png", :class => "logo col-md-4"
-	= image_tag "play_placeholder.png", :class => "play col-md-6"
-	.col-md-2.col-xs-12
-		%form{:class => "form-search"}
-			%input{:class => "input-medium search", :type => "text"}
-.tiles_area
+.style2
+	.row.header
+		= image_tag "logo.png", :class => "logo col-md-4"
+		= image_tag "play_placeholder.png", :class => "play col-md-6"
+		.col-md-2.col-xs-12
+			%form{:class => "form-search"}
+				%input{:class => "input-medium search", :type => "text"}
+	.tiles_area
 
 
 :javascript
@@ -47,7 +48,7 @@
 				{
 					markup += "</div><div class='row tile-row'>"
 				}
-				markup += "<div class='" + c + "' data-id=" + tile.id + " style='background-image: url(\"" + tile.image_url+ "\")'></div>";
+				markup += "<div class='" + c + "' data-id=" + tile.id + " style='background-image: url(\"" + tile.image_url+ "\")'><div class='play_tile'>0<span class='play-icon'></span><div class='btm-row'><span class='share-icon'></span><span class='expand-icon'></span></div></div></div>";
 				return markup;
 			}
 
