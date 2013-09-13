@@ -1,0 +1,23 @@
+= render 'shared/loading'
+.upload_area
+  %h1
+    = "Upload image for #{@tile.name}"
+
+  - if @tile.image.present?
+    %p= "Current filename: #{@tile.image_name}"
+
+  = simple_form_for @tile, :html => {:multiplart => true, :onsubmit => "test()"} do |f|
+    %p
+      - if @tile.id.present?
+        = f.file_field :image
+    %p
+      .actions
+        = f.submit 'Save', :class => 'btn btn-primary'
+
+:javascript 
+  $('.loader').hide();
+  function test()
+  {
+    $('.upload_area').hide();
+    $('.loader').show();
+  }

@@ -3,12 +3,16 @@ body.body
 {
 
   background: image-url("background.png") no-repeat center center fixed;
+  color: black;
+
+  // color: #eee;
+
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
 
-	color: #eee;
+	
 
 	.style1
 	{
@@ -37,6 +41,7 @@ body.body
 
 		.tiles_area
 		{
+			display: none;
 			margin: 0 36px 0 36px;
 			// width: 1200px;
 
@@ -136,6 +141,7 @@ body.body
 
 		.tiles_area
 		{
+			display: none;
 			margin: 0 36px 0 36px;
 			width: 1200px;
 

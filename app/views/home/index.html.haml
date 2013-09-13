@@ -6,6 +6,7 @@
 		.col-md-2.col-xs-12
 			%form{:class => "form-search"}
 				%input{:class => "input-medium search", :type => "text"}
+	= render 'shared/loading'
 	.tiles_area
 
 
@@ -56,4 +57,6 @@
 
 		var tiles = new TILE_LAYOUT();
 		tiles.init();
+		$('.loader').hide();
+		$('.tiles_area').show();
 	})

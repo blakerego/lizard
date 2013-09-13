@@ -63,6 +63,9 @@ class TilesController < ApplicationController
     end
   end
 
+  def edit_image
+  end
+
   def publish
     @tile.published = true
     if (@tile.save)
