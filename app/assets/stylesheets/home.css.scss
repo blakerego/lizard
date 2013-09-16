@@ -3,6 +3,7 @@ body.body
 {
 
   background: image-url("background.png") no-repeat center center fixed;
+  background: image-url("scratch_background.png") no-repeat center center fixed;
   color: black;
 
   // color: #eee;
@@ -26,10 +27,18 @@ body.body
 			  letter-spacing: 2px; 
 			  font-family: "Single Sleeve"; 
 			  -webkit-text-stroke: 4px black;
+			  line-height: 88px;
 			}
 			.play
 			{
-				// margin: 0px 36px 0px 0px;
+				width: 69px;
+				height: 88px;
+				background: image-url('play_neutral.png');
+				cursor: pointer;
+			}
+			.play.playing
+			{
+				background: image-url('play_play.png');
 			}
 			form.form-search
 			{

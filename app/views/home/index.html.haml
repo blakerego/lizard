@@ -1,9 +1,9 @@
 
 .style1
 	.row.header
-		.logo.col-md-4.col-xs-12
+		.logo.col-md-4.col-xs-10
 			ZE REP TILES
-		= image_tag "play_placeholder.png", :class => "play col-md-6"
+		.play.col-md-2.col-xs-2
 		/ .col-md-2.col-xs-12
 		/ 	%form{:class => "form-search"}
 		/ 		%input{:class => "input-medium search", :type => "text"}
@@ -53,11 +53,41 @@
 				markup += "<div class='" + c + "' data-id=" + tile.id + " style='background-image: url(\"" + tile.thumb+ "\")'><div class='play_tile'>0<span class='play-icon'></span><div class='btm-row'><span class='share-icon'></span><span class='expand-icon'></span></div></div></div>";
 				return markup;
 			}
+		}
 
+		window.AUDIO_CONTROL = function() {}
+		AUDIO_CONTROL.prototype = {
+			playing: false,
+			init: function()
+			{
+				var current_inst = this;
+				$('.play').on('click', function()
+				{
+					current_inst.toggle(this);
+				})
+			}, 
+
+			toggle: function(button)
+			{
+				if(this.playing)
+				{
+					$(button).addClass('playing');
+					this.playing = false;
+				}
+				else 
+				{
+					$(button).removeClass('playing');
+					this.playing = true;
+				}
+			}
 		}
 
 		var tiles = new TILE_LAYOUT();
 		tiles.init();
+
+		var ctrls = new AUDIO_CONTROL();
+		ctrls.init(); 
+
 		$('.loader').hide();
 		$('.tiles_area').show();
 	})
