@@ -17,7 +17,7 @@
 		TILE_LAYOUT.prototype = {
 			init: function()
 			{
-				var tiles = JSON.parse('#{@tiles.to_a.to_json(:methods => :image_url)}');
+				var tiles = JSON.parse('#{@tiles.to_a.to_json(:methods => :thumb)}');
 				var markup = "<div class='row tile-row'>";
 				
 				var current_row_size = 0; 
@@ -49,7 +49,7 @@
 				{
 					markup += "</div><div class='row tile-row'>"
 				}
-				markup += "<div class='" + c + "' data-id=" + tile.id + " style='background-image: url(\"" + tile.image_url+ "\")'><div class='play_tile'>0<span class='play-icon'></span><div class='btm-row'><span class='share-icon'></span><span class='expand-icon'></span></div></div></div>";
+				markup += "<div class='" + c + "' data-id=" + tile.id + " style='background-image: url(\"" + tile.thumb+ "\")'><div class='play_tile'>0<span class='play-icon'></span><div class='btm-row'><span class='share-icon'></span><span class='expand-icon'></span></div></div></div>";
 				return markup;
 			}
 

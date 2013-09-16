@@ -20,6 +20,10 @@ class Tile < ActiveRecord::Base
     File.basename(image.path || image.filename) if image
   end	
 
+  def thumb
+    return image_url(:thumb)
+  end
+
   def enqueue_image
     # ImageWorker.perform_async(id, key) if has_image_upload? && !skip_image_processing 
     # Leave in foreground for now.

@@ -1,4 +1,14 @@
-= render 'shared/loading'
+.saving
+  %h3 Hold on...
+  %p
+    We are:
+  %ul 
+    %li uploading the original image to a safe place
+    %li creating different sizes for the image
+    %li uploading the newly sized versions
+  %p 
+    Please be patient!
+  = render 'shared/loading'
 .upload_area
   %h1
     = "Upload image for #{@tile.name}"
@@ -15,9 +25,9 @@
         = f.submit 'Save', :class => 'btn btn-primary'
 
 :javascript 
-  $('.loader').hide();
+  $('.saving').hide();
   function test()
   {
     $('.upload_area').hide();
-    $('.loader').show();
+    $('.saving').show();
   }
