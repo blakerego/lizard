@@ -18,10 +18,14 @@ body.body
 	{
 		.header
 		{
-			margin: 36px 36px 0 36px;
-			.logo
+			margin: 36px 36px 36px 36px;
+			.logo 
 			{
-				// margin: 0px 36px 0px 0px;
+			  color:#fffc00; 
+			  font-size: 100px; 
+			  letter-spacing: 2px; 
+			  font-family: "Single Sleeve"; 
+			  -webkit-text-stroke: 4px black;
 			}
 			.play
 			{
