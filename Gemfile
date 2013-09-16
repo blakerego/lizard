@@ -39,6 +39,7 @@ gem 'carrierwave'
 gem 'rmagick'
 gem 'fog'
 gem 'carrierwave_direct'
+gem 'aws-s3'
 # gem 'sidekiq'
 
 gem 'devise'
