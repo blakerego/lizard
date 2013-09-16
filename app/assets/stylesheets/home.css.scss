@@ -35,11 +35,27 @@ body.body
 				height: 88px;
 				background: image-url('play_neutral.png');
 				cursor: pointer;
+				&:hover
+				{
+					background: image-url('play_hover.png');
+				}
 			}
 			.play.playing
 			{
 				background: image-url('play_play.png');
 			}
+			.ff
+			{
+				width: 69px;
+				height: 88px;
+				background: image-url('ff_neutral.png');
+				cursor: pointer;
+			}
+			.ff.playing
+			{
+				background: image-url('ff_play.png');
+			}
+
 			form.form-search
 			{
 				.search

@@ -3,7 +3,8 @@
 	.row.header
 		.logo.col-md-4.col-xs-10
 			ZE REP TILES
-		.play.col-md-2.col-xs-2
+		.play.col-md-1.col-xs-1
+		.ff.col-md-1.col-xs-1
 		/ .col-md-2.col-xs-12
 		/ 	%form{:class => "form-search"}
 		/ 		%input{:class => "input-medium search", :type => "text"}
@@ -58,26 +59,37 @@
 		window.AUDIO_CONTROL = function() {}
 		AUDIO_CONTROL.prototype = {
 			playing: false,
+			ffwding: false,
 			init: function()
 			{
 				var current_inst = this;
 				$('.play').on('click', function()
 				{
-					current_inst.toggle(this);
-				})
+					current_inst.playing = current_inst.toggle(this, current_inst.playing);
+				});
+
+				$('.ff').on('mousedown', function()
+				{
+					current_inst.toggle(this, false);
+				});
+
+				$('.ff').on('mouseup', function()
+				{
+					current_inst.toggle(this, true);
+				});
 			}, 
 
-			toggle: function(button)
+			toggle: function(button, state)
 			{
-				if(this.playing)
+				if(!state)
 				{
 					$(button).addClass('playing');
-					this.playing = false;
+					return true;
 				}
 				else 
 				{
 					$(button).removeClass('playing');
-					this.playing = true;
+					return false;
 				}
 			}
 		}
