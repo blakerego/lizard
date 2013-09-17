@@ -1,43 +1,48 @@
-%h1= @tile.name
+.tile_admin
+	%h1= @tile.name
 
-= image_tag @tile.image_url
-= image_tag @tile.image_url(:thumb)
-%p
-	%b Media type:
-	= @tile.media_type
+	.row
+		.thumbnail.col-md-4.col-sm-12
+			%a{:href => @tile.image_url}
+				= image_tag @tile.image_url(:thumb)
+			.caption
+				%h4= @tile.image_name
+				%p= link_to "Change Image", edit_image_tile_url(@tile), :class => 'btn btn-primary btn-sm btn-image'
 
-
-%p 
-	%b Media Url
-	%a{:href => "#{@tile.media_url}"}
-		= @tile.media_url
-
-%p 
-	- if @tile.size.present?
-		%b Size
-		= @tile.size
-
-
-
-- if @tile.image.present?
-	= @tile.image_name
-	%br 
-	= link_to "Change Image", edit_image_tile_url(@tile), :class => 'btn btn-primary'
-- else
-	= link_to "Add image to this tile", edit_image_tile_url(@tile), :class => 'btn btn-primary'
-%br
-
-- if @tile.published
 	%p
-		This tile is public
-- else 
-	%p
-		This has not yet been published. 
-	= simple_form_for :tile, :url => publish_tile_path do |f|
-		= f.submit "Publish Tile", :class => 'btn btn-primary'
+		%b Media type:
+		= @tile.media_type
 
-%br
 
-= link_to 'Edit', edit_tile_path(@tile)
-\|
-= link_to 'Back', tiles_path
+	%p 
+		%b Media Url
+		%a{:href => "#{@tile.media_url}"}
+			= @tile.media_url
+
+	%p 
+		- if @tile.size.present?
+			%b Size
+			= @tile.size
+
+
+
+	- if @tile.image.present?
+		= @tile.image_name
+	- else
+		= link_to "Add image to this tile", edit_image_tile_url(@tile), :class => 'btn btn-primary'
+	%br
+
+	- if @tile.published
+		%p
+			This tile is public
+	- else 
+		%p
+			This has not yet been published. 
+		= simple_form_for :tile, :url => publish_tile_path do |f|
+			= f.submit "Publish Tile", :class => 'btn btn-primary'
+
+	%br
+
+	= link_to 'Edit', edit_tile_path(@tile), :class => 'btn btn-default'
+	\|
+	= link_to 'See all tiles', tiles_path, :class => 'btn btn-default'

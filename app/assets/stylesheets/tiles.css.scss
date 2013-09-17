@@ -6,25 +6,39 @@
 {
 	margin: 36px;
 	font-size: 13px;
+	background-color: white;
+	border: 3px solid black;
+	padding: 30px;
+
 	ul.tiles
 	{
-		width: 700px;
+		width: 1000px;
 		list-style: none;
-		li.live
+		li
 		{
+			h4.tile_name
+			{
+				text-decoration: underline;
+			}
 			height: 100%;
 			padding: 5px;
 			margin: 2px 0 2px 0;
-			width: 150px;
+
+		}
+		li.live
+		{
+			width: 230px;
 			display: inline-block;
+			cursor: move;
 		}
 		li.secret
 		{
 			background-color: #FEFFCD;
-			height: 100%;
-			padding: 5px;
-			margin: 2px 0 2px 0;
 			width: 300px;			
 		}
+	}
+	h1.heading, .new_tile
+	{
+		margin-left: 40px;
 	}
 }

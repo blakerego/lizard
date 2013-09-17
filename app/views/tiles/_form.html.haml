@@ -6,12 +6,12 @@
         - @tile.errors.full_messages.each do |msg|
           %li= msg
   = f.input :name
-  = f.input :media_type, :as => :select, :collection => Tile.media_types
+  = f.input :media_type, :as => :select, :collection => Tile.media_types, :html => {:class => 'dropdown-toggle'}
   = f.input :vimeo_id, :label => "Vimeo ID"
   = f.input :size, :as => :select, :collection => (1..12), :selected => (@tile.size.present? ? @tile.size : "3")
   
   - if @tile.id.present?
-    = f.file_field :image
+    = f.input :image, :as => :file
 
   .actions
-    = f.submit 'Save'
+    = f.submit 'Save', :class => 'btn btn-success'

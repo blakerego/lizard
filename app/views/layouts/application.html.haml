@@ -11,6 +11,6 @@
     -if notice.present?
       %p.notice= notice 
     - if alert.present?
-      %p.alert= alert 
+      %p.alert.alert-info= alert 
     = yield
 
