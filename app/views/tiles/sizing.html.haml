@@ -1,34 +1,51 @@
 
 .tile_admin
-  %h1 Sizing options
+  %h1 Sizing helper
+
+  %h3 What are your image dimensions? 
+
+  Width:
+  %input.user_width
+  Height:
+  %input.user_height
+  .btn.btn-primary#calculate
+    Calculate
+  %br
+
+  .suggested_size
 
 
-  .sizing_area
+  .calculated
+    .consider_cropping
+      For best results at this size, crop your image to these dimensions -
+      <br>
+      Width:
+      .crop_width
+      Height:
+      .crop_height
 
-  Select Size: 
-  %select.btn.btn-default.dropdown-toggle.size_dropdown
-    - (1..12).each do |n|
-      - if n == 3
-        %option{:value => n, :selected => true}
-          = n
-      - elsif n == 12
-        %option{:value => n}
-          = "#{n} (Entire Row)"
-      - else    
-        %option{:value => n}
-          = n
+    %h5
+      The thumbnail Dimensions for this size will be:
+    .width
+      Width: 300
+    .height
+      Height: 205
 
-  %h3
-    Thumbnail Values:
-  .width
-    Width: 300
-  .height
-    Height: 205
+    Size:
+    %select.btn.btn-default.dropdown-toggle.size_dropdown
+      - (1..12).each do |n|
+        - if n == 3
+          %option{:value => n, :selected => true}
+            = n
+        - elsif n == 12
+          %option{:value => n}
+            = "#{n} (Entire Row)"
+        - else    
+          %option{:value => n}
+            = n
 
-  %h3
-    Actual Image Dimensions:
-  Width: 
-  %input{:type => 'range', :min => '100', :max => 1080}
+    .sizing_area
+
 
 :javascript
   $(function()
@@ -37,12 +54,90 @@
     SIZE_HELPER.prototype = {
       init: function()
       {
+        var current_inst = this;
+        $('.calculated').hide();
         $('.size_dropdown').on('change', function(e)
         {
-          var value = 100 * this.value;
-          $('.sizing_area').css('width', value.toString() + "px");
-          $('.width').html('Width: ' + value);
+          current_inst.update_sizing_area(this);
         });
+
+        $('#calculate').on('click', function()
+        {
+          current_inst.calculate_suggested_size();
+        })
+      }, 
+
+      update_sizing_area: function(dropdown)
+      {
+        
+        var value = 100 * $('.size_dropdown').val();
+        $('.sizing_area').css('width', value.toString() + "px");
+        $('.width').html('Width: ' + value);
+      },
+
+      calculate_suggested_size: function()
+      {
+        var height = $('input.user_height').val();
+        var width = $('input.user_width').val();
+        var ratio = width / height;
+        var suggested_size;
+        if (ratio > 5.75)
+        {
+          suggested_size = 12;
+        }
+        else if (ratio > 5.25)
+        {
+          suggested_size = 11; 
+        }
+        else if (ratio > 4.75)
+        {
+          suggested_size = 10
+        }
+        else if (ratio > 4.25)
+        {
+          suggested_size = 9
+        }
+        else if (ratio > 3.75)
+        {
+          suggested_size = 8
+        }
+        else if (ratio > 3.25)
+        {
+          suggested_size = 7
+        }
+        else if (ratio > 2.75)
+        {
+          suggested_size = 6
+        }
+        else if (ratio > 2.25)
+        {
+          suggested_size = 5
+        }
+        else if (ratio > 1.75)
+        {
+          suggested_size = 4
+        }
+        else if (ratio > 1.25)
+        {
+          suggested_size = 3
+        }
+        else if (ratio > 0.75)
+        {
+          suggested_size = 2
+        }
+        else 
+        {
+          suggested_size = 1
+        }
+        $('.suggested_size').html('<strong>Suggested size: </strong>' + suggested_size.toString());
+        var ideal_ratio = suggested_size*100 / 205;
+        var ideal_height = width / ideal_ratio;
+
+        $('.crop_width').html( width);
+        $('.crop_height').html(Math.round(ideal_height));
+        $('.calculated').show();
+        $('.size_dropdown').val(suggested_size);
+        this.update_sizing_area($('.size_dropdown'));
       }
     }
 
