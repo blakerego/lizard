@@ -1,0 +1,52 @@
+
+.tile_admin
+  %h1 Sizing options
+
+
+  .sizing_area
+
+  Select Size: 
+  %select.btn.btn-default.dropdown-toggle.size_dropdown
+    - (1..12).each do |n|
+      - if n == 3
+        %option{:value => n, :selected => true}
+          = n
+      - elsif n == 12
+        %option{:value => n}
+          = "#{n} (Entire Row)"
+      - else    
+        %option{:value => n}
+          = n
+
+  %h3
+    Thumbnail Values:
+  .width
+    Width: 300
+  .height
+    Height: 205
+
+  %h3
+    Actual Image Dimensions:
+  Width: 
+  %input{:type => 'range', :min => '100', :max => 1080}
+
+:javascript
+  $(function()
+  {
+    window.SIZE_HELPER = function(){};
+    SIZE_HELPER.prototype = {
+      init: function()
+      {
+        $('.size_dropdown').on('change', function(e)
+        {
+          var value = 100 * this.value;
+          $('.sizing_area').css('width', value.toString() + "px");
+          $('.width').html('Width: ' + value);
+        });
+      }
+    }
+
+    var sizer = new SIZE_HELPER(); 
+    sizer.init();
+
+  });

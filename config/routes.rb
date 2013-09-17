@@ -9,6 +9,7 @@ Zereptiles::Application.routes.draw do
     end
 
     collection do
+      get 'sizing'
       post 'reorder'
     end
   end

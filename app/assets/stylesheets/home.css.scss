@@ -15,57 +15,89 @@ body.body
 
 	
 
+	.logo 
+	{
+	  color:#fffc00; 
+	  font-size: 100px; 
+	  letter-spacing: 2px; 
+	  font-family: "Single Sleeve"; 
+	  -webkit-text-stroke: 4px black;
+	  line-height: 88px;
+		text-shadow: 1px 3px 2px #000, 7px 8px 9px gray
+	}
+	.tape_btn
+	{
+		margin-left: 3px;
+		width: 64px;
+		height: 80px;
+		top: 12px;
+		float: right;
+		cursor: pointer;
+		&:active
+		{
+			height: 74px;
+		}
+	}
+	.play
+	{
+		background: image-url('play_neutral.svg');
+		&:hover
+		{
+			background: image-url('play_hover.svg');
+		}
+		&:active
+		{
+			background: image-url('play_play.svg');
+		}
+		&.playing
+		{
+			background: image-url('play_play.svg');
+			height: 74px;
+		}
+	}
+	.ff
+	{
+		background: image-url('ff_neutral.svg');
+		&:hover
+		{
+			background: image-url('ff_hover.svg');
+		}
+		&:active
+		{
+			background: image-url('ff_play.svg');
+		}
+	}
+	.rw
+	{
+		background: image-url('rw_neutral.svg');
+		&:hover
+		{
+			background: image-url('rw_hover.svg');
+		}
+		&:active
+		{
+			background: image-url('rw_play.svg');
+		}
+	}
+	.stop
+	{
+		background: image-url('stop_neutral.svg');
+		&:hover
+		{
+			background: image-url('stop_hover.svg');
+		}
+		&:active
+		{
+			background: image-url('stop_play.svg');
+		}
+	}
+
+
 	.style1
 	{
 		.header
 		{
 			margin: 36px 36px 36px 36px;
-			.logo 
-			{
-			  color:#fffc00; 
-			  font-size: 100px; 
-			  letter-spacing: 2px; 
-			  font-family: "Single Sleeve"; 
-			  -webkit-text-stroke: 4px black;
-			  line-height: 88px;
-			}
-			.play
-			{
-				width: 69px;
-				height: 88px;
-				background: image-url('play_neutral.png');
-				cursor: pointer;
-				&:hover
-				{
-					background: image-url('play_hover.png');
-				}
-			}
-			.play.playing
-			{
-				background: image-url('play_play.png');
-			}
-			.ff
-			{
-				width: 69px;
-				height: 88px;
-				background: image-url('ff_neutral.png');
-				cursor: pointer;
-			}
-			.ff.playing
-			{
-				background: image-url('ff_play.png');
-			}
-
-			form.form-search
-			{
-				.search
-				{
-					height: 35px;
-					margin-top: 1px;
-					background-color: #222020;
-					border-color: #222020;
-				}
-			}
 		}
 
 		.tiles_area
@@ -147,25 +179,7 @@ body.body
 		.header
 		{
 			width: 1200px;
-			margin: 36px 36px 0 36px;
-			.logo
-			{
-				// margin: 0px 36px 0px 0px;
-			}
-			.play
-			{
-				// margin: 0px 36px 0px 0px;
-			}
-			form.form-search
-			{
-				.search
-				{
-					height: 35px;
-					margin-top: 1px;
-					background-color: #222020;
-					border-color: #222020;
-				}
-			}
+			margin: 36px 36px 20px 36px;
 		}
 
 		.tiles_area

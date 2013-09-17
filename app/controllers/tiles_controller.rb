@@ -1,7 +1,7 @@
 class TilesController < ApplicationController
   before_action :set_tile, only: [:show, :edit, :update, :destroy, :publish, :aws_success_action]
   before_filter :authenticate_user!
-  filter_resource_access :collection => [[:reorder, :index], :index]
+  filter_resource_access :collection => [[:reorder, :index], [:sizing, :index], :index]
 
   # GET /tiles
   # GET /tiles.json
@@ -91,6 +91,9 @@ class TilesController < ApplicationController
       updated << assignment
     end
     render :json => {'updated' => updated}
+  end
+
+  def sizing
   end
 
   private

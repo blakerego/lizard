@@ -1,28 +1,29 @@
-.saving
-  %h3 Hold on...
-  %p
-    We are:
-  %ul 
-    %li uploading the original image to a safe place
-    %li creating different sizes for the image
-    %li uploading the newly sized versions
-  %p 
-    Please be patient!
-  = render 'shared/loading'
-.upload_area
-  %h1
-    = "Upload image for #{@tile.name}"
-
-  - if @tile.image.present?
-    %p= "Current filename: #{@tile.image_name}"
-
-  = simple_form_for @tile, :html => {:multiplart => true, :onsubmit => "test()"} do |f|
+.tile_admin
+  .saving
+    %h3 Hold on...
     %p
-      - if @tile.id.present?
-        = f.file_field :image
-    %p
-      .actions
-        = f.submit 'Save', :class => 'btn btn-primary'
+      We are:
+    %ul 
+      %li uploading the original image to a safe place
+      %li creating different sizes for the image
+      %li uploading the newly sized versions
+    %p 
+      Please be patient!
+    = render 'shared/loading'
+  .upload_area
+    %h1
+      = "Upload image for #{@tile.name}"
+
+    - if @tile.image.present?
+      %p= "Current filename: #{@tile.image_name}"
+
+    = simple_form_for @tile, :html => {:multiplart => true, :onsubmit => "test()"} do |f|
+      %p
+        - if @tile.id.present?
+          = f.file_field :image
+      %p
+        .actions
+          = f.submit 'Save', :class => 'btn btn-primary'
 
 :javascript 
   $('.saving').hide();

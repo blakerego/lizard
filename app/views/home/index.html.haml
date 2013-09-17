@@ -1,16 +1,17 @@
 
-.style1
+.style2
 	.row.header
 		.logo.col-md-4.col-xs-10
 			ZE REP TILES
-		.play.col-md-1.col-xs-1
-		.ff.col-md-1.col-xs-1
-		/ .col-md-2.col-xs-12
-		/ 	%form{:class => "form-search"}
-		/ 		%input{:class => "input-medium search", :type => "text"}
+		.stop.tape_btn.col-md-1.col-xs-1
+		.ff.tape_btn.col-md-1.col-xs-1
+		.play.tape_btn.col-md-1.col-xs-1
+		.rw.tape_btn.col-md-1.col-xs-1
+
 	= render 'shared/loading'
 	.tiles_area
 
+	= audio_tag('cassette-player-button-3.mp3')
 
 :javascript
 	$(function() {
@@ -60,22 +61,28 @@
 		AUDIO_CONTROL.prototype = {
 			playing: false,
 			ffwding: false,
+			audioElement: document.createElement('audio'),
+
 			init: function()
 			{
+				
+				this.audioElement.setAttribute('src', "#{audio_url('cassette-player-button-3.mp3')}");
 				var current_inst = this;
+
+				$('.tape_btn').on('click', function()
+				{
+					current_inst.play_tape_btn_sound();
+				})
+
 				$('.play').on('click', function()
 				{
 					current_inst.playing = current_inst.toggle(this, current_inst.playing);
 				});
 
-				$('.ff').on('mousedown', function()
+				$('.stop').on('click', function()
 				{
-					current_inst.toggle(this, false);
-				});
-
-				$('.ff').on('mouseup', function()
-				{
-					current_inst.toggle(this, true);
+					current_inst.toggle($('.play'), true);
+					current_inst.playing = false;
 				});
 			}, 
 
@@ -91,6 +98,11 @@
 					$(button).removeClass('playing');
 					return false;
 				}
+			},
+
+			play_tape_btn_sound: function()
+			{
+				this.audioElement.play();
 			}
 		}
 
