@@ -17,7 +17,12 @@ class Tile < ActiveRecord::Base
   end
 
   def image_name
-    File.basename(image.path || image.filename) if image
+    path = image.path || image.filename if image 
+    if path.present?
+      File.basename(image.path || image.filename)
+    else
+      ""
+    end
   end	
 
   def thumb
