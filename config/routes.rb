@@ -6,6 +6,7 @@ Zereptiles::Application.routes.draw do
       post 'publish'
       get 'edit_image'
       get 'aws_success_action'
+      get 'full_tile'
     end
 
     collection do

@@ -11,7 +11,19 @@
 	= render 'shared/loading'
 	.tiles_area
 
-	= audio_tag('cassette-player-button-3.mp3')
+
+.modal{id: "full_tile_modal", "aria-hidden" => true, "tab-index" => "-1"}
+	.modal-dialog
+		.modal-content
+			.modal-header
+				%button.close{"data-dismiss" => "modal", "aria-hidden" => true}
+					x
+				%h3 Tile
+			.modal-body
+				= render 'shared/loading'
+			.modal-footer
+				%button.btn{"data-dismiss"=>"modal", "aria-hidden"=>"true"} Close
+
 
 :javascript
 	$(function() {
@@ -20,7 +32,7 @@
 		TILE_LAYOUT.prototype = {
 			init: function()
 			{
-				var tiles = JSON.parse('#{@tiles.to_a.to_json(:methods => :thumb)}');
+				var tiles = JSON.parse('#{@tiles.to_a.to_json(:methods => :thumb, :except => [ :lyrics])}');
 				var markup = "<div class='row tile-row'>";
 				
 				var current_row_size = 0; 
@@ -41,6 +53,18 @@
 				});
 
 				$('.tiles_area').html(markup + "</div>");
+
+				$('.tile').on('click', function()
+				{
+					$('#full_tile_modal').modal().show();
+					
+					var tile_id = $(this).data()['id']; 
+
+					$.get( "tiles/" + tile_id + "/full_tile", function( data ) 
+					{
+						$('#full_tile_modal .modal-body').html(data);
+					});
+				})
 			},
 
 			add_tile: function(tile, new_row)
@@ -102,6 +126,6 @@
 		var ctrls = new AUDIO_CONTROL();
 		ctrls.init(); 
 
-		$('.loader').hide();
+		$('.style2 .loader').hide();
 		$('.tiles_area').show();
 	})

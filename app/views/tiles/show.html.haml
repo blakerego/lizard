@@ -24,13 +24,15 @@
 			%b Size
 			= @tile.size
 
-
+	%p
+		= raw @tile.lyrics
 
 	- if @tile.image.present?
 		= @tile.image_name
 	- else
 		= link_to "Add image to this tile", edit_image_tile_url(@tile), :class => 'btn btn-primary'
 	%br
+
 
 	- if @tile.published
 		%p
@@ -46,3 +48,8 @@
 	= link_to 'Edit', edit_tile_path(@tile), :class => 'btn btn-default'
 	\|
 	= link_to 'See all tiles', tiles_path, :class => 'btn btn-default'
+
+
+
+= render 'full_tile', :tile => @tile
+

@@ -5107,6 +5107,9 @@ body.modal-open,
 }
 .modal-header .close {
   margin-top: -2px;
+  /*color: white;*/
+  background-color: white;
+
 }
 .modal-title {
   margin: 0;

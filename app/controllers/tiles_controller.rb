@@ -96,6 +96,10 @@ class TilesController < ApplicationController
   def sizing
   end
 
+  def full_tile
+    render :partial => 'full_tile', :locals => {:tile => @tile}
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_tile
@@ -112,6 +116,6 @@ class TilesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def tile_params
-      params.require(:tile).permit(:name, :media_type, :position, :published, :vimeo_id, :size, :image)
+      params.require(:tile).permit(:name, :media_type, :position, :published, :vimeo_id, :size, :image, :lyrics)
     end
 end
