@@ -9,6 +9,7 @@
   = f.input :media_type, :as => :select, :collection => Tile.media_types, :html => {:class => 'dropdown-toggle'}
   = f.input :vimeo_id, :label => "Vimeo ID"
   = f.input :size, :as => :select, :collection => (1..12), :selected => (@tile.size.present? ? @tile.size : "3")
+  = f.input :lyrics, :as => :ckeditor
   
   - if @tile.id.present?
     = f.input :image, :as => :file

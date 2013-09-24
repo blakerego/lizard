@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130910104923) do
+ActiveRecord::Schema.define(version: 20130924082625) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 20130910104923) do
     t.integer  "size"
     t.text     "image"
     t.boolean  "skip_image_processing"
+    t.text     "lyrics"
   end
 
   create_table "users", force: true do |t|

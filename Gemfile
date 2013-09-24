@@ -45,6 +45,8 @@ gem 'aws-s3'
 gem 'devise'
 gem  "declarative_authorization"
 
+gem 'ckeditor'
+
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
