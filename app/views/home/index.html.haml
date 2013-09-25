@@ -7,7 +7,8 @@
 		.ff.tape_btn.col-md-1.col-xs-1
 		.play.tape_btn.col-md-1.col-xs-1
 		.rw.tape_btn.col-md-1.col-xs-1
-
+		/ .push_button
+		
 	= render 'shared/loading'
 	.tiles_area
 
@@ -30,8 +31,11 @@
 
 		window.TILE_LAYOUT = function() {}
 		TILE_LAYOUT.prototype = {
-			init: function()
+			audio_control: null,
+
+			init: function(audio_control)
 			{
+				this.audio_control = audio_control;
 				var tiles = JSON.parse('#{@tiles.to_a.to_json(:methods => :thumb, :except => [ :lyrics])}');
 				var markup = "<div class='row tile-row'>";
 				
@@ -61,12 +65,14 @@
 					var data = $(this).data();
 					var tile_id = data['id']; 
 					var media_url = data['media_url'];
+					current_inst
 
 					$.get( "tiles/" + tile_id + "/full_tile", function( data ) 
 					{
 						$('#full_tile_modal .modal-body').html(data + "<div class='container'></div>");
 
-		        $('.container').html('<iframe src="' + media_url + '?autoplay=true" width="100%" height="100%" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
+						$('.container').html('<iframe src="' + media_url + '?autoplay=true&api=1" width="100%" height="100%" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
+						current_inst.audio_control.reset_vimeo_wrapper();
 					});
 
 
@@ -91,7 +97,7 @@
 		AUDIO_CONTROL.prototype = {
 			playing: false,
 			ffwding: false,
-			audioElement: document.createElement('audio'),
+			vimeo_inst: new VIMEO_WRAPPER(),
 
 			init: function()
 			{
@@ -107,6 +113,7 @@
 				{
 					current_inst.toggle($('.play'), true);
 					current_inst.playing = false;
+					current_inst.vimeo_inst.stop();
 				});
 			}, 
 
@@ -115,22 +122,32 @@
 				if(!state)
 				{
 					$(button).addClass('playing');
+					this.vimeo_inst.play();						
 					return true;
 				}
 				else 
 				{
 					$(button).removeClass('playing');
+					this.vimeo_inst.pause();
 					return false;
 				}
 			},
 
-		}
+			reset_vimeo_wrapper: function()
+			{
+				this.vimeo_inst.stop();
+				this.vimeo_inst = new VIMEO_WRAPPER();
+				this.vimeo_inst.init();
+			}
 
-		var tiles = new TILE_LAYOUT();
-		tiles.init();
+		}
 
 		var ctrls = new AUDIO_CONTROL();
 		ctrls.init(); 
+
+		var tiles = new TILE_LAYOUT();
+		tiles.init(ctrls);
+
 
 		$('.style2 .loader').hide();
 		$('.tiles_area').show();

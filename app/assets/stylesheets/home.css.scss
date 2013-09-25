@@ -26,6 +26,18 @@ body.body
 	  line-height: 88px;
 		text-shadow: 1px 3px 2px #000, 7px 8px 9px gray
 	}
+	.push_button
+	{
+		margin-left: 3px;
+		width: 50px;
+		height: 64px;
+		top: 12px;
+		float: right;
+		cursor: pointer;
+		background-repeat: no-repeat;
+		background-size: 80%;
+		background: image-url('pushbutton_play.png');
+	}
 	.tape_btn
 	{
 		margin-left: 3px;
