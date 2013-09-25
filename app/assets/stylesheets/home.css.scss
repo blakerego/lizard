@@ -9,12 +9,10 @@ body.body
   // -o-background-size: cover;
   // background-size: cover;
 
-  // background: image-url("static.gif") repeat center ;
-  background: image-url('http://kimasendorf.com/12c/images/12c-9_10_1_13_31%20Kopie.gif') repeat center;
+  background: image-url("static.gif") repeat center ;
+  // background: image-url('http://kimasendorf.com/12c/images/12c-9_10_1_13_31%20Kopie.gif') repeat center;
   color: black;
 
-
-	
 
 	.logo 
 	{
@@ -67,7 +65,7 @@ body.body
 		&.playing
 		{
 			background: image-url('play_play.svg');
-			height: 74px;
+			height: 59px;
 		}
 	}
 	.ff

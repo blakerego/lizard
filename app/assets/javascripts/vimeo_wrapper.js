@@ -21,7 +21,10 @@ VIMEO_WRAPPER.prototype = {
     {
       data.value = value;
     }
-    this.vimeo_frame[0].contentWindow.postMessage(JSON.stringify(data), this.url);
+    if (this.vimeo_frame[0].contentWindow != null)
+    {
+      this.vimeo_frame[0].contentWindow.postMessage(JSON.stringify(data), this.url);
+    }
   },
 
   pause: function()
