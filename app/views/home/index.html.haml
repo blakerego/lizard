@@ -58,12 +58,18 @@
 				{
 					$('#full_tile_modal').modal().show();
 					
-					var tile_id = $(this).data()['id']; 
+					var data = $(this).data();
+					var tile_id = data['id']; 
+					var media_url = data['media_url'];
 
 					$.get( "tiles/" + tile_id + "/full_tile", function( data ) 
 					{
-						$('#full_tile_modal .modal-body').html(data);
+						$('#full_tile_modal .modal-body').html(data + "<div class='container'></div>");
+
+		        $('.container').html('<iframe src="' + media_url + '?autoplay=true" width="100%" height="100%" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
 					});
+
+
 				})
 			},
 
@@ -76,7 +82,7 @@
 				{
 					markup += "</div><div class='row tile-row'>"
 				}
-				markup += "<div class='" + c + "' data-id=" + tile.id + " style='background-image: url(\"" + tile.thumb+ "\")'><div class='play_tile'>0<span class='play-icon'></span><div class='btm-row'><span class='share-icon'></span><span class='expand-icon'></span></div></div></div>";
+				markup += "<div class='" + c + "' data-id='" + tile.id + "' data-media_url='" + tile.media_url + "' style='background-image: url(\"" + tile.thumb+ "\")'><div class='play_tile'>0<span class='play-icon'></span><div class='btm-row'><span class='share-icon'></span><span class='expand-icon'></span></div></div></div>";
 				return markup;
 			}
 		}

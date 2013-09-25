@@ -52,6 +52,12 @@ class TilesController < ApplicationController
   # PATCH/PUT /tiles/1
   # PATCH/PUT /tiles/1.json
   def update
+    vimeo_id = tile_params.delete :vimeo_id
+    
+    if vimeo_id.present?
+      @tile.update_attributes(:media_url => 'http://player.vimeo.com/video/' + vimeo_id)
+    end
+
     respond_to do |format|
       if @tile.update(tile_params)
         format.html { redirect_to @tile, notice: 'Tile was successfully updated.' }

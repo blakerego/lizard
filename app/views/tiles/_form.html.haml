@@ -7,7 +7,7 @@
           %li= msg
   = f.input :name
   = f.input :media_type, :as => :select, :collection => Tile.media_types, :html => {:class => 'dropdown-toggle'}
-  = f.input :vimeo_id, :label => "Vimeo ID"
+  = f.input :vimeo_id, :label => "Vimeo ID", :input_html => {:value => @tile.media_url.split('/').last } if @tile.present? and @tile.media_url.present? 
   = f.input :size, :as => :select, :collection => (1..12), :selected => (@tile.size.present? ? @tile.size : "3")
   = f.input :lyrics, :as => :ckeditor
   
