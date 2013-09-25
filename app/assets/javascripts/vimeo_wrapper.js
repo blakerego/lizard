@@ -13,7 +13,9 @@ VIMEO_WRAPPER.prototype = {
   post: function(action, value) 
   {
     if (this.vimeo_frame == null)
+    {
       return false;
+    }
     var data = { method: action }; 
     if (value) 
     {
