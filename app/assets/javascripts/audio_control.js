@@ -4,7 +4,7 @@ window.AUDIO_CONTROL = function() {}
 AUDIO_CONTROL.prototype = {
   playing: false,
   ffwding: false,
-  vimeo_inst: new VIMEO_WRAPPER(),
+  vimeo_player: new VIMEO_WRAPPER(),
 
   init: function()
   {
@@ -20,7 +20,7 @@ AUDIO_CONTROL.prototype = {
     {
       current_inst.toggle($('.play'), false);
       current_inst.playing = false;
-      current_inst.vimeo_inst.stop();
+      current_inst.vimeo_player.stop();
     });
   }, 
 
@@ -29,13 +29,13 @@ AUDIO_CONTROL.prototype = {
     if(playing)
     {
       $(button).addClass('playing');
-      this.vimeo_inst.play();            
+      this.vimeo_player.play();            
       return true;
     }
     else 
     {
       $(button).removeClass('playing');
-      this.vimeo_inst.pause();
+      this.vimeo_player.pause();
       return false;
     }
   },
@@ -48,9 +48,9 @@ AUDIO_CONTROL.prototype = {
 
   reset_vimeo_wrapper: function()
   {
-    this.vimeo_inst.stop();
-    this.vimeo_inst = new VIMEO_WRAPPER();
-    this.vimeo_inst.init();
+    this.vimeo_player.stop();
+    this.vimeo_player = new VIMEO_WRAPPER();
+    this.vimeo_player.init();
     this.play();
   }
 

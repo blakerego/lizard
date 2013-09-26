@@ -2,6 +2,7 @@ class Tile < ActiveRecord::Base
 	attr_accessor :vimeo_id
 	default_scope order('position ASC')
 	mount_uploader :image, ImageUploader
+  belongs_to :group
 	# after_save :enqueue_image
 
 	def self.media_types 
