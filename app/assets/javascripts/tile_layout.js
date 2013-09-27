@@ -2,6 +2,8 @@ window.TILE_LAYOUT = function() {}
 TILE_LAYOUT.prototype = {
   audio_control: null,
 
+  current_tile: null,
+
   init: function(tile_data, audio_control)
   {
     this.audio_control = audio_control;
@@ -29,23 +31,34 @@ TILE_LAYOUT.prototype = {
 
     $('.tile').on('click', function()
     {
-      $('#full_tile_modal').modal().show();
-      
-      var data = $(this).data();
-      var tile_id = data['id']; 
-      var media_url = data['media_url'];
-      current_inst
-
-      $.get( "tiles/" + tile_id + "/full_tile", function( data ) 
-      {
-        $('#full_tile_modal .modal-body').html(data + "<div class='container'></div>");
-
-        $('.container').html('<iframe src="' + media_url + '?autoplay=true&api=1" width="100%" height="100%" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
-        current_inst.audio_control.reset_vimeo_wrapper();
-      });
-
-
+      current_inst.on_tile_click($(this));
     })
+  },
+
+  on_tile_click: function(tile)
+  {
+    var tile_data = tile.data();
+    $('#full_tile_modal').modal().show();
+
+    if (this.current_tile != null)
+    {
+      this.current_tile.removeClass('playing');
+    }
+
+    tile.addClass('playing');
+    this.current_tile = tile;
+
+    var tile_id = tile_data['id']; 
+    var media_url = tile_data['media_url'];
+    current_inst = this;
+    $.get( "tiles/" + tile_id + "/full_tile", function( tile_data ) 
+    {
+      $('#full_tile_modal .modal-body').html(tile_data + "<div class='container'></div>");
+
+      $('.container').html('<iframe src="' + media_url + '?autoplay=true&api=1" width="100%" height="100%" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
+
+      current_inst.audio_control.reset_vimeo_wrapper();
+    });
   },
 
   add_tile: function(tile, new_row)
