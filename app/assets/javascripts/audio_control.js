@@ -43,7 +43,7 @@ AUDIO_CONTROL.prototype = {
   play: function()
   {
     var current_inst = this;
-    current_inst.toggle($('.play'), true);
+    this.playing = current_inst.toggle($('.play'), true);
   },
 
   reset_vimeo_wrapper: function()
