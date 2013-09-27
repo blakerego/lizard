@@ -33,10 +33,16 @@ TILE_LAYOUT.prototype = {
     {
       current_inst.on_tile_click($(this));
     })
+
+    $('#full_tile_modal').on('hidden.bs.modal', function () {
+      // $( '.tiles_area' ).toggle( "explode" );
+    });
+    
   },
 
   on_tile_click: function(tile)
   {
+    // $( '.tiles_area' ).toggle( "explode" );
     var tile_data = tile.data();
     $('#full_tile_modal').modal().show();
 
@@ -59,6 +65,11 @@ TILE_LAYOUT.prototype = {
 
       current_inst.audio_control.reset_vimeo_wrapper();
     });
+  },
+
+  open_first_tile: function()
+  {
+    this.on_tile_click($('.tile').first());
   },
 
   add_tile: function(tile, new_row)

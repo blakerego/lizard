@@ -12,7 +12,7 @@ VIMEO_WRAPPER.prototype = {
 
   post: function(action, value) 
   {
-    if (this.vimeo_frame == null || this.vimeo_frame[0].contentWindow == null)
+    if (this.vimeo_frame == null)
     {
       return false;
     }
@@ -21,7 +21,12 @@ VIMEO_WRAPPER.prototype = {
     {
       data.value = value;
     }
-    this.vimeo_frame[0].contentWindow.postMessage(JSON.stringify(data), this.url);
+
+    if (this.vimeo_frame[0].contentWindow != null)
+    {
+      this.vimeo_frame[0].contentWindow.postMessage(JSON.stringify(data), this.url);
+    }
+    return true;
   },
 
   pause: function()

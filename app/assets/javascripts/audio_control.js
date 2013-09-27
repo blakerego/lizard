@@ -11,11 +11,13 @@ AUDIO_CONTROL.prototype = {
     
     var current_inst = this;
 
+    /// Initialize Play / Pause button
     $('.play').on('click', function()
     {
       current_inst.playing = current_inst.toggle(this, !current_inst.playing);
     });
 
+    /// Initialize Stop button, if it exists.
     $('.stop').on('click', function()
     {
       current_inst.toggle($('.play'), false);
@@ -29,7 +31,12 @@ AUDIO_CONTROL.prototype = {
     if(playing)
     {
       $(button).addClass('playing');
-      this.vimeo_player.play();            
+      if (!this.vimeo_player.play())
+      {
+        /// This means no song is selected.
+        /// Consider changing - the following line requires global variable knowledge. yucky.
+        // TILES.open_first_tile();
+      }
       return true;
     }
     else 

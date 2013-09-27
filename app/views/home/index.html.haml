@@ -17,10 +17,9 @@
 .modal{id: "full_tile_modal", "aria-hidden" => true, "tab-index" => "-1"}
 	.modal-dialog
 		.modal-content
-			.modal-header
-				%button.close{"data-dismiss" => "modal", "aria-hidden" => true}
-					x
-				%h3 Tile
+			/ .modal-header
+			/ 	%button.close{"data-dismiss" => "modal", "aria-hidden" => true}
+			/ 		x
 			.modal-body
 				= render 'shared/loading'
 			.modal-footer
@@ -28,13 +27,13 @@
 
 
 :javascript
+	var CTRLS = new AUDIO_CONTROL();
+	var TILES = new TILE_LAYOUT();
 	$(function() {
 
-		var ctrls = new AUDIO_CONTROL();
-		ctrls.init(); 
-
-		var tiles = new TILE_LAYOUT();
-		tiles.init('#{@tiles.to_a.to_json(:methods => :thumb, :except => [ :lyrics])}', ctrls);
+		
+		CTRLS.init(); 
+		TILES.init('#{@tiles.to_a.to_json(:methods => :thumb, :except => [ :lyrics])}', CTRLS);
 
 		$('.style2 .loader').hide();
 		$('.tiles_area').show();
