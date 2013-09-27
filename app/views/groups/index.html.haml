@@ -1,19 +1,20 @@
-%h1 Listing groups
+.tile_admin
+  %h1 Listing groups
 
-%table
-  %tr
-    %th Name
-    %th
-    %th
-    %th
-
-  - @groups.each do |group|
+  %table
     %tr
-      %td= group.name
-      %td= link_to 'Show', group
-      %td= link_to 'Edit', edit_group_path(group)
-      %td= link_to 'Destroy', group, :method => :delete, :data => { :confirm => 'Are you sure?' }
+      %th Name
+      %th
+      %th
+      %th
 
-%br
+    - @groups.each do |group|
+      %tr
+        %td= group.name
+        %td= link_to 'Show', group
+        %td= link_to 'Edit', edit_group_path(group)
+        %td= link_to 'Destroy', group, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
-= link_to 'New Group', new_group_path
+  %br
+
+  = link_to 'New Group', new_group_path, :class => 'btn btn-primary'

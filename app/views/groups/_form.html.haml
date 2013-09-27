@@ -1,4 +1,4 @@
-= form_for @group do |f|
+= simple_form_for @group do |f|
   - if @group.errors.any?
     #error_explanation
       %h2= "#{pluralize(@group.errors.count, "error")} prohibited this group from being saved:"
@@ -6,8 +6,8 @@
         - @group.errors.full_messages.each do |msg|
           %li= msg
 
-  .field
-    = f.label :name
-    = f.text_field :name
+  = f.input :name
+  = f.input :group_type, :as => :select, :collection => Group.group_types, :html => {:class => 'dropdown-toggle'}, :default => 'album'
+
   .actions
-    = f.submit 'Save'
+    = f.submit 'Save', :class => 'btn btn-success'
