@@ -5108,6 +5108,12 @@ body.modal-open,
   background-color: white;
 
 }
+.modal-body .close
+{
+  margin: 2px 10px 0 0;
+  background-color: white;  
+  cursor: pointer;
+}
 .modal-title {
   margin: 0;
   line-height: 1.428571429;

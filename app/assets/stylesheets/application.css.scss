@@ -12,9 +12,21 @@
  *= require_tree .
  */
 
-@font-face {
-  font-family: Single Sleeve;
+@font-face 
+{
+  font-family: "Single Sleeve";
   src: font-url('sing.ttf');
+}
+
+@font-face 
+{
+  font-family: "Distant Galaxy";
+  src: font-url('DISTGRG_.ttf');
+}
+
+@font-face {
+  font-family: "PT-Sans";
+  src: font-url('PTC55F.ttf');
 }
 
 #error_explanation

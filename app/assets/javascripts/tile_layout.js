@@ -37,7 +37,7 @@ TILE_LAYOUT.prototype = {
     $('#full_tile_modal').on('hidden.bs.modal', function () {
       // $( '.tiles_area' ).toggle( "explode" );
     });
-    
+
   },
 
   on_tile_click: function(tile)
@@ -59,10 +59,11 @@ TILE_LAYOUT.prototype = {
     current_inst = this;
     $.get( "tiles/" + tile_id + "/full_tile", function( tile_data ) 
     {
-      $('#full_tile_modal .modal-body').html(tile_data + "<div class='container'></div>");
+      var close_btn = '<button aria-hidden="" class="close" data-dismiss="modal">x</button>';
+      $('#full_tile_modal .modal-body').html(close_btn + tile_data + "<div class='container'></div>");
 
       $('.container').html('<iframe src="' + media_url + '?autoplay=true&api=1" width="100%" height="100%" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
-
+      $('.container').hide();
       current_inst.audio_control.reset_vimeo_wrapper();
     });
   },
