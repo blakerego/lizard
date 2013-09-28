@@ -36,7 +36,10 @@ class TilesController < ApplicationController
   def create
     vimeo_id = tile_params.delete :vimeo_id
     @tile = Tile.new(tile_params)
-    @tile.media_url = 'http://player.vimeo.com/video/' + vimeo_id
+
+    if (vimeo_id.present?)
+      @tile.media_url = 'http://player.vimeo.com/video/' + vimeo_id
+    end
 
     respond_to do |format|
       if @tile.save
