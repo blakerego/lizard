@@ -14,5 +14,6 @@
   - if @tile.id.present?
     = f.input :image, :as => :file
 
+  = render 'sizing_info'
   .actions
     = f.submit 'Save', :class => 'btn btn-success'
