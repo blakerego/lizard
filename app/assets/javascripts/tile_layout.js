@@ -35,37 +35,69 @@ TILE_LAYOUT.prototype = {
     })
 
     $('#full_tile_modal').on('hidden.bs.modal', function () {
-      // $( '.tiles_area' ).toggle( "explode" );
     });
 
   },
 
   on_tile_click: function(tile)
   {
-    // $( '.tiles_area' ).toggle( "explode" );
     var tile_data = tile.data();
     $('#full_tile_modal').modal().show();
 
+    var current_tile_clicked = false;
+
     if (this.current_tile != null)
     {
-      this.current_tile.removeClass('playing');
+      current_tile_clicked = $(this.current_tile).data()['id'] == tile_data['id'];
+      if (!current_tile_clicked)
+      {
+        this.current_tile.removeClass('playing');
+      }
     }
 
-    tile.addClass('playing');
-    this.current_tile = tile;
+    if (!current_tile_clicked)
+    {
+      tile.addClass('playing');
+      this.current_tile = tile;
+    }
 
     var tile_id = tile_data['id']; 
     var media_url = tile_data['media_url'];
     current_inst = this;
     $.get( "tiles/" + tile_id + "/full_tile", function( tile_data ) 
     {
-      var close_btn = '<button aria-hidden="" class="close" data-dismiss="modal">x</button>';
-      $('#full_tile_modal .modal-body').html(close_btn + tile_data + "<div class='container'></div>");
 
-      $('.container').html('<iframe src="' + media_url + '?autoplay=true&api=1" width="100%" height="100%" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
-      $('.container').hide();
-      current_inst.audio_control.reset_vimeo_wrapper();
+      if (current_tile_clicked)
+      {
+        $('#full_tile_modal').modal().show();
+      }
+      else
+      {
+        current_inst.open_modal_dialog(tile_data, media_url);
+      }
     });
+  },
+
+  open_modal_dialog: function(tile_data, media_url)
+  {
+    var close_btn = '<button aria-hidden="" class="close" data-dismiss="modal">x</button>';
+    $('#full_tile_modal .modal-body').html(close_btn + tile_data + "<div class='container'></div>");
+    this.add_audio_to_modal(media_url);
+
+    $('.image_block img').on('load', function()
+    {
+      height = $('.image_block img').height();
+      $('.full').height(height);
+      $('.image_block .block .body').height(height - 101);
+    });
+
+  },
+
+  add_audio_to_modal: function(media_url)
+  {
+    $('.container').html('<iframe src="' + media_url + '?autoplay=true&api=1" width="100%" height="100%" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
+    $('.container').hide();
+    this.audio_control.reset_vimeo_wrapper();
   },
 
   open_first_tile: function()
@@ -82,7 +114,7 @@ TILE_LAYOUT.prototype = {
     {
       markup += "</div><div class='row tile-row'>"
     }
-    markup += "<div class='" + c + "' data-id='" + tile.id + "' data-media_url='" + tile.media_url + "' style='background-image: url(\"" + tile.thumb+ "\")'><div class='play_tile'>0<span class='play-icon'></span><div class='btm-row'><span class='share-icon'></span><span class='expand-icon'></span></div></div></div>";
+    markup += "<div class='" + c + "' data-id='" + tile.id + "' data-media_url='" + tile.media_url + "' style='background-image: url(\"" + tile.thumb+ "\")'><div class='play_tile'>0<span class='play-icon'>Now Playing</span><div class='btm-row'><span class='share-icon'></span><span class='expand-icon'></span></div></div></div>";
     return markup;
   }
 }
