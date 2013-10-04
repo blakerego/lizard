@@ -1,5 +1,11 @@
 authorization do 
+
+  role :guest do 
+    has_permission_on [:tiles], :to => [:full_tile]
+  end
+
   role :admin do 
-    has_permission_on [:tiles], :to => [:index, :show, :new, :create, :edit, :update, :destroy, :publish, :aws_success_action, :reorder, :edit_image, :sizing, :full_tile]
+    includes :guest
+    has_permission_on [:tiles], :to => [:show, :index, :new, :create, :edit, :update, :destroy, :publish, :aws_success_action, :reorder, :edit_image, :sizing]
   end
 end

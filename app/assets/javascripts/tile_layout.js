@@ -91,6 +91,11 @@ TILE_LAYOUT.prototype = {
       $('.image_block .block .body').height(height - 101);
     });
 
+    $('.modal-body button').on('click', function()
+    {
+      $('#full_tile_modal').modal().hide();
+    })
+
   },
 
   add_audio_to_modal: function(media_url)
@@ -114,7 +119,7 @@ TILE_LAYOUT.prototype = {
     {
       markup += "</div><div class='row tile-row'>"
     }
-    markup += "<div class='" + c + "' data-id='" + tile.id + "' data-media_url='" + tile.media_url + "' style='background-image: url(\"" + tile.thumb+ "\")'><div class='play_tile'>0<span class='play-icon'>Now Playing</span><div class='btm-row'><span class='share-icon'></span><span class='expand-icon'></span></div></div></div>";
+    markup += "<div class='" + c + "' data-id='" + tile.id + "' data-media_url='" + tile.media_url + "' style='background-image: url(\"" + tile.thumb+ "\")'><div class='play_tile'>0<span class='play-icon'>Now Playing</span><div class='btm-row'><span class='expand-icon'></span></div></div></div>";
     return markup;
   }
 }

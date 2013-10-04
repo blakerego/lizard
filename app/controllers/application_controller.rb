@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def permission_denied
+    binding.pry
     flash[:error] = "Sorry, you are not allowed to access that page."
     redirect_to root_url
   end
