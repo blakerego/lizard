@@ -80,7 +80,7 @@ TILE_LAYOUT.prototype = {
 
   open_modal_dialog: function(tile_data, media_url)
   {
-    var close_btn = '<button aria-hidden="" class="close" data-dismiss="modal">x</button>';
+    var close_btn = '<span class="button_wrapper"><button class="close modal_close">x</button></span>';
     $('#full_tile_modal .modal-body').html(close_btn + tile_data + "<div class='container'></div>");
     this.add_audio_to_modal(media_url);
 
@@ -88,10 +88,10 @@ TILE_LAYOUT.prototype = {
     {
       height = $('.image_block img').height();
       $('.full').height(height);
-      $('.image_block .block .body').height(height - 101);
+      $('.image_block .block .body').height(height - 122);
     });
 
-    $('.modal-body button').on('click', function()
+    $('.modal_close').on('click', function()
     {
       $('#full_tile_modal').modal().hide();
     })
