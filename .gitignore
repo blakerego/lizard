@@ -19,3 +19,5 @@ app/assets/javascripts/.DS_Store
 *~
 
 public/uploads
+
+backups/*
