@@ -1,9 +1,11 @@
 .full
-  .image_block
-    .img
-      = image_tag tile.image_url
-    .block
-      .header
-        = tile.name
-      .body
-        = raw tile.lyrics
+  #media_type{"data-value" => "#{tile.media_type}"}
+  - if (tile.media_type.present? && tile.media_type != 'video')
+    .image_block
+      .img
+        = image_tag tile.image_url
+      .block
+        .header
+          = tile.name
+        .body
+          = raw tile.lyrics

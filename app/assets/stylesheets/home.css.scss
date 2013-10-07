@@ -260,6 +260,11 @@ span.share-icon
 			}
 			.full
 			{
+				.media_type
+				{
+					display: none;
+				}
+				
 				.image_block
 				{
 					.img
