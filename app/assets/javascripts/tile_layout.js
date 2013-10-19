@@ -4,6 +4,8 @@ TILE_LAYOUT.prototype = {
 
   current_tile: null,
 
+  currently_playing: false,
+
   init: function(tile_data, audio_control)
   {
     this.audio_control = audio_control;
@@ -85,7 +87,22 @@ TILE_LAYOUT.prototype = {
     var tile_data = tile.data();
     var current_tile_clicked = this.is_tile_clicked(tile, tile_data);
     this.update_selected_tile(tile, current_tile_clicked);
-    this.load_tile(tile_data, current_tile_clicked, true);
+
+    if (current_tile_clicked)
+    {
+      if (this.currently_playing)
+      {
+        this.audio_control.pause();
+      }
+      else 
+      {
+        this.audio_control.play();
+      }
+    }
+    else 
+    {
+      this.load_tile(tile_data, current_tile_clicked, true);
+    }
   },
 
   on_expand_click: function(tile)
@@ -115,11 +132,25 @@ TILE_LAYOUT.prototype = {
 
   update_selected_tile: function(tile, current_tile_clicked)
   {
-    if (!current_tile_clicked)
+    this.currently_playing = !this.currently_playing;
+    if (current_tile_clicked)
+    {
+      if (this.currently_playing)
+      {
+        this.audio_control.pause();
+        tile.removeClass('playing');
+      }
+      else 
+      {
+        this.audio_control.play();
+        tile.addClass('playing');
+      }
+    }
+    else
     {
       tile.addClass('playing');
       this.current_tile = tile;
-    }    
+    }
   },
 
   load_tile: function(tile_data, current_tile_clicked, autoplay)

@@ -54,6 +54,12 @@ AUDIO_CONTROL.prototype = {
     this.playing = current_inst.toggle($('.play'), true);
   },
 
+  pause: function()
+  {
+    var current_inst = this;
+    this.playing = current_inst.toggle($('.play'), false);    
+  },
+
   reset_vimeo_wrapper: function()
   {
     this.vimeo_player.stop();
