@@ -77,7 +77,7 @@ TILE_LAYOUT.prototype = {
 
 
   /**************************
-    HANDLERS
+    Handlers
   ***************************/
   on_play_click: function(tile)
   {

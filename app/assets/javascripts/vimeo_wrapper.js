@@ -42,5 +42,20 @@ VIMEO_WRAPPER.prototype = {
   stop: function()
   {
     this.post('stop');
+  }, 
+
+  add_event_listener: function(event_name, callback)
+  {
+    this.post('api_addEventListener', [event_name, callback.name]);
+  },
+
+  add_play_progress_listener: function(callback)
+  {
+    this.add_event_listener('playProgress', callback);
+  },
+
+  add_play_listener: function(callback)
+  {
+    this.add_event_listener('play', callback);
   }
 }
