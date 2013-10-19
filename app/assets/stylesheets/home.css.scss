@@ -11,6 +11,7 @@ body.body
 
   // background: image-url("static.gif") repeat center ;
   background: image-url("stars.gif") repeat center;
+  background: image-url("pink_background.png") repeat center;
   // background: image-url('http://kimasendorf.com/12c/images/12c-9_10_1_13_31%20Kopie.gif') repeat center;
   color: black;
 
@@ -124,7 +125,7 @@ body.body
 	.header
 	{
 		width: 1200px;
-		margin: 36px auto;
+		margin: 15px auto;
 	}
 
 	.tiles_area
@@ -157,7 +158,7 @@ body.body
 						display: block;
 						width: 100%;
 						height: 100%;
-						cursor: pointer;
+						
 						background-color: rgba(0,0,0,.5);
 						color: rgba(255,255,255,0);
 					}
@@ -229,6 +230,11 @@ span.play-icon
 	background: image-url('play.png');
 	width: 91px;
 	height: 91px;
+	&:hover
+	{
+		background: image-url('white_play_icon.png');
+		cursor: pointer;
+	}
 }
 
 span.expand-icon
@@ -236,6 +242,11 @@ span.expand-icon
 	background: image-url('expand.png');
 	width: 30px;
 	height: 30px;
+	&:hover
+	{
+		background: image-url('white_expand_icon.png');		
+		cursor: pointer;
+	}
 }
 
 span.share-icon
@@ -273,10 +284,9 @@ span.share-icon
 					}
 					.block
 					{
-						padding: 20px;
+						padding: 0px 0 0 20px;
 						.header
 						{
-							padding-bottom: 10px;
 							font-family: 'Distant Galaxy';
 							font-size: 20px;
 						}

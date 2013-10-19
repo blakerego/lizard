@@ -31,12 +31,7 @@ AUDIO_CONTROL.prototype = {
     if(playing)
     {
       $(button).addClass('playing');
-      if (!this.vimeo_player.play())
-      {
-        /// This means no song is selected.
-        /// Consider changing - the following line requires global variable knowledge. yucky.
-        // TILES.open_first_tile();
-      }
+      this.vimeo_player.play();
       return true;
     }
     else 
@@ -58,7 +53,6 @@ AUDIO_CONTROL.prototype = {
     this.vimeo_player.stop();
     this.vimeo_player = new VIMEO_WRAPPER();
     this.vimeo_player.init();
-    this.play();
   }
 
 }
