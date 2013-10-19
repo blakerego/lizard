@@ -233,16 +233,13 @@ body.body
 					padding: 0; 
 					.play_tile
 					{
-						background-color: rgba(0,0,0,.5);
 						span.play-icon
 						{
-							color: #fffc00;
-							background: none;
-							font-family: 'Single Sleeve';
-							font-size: 43px;
-							width: 148px;
-							-webkit-text-stroke: 2px black;
-							letter-spacing: 1px;
+							background: image-url('pause_icon.png');
+							&:hover
+							{
+								background: image-url('pause_icon_white.png');
+							}
 						}
 					}
 				}

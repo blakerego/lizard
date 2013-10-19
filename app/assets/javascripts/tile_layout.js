@@ -73,7 +73,7 @@ TILE_LAYOUT.prototype = {
     {
       markup += "</div><div class='row tile-row'>"
     }
-    markup += "<div class='" + c + "' data-id='" + tile.id + "' data-media_url='" + tile.media_url + "' style='background-image: url(\"" + tile.thumb+ "\")'><div class='play_tile'>0<span class='play-icon'>Now Playing</span><div class='btm-row'><span class='expand-icon'></span></div></div></div>";
+    markup += "<div class='" + c + "' data-id='" + tile.id + "' data-media_url='" + tile.media_url + "' style='background-image: url(\"" + tile.thumb+ "\")'><div class='play_tile'>0<span class='play-icon'>0</span><div class='btm-row'><span class='expand-icon'></span></div></div></div>";
     return markup;
   },
 
@@ -88,18 +88,7 @@ TILE_LAYOUT.prototype = {
     var current_tile_clicked = this.is_tile_clicked(tile, tile_data);
     this.update_selected_tile(tile, current_tile_clicked);
 
-    if (current_tile_clicked)
-    {
-      if (this.currently_playing)
-      {
-        this.audio_control.pause();
-      }
-      else 
-      {
-        this.audio_control.play();
-      }
-    }
-    else 
+    if (!current_tile_clicked)
     {
       this.load_tile(tile_data, current_tile_clicked, true);
     }
@@ -132,22 +121,23 @@ TILE_LAYOUT.prototype = {
 
   update_selected_tile: function(tile, current_tile_clicked)
   {
-    this.currently_playing = !this.currently_playing;
     if (current_tile_clicked)
     {
+      this.currently_playing = !this.currently_playing;
       if (this.currently_playing)
-      {
-        this.audio_control.pause();
-        tile.removeClass('playing');
-      }
-      else 
       {
         this.audio_control.play();
         tile.addClass('playing');
       }
+      else 
+      {
+        this.audio_control.pause();
+        tile.removeClass('playing');
+      }
     }
     else
     {
+      this.currently_playing = true;
       tile.addClass('playing');
       this.current_tile = tile;
     }
