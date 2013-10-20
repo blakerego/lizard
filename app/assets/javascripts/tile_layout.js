@@ -1,14 +1,16 @@
+//= require modal_renderer_factory
+
 window.TILE_LAYOUT = function() {}
 TILE_LAYOUT.prototype = {
-  audio_control: null,
+  media_control: null,
 
   current_tile: null,
 
   currently_playing: false,
 
-  init: function(tile_data, audio_control)
+  init: function(tile_data, media_control)
   {
-    this.audio_control = audio_control;
+    this.media_control = media_control;
     this.initialize_layout(JSON.parse(tile_data));
     this.initialize_handlers();
   },
@@ -126,12 +128,12 @@ TILE_LAYOUT.prototype = {
       this.currently_playing = !this.currently_playing;
       if (this.currently_playing)
       {
-        this.audio_control.play();
+        this.media_control.play();
         tile.addClass('playing');
       }
       else 
       {
-        this.audio_control.pause();
+        this.media_control.pause();
         tile.removeClass('playing');
       }
     }
@@ -184,13 +186,13 @@ TILE_LAYOUT.prototype = {
   {
     $('.container').html('<iframe src="' + media_url + '?autoplay=' + autoplay.toString() + '&api=1" width="100%" height="100%" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
     $('.container').hide();
-    this.audio_control.reset_vimeo_wrapper();
+    this.media_control.reset_vimeo_wrapper();
   },
 
   add_video_to_modal: function(media_url, autoplay)
   {
     $('.container').html('<iframe src="' + media_url + '?autoplay=' + autoplay.toString() + '&api=1" width="100%" height="100%" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
-    this.audio_control.reset_vimeo_wrapper();    
+    this.media_control.reset_vimeo_wrapper();    
   },
 
   show_modal: function()
@@ -201,34 +203,8 @@ TILE_LAYOUT.prototype = {
   adjust_size_for_media: function()
   {
     var value = $('#media_type').data()['value'];
-
-    if (value == 'video')
-    {
-      $('.modal-dialog').css('margin-top', '0');
-      var iframe_width = $('iframe').width();
-      if (iframe_width > 400)
-      {
-        $('.modal-dialog').width(iframe_width);
-      }
-      else
-      {
-        $('.modal-dialog').width(940);
-      }
-    }
-    else 
-    {
-      $('.modal-dialog').css('margin-top', '100px');
-      $('.modal-dialog').width('1215px'); 
-      $('.image_block img').on('load', function()
-      {
-        height = $('.image_block img').height();
-        if (height > 0)
-        {
-          $('.full').height(height);
-          $('.image_block .block .body').height(height - 122);
-        }
-      });
-    }
+    var modal_renderer = (new MODAL_RENDERER_FACTORY()).get(value);
+    modal_renderer.adjust_size();
   }
 
 }
