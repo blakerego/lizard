@@ -32,6 +32,11 @@ AUDIO_MODAL_RENDERER.prototype = {
       $('.full').height(height);
       $('.image_block .block .body').height(height - 122);
     }
+  },
 
+  add_media_to_modal: function(media_url, autoplay)
+  {
+    $('.container').html('<iframe src="' + media_url + '?autoplay=' + autoplay.toString() + '&api=1" width="100%" height="100%" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
+    $('.container').hide();
   }
 }

@@ -13,5 +13,12 @@ VIDEO_MODAL_RENDERER.prototype = {
     {
       $('.modal-dialog').width(940);
     }    
+  },
+
+  add_media_to_modal: function(media_url, autoplay)
+  {
+    $('.container').html('<iframe src="' + media_url + '?autoplay=' + autoplay.toString() + '&api=1" width="100%" height="100%" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
+    $('.container').height('75%');
+    $('.container').width('100%');
   }
 }

@@ -8,6 +8,8 @@ TILE_LAYOUT.prototype = {
 
   currently_playing: false,
 
+  modal_renderer: null,
+
   init: function(tile_data, media_control)
   {
     this.media_control = media_control;
@@ -103,7 +105,7 @@ TILE_LAYOUT.prototype = {
     var tile_data = tile.data();
     var current_tile_clicked = this.is_tile_clicked(tile, tile_data);
     this.load_tile(tile_data, current_tile_clicked, false);
-    this.show_modal();
+    $('#full_tile_modal').modal().show();
   },
 
   is_tile_clicked: function(tile, tile_data)
@@ -154,7 +156,7 @@ TILE_LAYOUT.prototype = {
     {
       if (current_tile_clicked)
       {
-        current_inst.adjust_size_for_media();
+        current_inst.modal_renderer.adjust_size();
       }
       else
       {
@@ -165,46 +167,17 @@ TILE_LAYOUT.prototype = {
 
   on_tile_loaded: function(tile_data, media_url, autoplay)
   {
+    this.reset_renderer(tile_data);
+    this.modal_renderer.add_media_to_modal(media_url, autoplay);
+    this.media_control.reset_vimeo_wrapper(); 
+    this.modal_renderer.adjust_size();
+  },
+
+  reset_renderer: function(tile_data)
+  {
     $('#full_tile_modal .modal-body').html(tile_data + "<div class='container'></div>");
-    
     var value = $('#media_type').data()['value'];
-
-    if (value == 'video')
-    {
-      this.add_video_to_modal(media_url, autoplay);
-      $('.container').height('75%');
-      $('.container').width('100%');
-    }
-    else
-    {
-      this.add_audio_to_modal(media_url, autoplay);
-    }
-    this.adjust_size_for_media();
-  },
-
-  add_audio_to_modal: function(media_url, autoplay)
-  {
-    $('.container').html('<iframe src="' + media_url + '?autoplay=' + autoplay.toString() + '&api=1" width="100%" height="100%" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
-    $('.container').hide();
-    this.media_control.reset_vimeo_wrapper();
-  },
-
-  add_video_to_modal: function(media_url, autoplay)
-  {
-    $('.container').html('<iframe src="' + media_url + '?autoplay=' + autoplay.toString() + '&api=1" width="100%" height="100%" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
-    this.media_control.reset_vimeo_wrapper();    
-  },
-
-  show_modal: function()
-  {
-    $('#full_tile_modal').modal().show();
-  },
-
-  adjust_size_for_media: function()
-  {
-    var value = $('#media_type').data()['value'];
-    var modal_renderer = (new MODAL_RENDERER_FACTORY()).get(value);
-    modal_renderer.adjust_size();
+    this.modal_renderer = (new MODAL_RENDERER_FACTORY()).get(value);    
   }
 
 }
