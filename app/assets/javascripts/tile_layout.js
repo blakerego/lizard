@@ -66,7 +66,7 @@ TILE_LAYOUT.prototype = {
   ***************************/
   add_tile: function(tile, new_row)
   {
-    var c = "tile col-xs-12 col-md-" + tile.size.toString();
+    var c = "tile col-xs-6 col-md-" + tile.size.toString();
     var markup = "";
 
     if (new_row)

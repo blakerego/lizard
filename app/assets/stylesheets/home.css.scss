@@ -1,3 +1,24 @@
+@media screen and (max-width: 769px) 
+{
+	body.body
+	{
+		.tiles_area
+		{
+			width: 100%;
+		}
+	}
+}
+
+@media screen and (min-width: 770px)
+{
+	body.body
+	{
+		.tiles_area
+		{
+			width: 1200px;
+		}
+	}
+}
 
 body.body
 {
@@ -148,7 +169,6 @@ body.body
 	{
 		display: none;
 		margin: 0 auto;
-		width: 1200px;
 
 		.tile-row
 		{
@@ -227,7 +247,8 @@ body.body
 			}
 			.tile.playing
 			{
-				border: solid #26a9e0 4.5px;
+				// border: solid #26a9e0 4.5px;
+				border: solid yellow 4.5px;
 				&:hover
 				{
 					padding: 0; 
@@ -330,4 +351,3 @@ span.share-icon
 		}
 	}
 }
-
