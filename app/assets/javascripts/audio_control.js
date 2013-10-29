@@ -1,11 +1,5 @@
 //= require vimeo_wrapper
 
-function on_play_progress(data)
-{
-  console.log('on play progress not connected'); 
-  console.log(data['percent']);
-}
-
 window.AUDIO_CONTROL = function() {}
 AUDIO_CONTROL.prototype = {
   playing: false,
@@ -65,9 +59,8 @@ AUDIO_CONTROL.prototype = {
     this.vimeo_player.stop();
     this.vimeo_player = new VIMEO_WRAPPER();
     this.vimeo_player.init();
-    this.vimeo_player.add_play_progress_listener(on_play_progress);
-    // this.vimeo_player.add_play_progress_listener(this.on_play_progress);
-    // this.vimeo_player.add_play_listener(this.on_play); 
+    this.vimeo_player.add_play_progress_listener(this.on_play_progress);
+    this.vimeo_player.add_play_listener(this.on_play); 
     this.vimeo_player.add_pause_listener(this.on_pause);
   },
 
@@ -75,7 +68,6 @@ AUDIO_CONTROL.prototype = {
   {
     console.log('on play progress'); 
     console.log(data['percent']);
-    debugger;
   },
 
   on_play: function(data)
@@ -86,7 +78,6 @@ AUDIO_CONTROL.prototype = {
   on_pause: function(data)
   {
     console.log('pause event fired!');
-    debugger;
   }
 
 }

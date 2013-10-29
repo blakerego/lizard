@@ -1,5 +1,3 @@
-//= require froogaloop
-
 window.VIMEO_WRAPPER = function() {}
 VIMEO_WRAPPER.prototype = {
   
@@ -10,6 +8,10 @@ VIMEO_WRAPPER.prototype = {
   status: 'uninitiated',
 
   eventCallbacks: {},
+
+  player_ready: false, 
+
+  callback_queue: [],
 
   init: function()
   {
@@ -27,34 +29,6 @@ VIMEO_WRAPPER.prototype = {
       window.addEventListener('onmessage', this.on_message_received.bind(this));
     }
 
-    $f(this.vimeo_frame).addEvent('ready', this.ready.bind(this));
-  },
-
-  froogaloop: null,
-
-  ready: function()
-  {
-    console.log('ready!');
-
-    this.froogaloop = $f($('iframe'));
-
-    this.onPlay();
-    this.onFinish();
-
-  },
-
-  onPlay: function()
-  {
-    this.froogaloop.addEvent('play', function(data) {
-        console.log('play');
-    });
-  },
-
-  onFinish: function()
-  {
-    this.froogaloop.addEvent('finish', function(data) {
-        console.log('finish');
-    });    
   },
 
   post: function(action, value) 
@@ -94,28 +68,34 @@ VIMEO_WRAPPER.prototype = {
   add_event_listener: function(event_name, callback)
   {
     this.add_callback(event_name, callback, this.url);
-    // this.post('addEventListener', [event_name, callback.name]);    
-    // this.post('addEventListener', event_name, callback.name);
-    // this.post('addEventListener', event_name, this.vimeo_frame);
-
-    var data = { method: 'addEventListener', value: event_name }; 
-    this.vimeo_frame[0].contentWindow.postMessage(JSON.stringify(data), this.vimeo_frame);
+    if (this.player_ready)
+    {
+      this.post('addEventListener', event_name, this.vimeo_frame);
+    }
+    else 
+    {
+      this.callback_queue.push(event_name);
+    }
 
   },
 
   add_play_progress_listener: function(callback)
   {
     this.add_event_listener('playProgress', callback);
+    // this.froogaloop.addEvent('playProgress', callback);
   },
 
   add_play_listener: function(callback)
   {
+    console.log('adding play listener');
     this.add_event_listener('play', callback);
   }, 
 
   add_pause_listener: function(callback)
   {
+    console.log('adding pause listener');
     this.add_event_listener('pause', callback);
+    // this.froogaloop.addEvent('pause', callback);
   },
 
   add_callback: function(event_name, callback, target_id)
@@ -157,29 +137,19 @@ VIMEO_WRAPPER.prototype = {
 
   get_callback: function(event_name, target_id)
   {
-    if (target_id && this.eventCallbacks[target_id]) 
+    if (target_id) 
     {
-      if (!this.eventCallbacks[target_id][event_name]) 
-      {
-        return false;
-      }
-      this.eventCallbacks[target_id][event_name] = null;
+      return this.eventCallbacks[target_id][event_name];
     }
     else 
     {
-      if (!this.eventCallbacks[event_name]) 
-      {
-        return false;
-      }
-      this.eventCallbacks[event_name] = null;
-    }
-    return true;    
+      return this.eventCallbacks[event_name];
+    }  
   },
 
   on_message_received: function(event)
   {
     var data, method;
-    console.log('received');
     try 
     {
       data = JSON.parse(event.data);
@@ -191,33 +161,40 @@ VIMEO_WRAPPER.prototype = {
     }
 
     console.log("Vimeo message received: " + method);
-    debugger;
-    var value = data.value,
-        eventData = data.data,
-        target_id = target_id === '' ? null : data.player_id,
 
-        callback = this.get_callback(method, target_id),
-        params = [];
-
-    if (!callback) 
+    if (method == 'ready')
     {
-      return false;
+      this.player_ready = true; 
+      while (this.callback_queue.length > 0)
+      {
+        /// Dequeue events
+        var event_name = this.callback_queue.shift();
+        this.post('addEventListener', event_name, this.vimeo_frame);
+      }
     }
-
-    if (value !== undefined) 
+    else 
     {
-      params.push(value);
-    }
+      var value = data.value,
+          eventData = data.data,
+          callback = this.get_callback(method, this.url),
+          params = [];
 
-    if (eventData) 
-    {
-      params.push(eventData);
-    }
+      if (!callback) 
+      {
+        return false;
+      }
 
-    if (target_id) 
-    {
-      params.push(target_id);
-    }
-    return params.length > 0 ? callback.apply(null, params) : callback.call();
+      if (value !== undefined) 
+      {
+        params.push(value);
+      }
+
+      if (eventData) 
+      {
+        params.push(eventData);
+      }
+
+      return params.length > 0 ? callback.apply(null, params) : callback.call();
+    } 
   }
 }
