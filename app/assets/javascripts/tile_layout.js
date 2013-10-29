@@ -152,7 +152,7 @@ TILE_LAYOUT.prototype = {
     var tile_id = tile_data['id']; 
     var media_url = tile_data['media_url'];
     current_inst = this;
-    $.get( "tiles/" + tile_id + "/full_tile", function( tile_data ) 
+    $.get( "tiles/" + tile_id + "/full_tile", function( tile_markup ) 
     {
       if (current_tile_clicked)
       {
@@ -160,22 +160,22 @@ TILE_LAYOUT.prototype = {
       }
       else
       {
-        current_inst.on_tile_loaded(tile_data, media_url, autoplay);
+        current_inst.on_tile_loaded(tile_markup, media_url, tile_id, autoplay);
       }
     });
   },
 
-  on_tile_loaded: function(tile_data, media_url, autoplay)
+  on_tile_loaded: function(tile_markup, media_url, tile_id, autoplay)
   {
-    this.reset_renderer(tile_data);
-    this.modal_renderer.add_media_to_modal(media_url, autoplay);
+    this.reset_renderer(tile_markup);
+    this.modal_renderer.add_media_to_modal(media_url, autoplay, tile_id);
     this.media_control.reset_vimeo_wrapper(); 
     this.modal_renderer.adjust_size();
   },
 
-  reset_renderer: function(tile_data)
+  reset_renderer: function(tile_markup)
   {
-    $('#full_tile_modal .modal-body').html(tile_data + "<div class='container'></div>");
+    $('#full_tile_modal .modal-body').html(tile_markup + "<div class='container'></div>");
     var value = $('#media_type').data()['value'];
     this.modal_renderer = (new MODAL_RENDERER_FACTORY()).get(value);    
   }

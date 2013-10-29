@@ -34,9 +34,9 @@ AUDIO_MODAL_RENDERER.prototype = {
     }
   },
 
-  add_media_to_modal: function(media_url, autoplay)
+  add_media_to_modal: function(media_url, autoplay, tile_id)
   {
-    $('.container').html('<iframe src="' + media_url + '?autoplay=' + autoplay.toString() + '&api=1" width="100%" height="100%" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
+    $('.container').html('<iframe id="' + tile_id.toString() + '" src="' + media_url + '?autoplay=' + autoplay.toString() + '&api=1" width="100%" height="100%" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
     $('.container').hide();
   }
 }
