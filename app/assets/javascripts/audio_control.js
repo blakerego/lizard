@@ -2,9 +2,14 @@
 
 window.AUDIO_CONTROL = function() {}
 AUDIO_CONTROL.prototype = {
+
   playing: false,
+
   ffwding: false,
+
   vimeo_player: new VIMEO_WRAPPER(),
+
+  finish_callback: null,
 
   init: function()
   {
@@ -62,6 +67,7 @@ AUDIO_CONTROL.prototype = {
     this.vimeo_player.add_play_progress_listener(this.on_play_progress);
     this.vimeo_player.add_play_listener(this.on_play); 
     this.vimeo_player.add_pause_listener(this.on_pause);
+    this.vimeo_player.add_finish_listener(this.on_finish.bind(this));
   },
 
   on_play_progress: function(data)
@@ -78,6 +84,20 @@ AUDIO_CONTROL.prototype = {
   on_pause: function(data)
   {
     console.log('pause event fired!');
+  }, 
+
+  on_finish: function()
+  {
+    console.log('vimeo video finish event fired');
+    if (this.finish_callback != null)
+    {
+      this.finish_callback();
+    }
+  },
+
+  set_finish_callback: function(callback)
+  {
+    this.finish_callback = callback;
   }
 
 }

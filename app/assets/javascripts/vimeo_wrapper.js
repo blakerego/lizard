@@ -82,7 +82,6 @@ VIMEO_WRAPPER.prototype = {
   add_play_progress_listener: function(callback)
   {
     this.add_event_listener('playProgress', callback);
-    // this.froogaloop.addEvent('playProgress', callback);
   },
 
   add_play_listener: function(callback)
@@ -95,7 +94,12 @@ VIMEO_WRAPPER.prototype = {
   {
     console.log('adding pause listener');
     this.add_event_listener('pause', callback);
-    // this.froogaloop.addEvent('pause', callback);
+  },
+
+  add_finish_listener: function(callback)
+  {
+    console.log('adding finish listener'); 
+    this.add_event_listener('finish', callback);
   },
 
   add_callback: function(event_name, callback, target_id)

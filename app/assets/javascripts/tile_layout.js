@@ -8,7 +8,7 @@ TILE_LAYOUT.prototype = {
 
   currently_playing: false,
 
-  modal_renderer: null,
+  rendering_strategy: null,
 
   init: function(tile_data, media_control)
   {
@@ -208,7 +208,7 @@ TILE_LAYOUT.prototype = {
     {
       if (current_tile_clicked)
       {
-        current_inst.modal_renderer.adjust_size();
+        current_inst.rendering_strategy.adjust_size();
       }
       else
       {
@@ -219,17 +219,23 @@ TILE_LAYOUT.prototype = {
 
   on_tile_loaded: function(tile_markup, media_url, tile_id, autoplay)
   {
-    this.reset_renderer(tile_markup);
-    this.modal_renderer.add_media_to_modal(media_url, autoplay, tile_id);
+    this.update_rendering_strategy(tile_markup);
+    this.rendering_strategy.add_media_to_modal(media_url, autoplay, tile_id);
     this.media_control.reset_vimeo_wrapper(); 
-    this.modal_renderer.adjust_size();
+    this.media_control.set_finish_callback(this.on_tile_finished.bind(this));
+    this.rendering_strategy.adjust_size();
   },
 
-  reset_renderer: function(tile_markup)
+  on_tile_finished: function()
+  {
+    this.play_next_tile();
+  },
+
+  update_rendering_strategy: function(tile_markup)
   {
     $('#full_tile_modal .modal-body').html(tile_markup + "<div class='container'></div>");
     var value = $('#media_type').data()['value'];
-    this.modal_renderer = (new MODAL_RENDERER_FACTORY()).get(value);    
+    this.rendering_strategy = (new MODAL_RENDERER_FACTORY()).get(value);    
   }
 
 }
