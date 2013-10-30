@@ -8,7 +8,7 @@ TILE_LAYOUT.prototype = {
 
   currently_playing: false,
 
-  modal_renderer: null,
+  rendering_strategy: null,
 
   init: function(tile_data, media_control)
   {
@@ -87,6 +87,11 @@ TILE_LAYOUT.prototype = {
   ***************************/
   on_play_click: function(tile)
   {
+    if (tile == null)
+    {
+      return;
+    }
+
     // Play the song / video, but don't open up the dialog. 
     var tile_data = tile.data();
     var current_tile_clicked = this.is_tile_clicked(tile, tile_data);
@@ -95,6 +100,53 @@ TILE_LAYOUT.prototype = {
     if (!current_tile_clicked)
     {
       this.load_tile(tile_data, current_tile_clicked, true);
+    }
+  },
+
+  play_next_tile: function()
+  {
+    this.on_play_click($(this.get_next_tile()));
+  },
+
+  get_next_tile: function()
+  {
+    if (this.current_tile == null)
+    {
+      /// Nothing selected, return first tile.
+      return $('.tile-row').first().children().first();
+    }
+
+    var next_in_row = this.get_next_element(this.current_tile);
+    if (next_in_row != null)
+    {
+      /// Next tile is in current row.
+      return next_in_row;
+    }
+
+    /// Get first tile from next row.
+    var next_row = this.get_next_element(this.current_tile.parent());
+    if (next_row != null)
+    {
+      return next_row.children()[0];
+    }
+
+    /// current tile is last tile. nothing left to return but null.
+    return null; 
+
+  },
+
+  get_next_element: function(element)
+  {
+    var parent = element.parent(),
+      children = parent.children(),
+      current_index = children.index(element);
+    if (current_index < children.length -1 && current_index >= 0)
+    {
+      return $(children[current_index + 1]);
+    }
+    else 
+    {
+      return null; 
     }
   },
 
@@ -152,32 +204,38 @@ TILE_LAYOUT.prototype = {
     var tile_id = tile_data['id']; 
     var media_url = tile_data['media_url'];
     current_inst = this;
-    $.get( "tiles/" + tile_id + "/full_tile", function( tile_data ) 
+    $.get( "tiles/" + tile_id + "/full_tile", function( tile_markup ) 
     {
       if (current_tile_clicked)
       {
-        current_inst.modal_renderer.adjust_size();
+        current_inst.rendering_strategy.adjust_size();
       }
       else
       {
-        current_inst.on_tile_loaded(tile_data, media_url, autoplay);
+        current_inst.on_tile_loaded(tile_markup, media_url, tile_id, autoplay);
       }
     });
   },
 
-  on_tile_loaded: function(tile_data, media_url, autoplay)
+  on_tile_loaded: function(tile_markup, media_url, tile_id, autoplay)
   {
-    this.reset_renderer(tile_data);
-    this.modal_renderer.add_media_to_modal(media_url, autoplay);
+    this.update_rendering_strategy(tile_markup);
+    this.rendering_strategy.add_media_to_modal(media_url, autoplay, tile_id);
     this.media_control.reset_vimeo_wrapper(); 
-    this.modal_renderer.adjust_size();
+    this.media_control.set_finish_callback(this.on_tile_finished.bind(this));
+    this.rendering_strategy.adjust_size();
   },
 
-  reset_renderer: function(tile_data)
+  on_tile_finished: function()
   {
-    $('#full_tile_modal .modal-body').html(tile_data + "<div class='container'></div>");
+    this.play_next_tile();
+  },
+
+  update_rendering_strategy: function(tile_markup)
+  {
+    $('#full_tile_modal .modal-body').html(tile_markup + "<div class='container'></div>");
     var value = $('#media_type').data()['value'];
-    this.modal_renderer = (new MODAL_RENDERER_FACTORY()).get(value);    
+    this.rendering_strategy = (new MODAL_RENDERER_FACTORY()).get(value);    
   }
 
 }
