@@ -1,11 +1,17 @@
 class Group < ActiveRecord::Base
 
+  has_many :tiles
+
   def self.group_types 
-    return ['album']
+    return ['album', 'EP']
   end
 
-  def tiles
-    return Tile.where(:group_id => self.id)
+  def self.published
+    return Group.where(:published => true)
+  end
+
+  def published_tiles
+    return Tile.published.where(:group_id => self.id)
   end
 
 end

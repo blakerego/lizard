@@ -43,7 +43,7 @@ class TilesController < ApplicationController
 
     respond_to do |format|
       if @tile.save
-        format.html { redirect_to @tile, notice: 'Tile was successfully created.' }
+        format.html { redirect_to :index, notice: 'Tile was successfully created.' }
         format.json { render action: 'show', status: :created, location: @tile }
       else
         format.html { render action: 'new' }
