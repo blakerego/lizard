@@ -4,28 +4,17 @@
   %ul.sortable.tiles
     - @tiles.each do |tile|
       %li.ui-state-default.live.tile{"data-tile-id" => "#{tile.id}"}
-        %h4.tile_name
-          = link_to tile.name, tile
-        %p= tile.image_name
-        %p="Size: #{tile.size}"
-        %p= tile.media_type
-        %p= "Group: #{tile.group.name}" if tile.group.present?
-        = link_to 'Edit', edit_tile_path(tile), :class => 'btn btn-primary btn-xs'
-        = link_to 'Destroy', tile, :method => :delete, :data => { :confirm => 'Are you sure?' },:class => 'btn btn-danger btn-xs'
-
+        = render 'quick_view', :tile => tile
   %p
     Remember - The sizing convention is based on rows of size 12. This means that each row should add up in size to 12. 
 
-
-  %h1.heading Top Secret Tiles
-  %ul.tiles
-    - @secret_tiles.each do |tile|
-      %li.tile.secret
-        %h3
-          = link_to tile.name, tile
-        = link_to 'Edit', edit_tile_path(tile)
-        = link_to 'Destroy', tile, :method => :delete, :data => { :confirm => 'Are you sure?' }
-  %br
+  - if @secret_tiles.present?
+    %h1.heading Top Secret Tiles
+    %ul.tiles
+      - @secret_tiles.each do |tile|
+        %li.tile.secret
+          = render 'quick_view', :tile => tile
+    %br
 
   = link_to 'New Tile', new_tile_path, :class => 'btn btn-default new_tile'
 
