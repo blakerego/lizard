@@ -9,6 +9,7 @@
         %p= tile.image_name
         %p="Size: #{tile.size}"
         %p= tile.media_type
+        %p= "Group: #{tile.group.name}" if tile.group.present?
         = link_to 'Edit', edit_tile_path(tile), :class => 'btn btn-primary btn-xs'
         = link_to 'Destroy', tile, :method => :delete, :data => { :confirm => 'Are you sure?' },:class => 'btn btn-danger btn-xs'
 

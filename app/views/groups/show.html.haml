@@ -1,9 +1,12 @@
 .tile_admin
   %p#notice= notice
 
-  %p
-    %b Name:
-    = @group.name
+  %h1= @group.name
+
+  Tiles:
+  - @group.tiles.each do |tile|
+    %p= tile.name
+
 
   = link_to 'Edit', edit_group_path(@group)
   \|

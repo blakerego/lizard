@@ -4,4 +4,8 @@ class Group < ActiveRecord::Base
     return ['album']
   end
 
+  def tiles
+    return Tile.where(:group_id => self.id)
+  end
+
 end

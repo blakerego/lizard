@@ -18,6 +18,7 @@ VIMEO_WRAPPER.prototype = {
     this.vimeo_frame = $('iframe');
     this.url = this.vimeo_frame.attr('src').split('?')[0];
     this.status = 'initiated';
+    this.player_ready = false;
 
     if (window.addEventListener) 
     {
