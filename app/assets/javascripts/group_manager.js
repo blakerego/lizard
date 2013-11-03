@@ -1,8 +1,6 @@
 window.GROUP_MANAGER = function() {}
 GROUP_MANAGER.prototype = {
 
-  current_group_id: null,
-
   default_group_id: null,
 
   albums: {},
@@ -12,12 +10,12 @@ GROUP_MANAGER.prototype = {
   init: function(tile_data, default_group_id)
   {
     this.all_tiles = JSON.parse(tile_data);
-    this.current_group_id = this.default_group_id = default_group_id;
-    this.albums = this.parse_albums(this.all_tiles)
+    this.default_group_id = default_group_id;
+    this.albums = this.generate_album_hash(this.all_tiles)
 
   },
 
-  parse_albums: function(tiles)
+  generate_album_hash: function(tiles)
   {
     var album_hash = {}
 
@@ -35,9 +33,14 @@ GROUP_MANAGER.prototype = {
     return album_hash;
   },
 
-  default_album_tiles: function()
+  default_group_tiles: function()
   {
-    return this.albums[this.current_group_id];
+    return this.albums[this.default_group_id];
+  },
+
+  tiles_for_group: function(group_id)
+  {
+    return this.albums[group_id];
   }
 
 }

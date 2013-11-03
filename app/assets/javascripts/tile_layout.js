@@ -4,16 +4,19 @@ window.TILE_LAYOUT = function() {}
 TILE_LAYOUT.prototype = {
   media_control: null,
 
+  group_manager: null,
+
   current_tile: null,
 
   currently_playing: false,
 
   rendering_strategy: null,
 
-  init: function(tiles, media_control)
+  init: function(group_manager, media_control)
   {
+    this.group_manager = group_manager;
     this.media_control = media_control;
-    this.initialize_layout(tiles);
+    this.initialize_layout(this.group_manager.default_group_tiles());
     this.initialize_handlers();
   },
 
@@ -27,7 +30,7 @@ TILE_LAYOUT.prototype = {
     var markup = "<div class='row tile-row'>";
     
     var current_row_size = 0; 
-    
+
     $.each(tiles, function(index, tile)
     {
       if (current_row_size + tile.size <= 12)
@@ -49,18 +52,25 @@ TILE_LAYOUT.prototype = {
 
   initialize_handlers: function()
   {
-    var current_inst = this;
+    var $this = this;
     $('span.play-icon').on('click', function()
     {
       var tile = $(this).closest('.tile');
-      current_inst.on_play_click(tile);
+      $this.on_play_click(tile);
     });
 
     $('span.expand-icon').on('click', function()
     {
       var tile = $(this).closest('.tile');
-      current_inst.on_expand_click(tile);
-    })
+      $this.on_expand_click(tile);
+    });
+
+    $('.album_btn').on('click', function()
+    {
+      var group_id = $(this).data()["groupId"];
+      debugger;
+      $this.switch_album_view(group_id);
+    });
 
     $('#full_tile_modal').on('hidden.bs.modal', function () {
     });
@@ -237,6 +247,11 @@ TILE_LAYOUT.prototype = {
     $('#full_tile_modal .modal-body').html(tile_markup + "<div class='container'></div>");
     var value = $('#media_type').data()['value'];
     this.rendering_strategy = (new MODAL_RENDERER_FACTORY()).get(value);    
+  }, 
+
+  switch_album_view: function(group_id)
+  {
+    this.initialize_layout(this.group_manager.tiles_for_group(group_id));
   }
 
 }
