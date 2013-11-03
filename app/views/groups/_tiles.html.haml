@@ -23,13 +23,14 @@
         = render 'shared/loading'
 
 :javascript
-  var CTRLS = new AUDIO_CONTROL();
-  var TILES = new TILE_LAYOUT();
+  var media_control = new AUDIO_CONTROL();
+  var layout = new TILE_LAYOUT();
+  var group_manager = new GROUP_MANAGER();
   $(function() {
 
-    
-    CTRLS.init(); 
-    TILES.init('#{@tiles.to_a.to_json(:methods => :thumb, :except => [ :lyrics])}', CTRLS);
+    group_manager.init('#{@tiles.to_a.to_json(:methods => :thumb, :except => [ :lyrics])}', "#{@group.id}");
+    media_control.init(); 
+    layout.init(group_manager.default_album_tiles(), media_control);
 
     $('.loader').hide();
     $('.tiles_area').show();

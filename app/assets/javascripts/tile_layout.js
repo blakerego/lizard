@@ -10,10 +10,10 @@ TILE_LAYOUT.prototype = {
 
   rendering_strategy: null,
 
-  init: function(tile_data, media_control)
+  init: function(tiles, media_control)
   {
     this.media_control = media_control;
-    this.initialize_layout(JSON.parse(tile_data));
+    this.initialize_layout(tiles);
     this.initialize_handlers();
   },
 
@@ -27,6 +27,7 @@ TILE_LAYOUT.prototype = {
     var markup = "<div class='row tile-row'>";
     
     var current_row_size = 0; 
+    
     $.each(tiles, function(index, tile)
     {
       if (current_row_size + tile.size <= 12)
