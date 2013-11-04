@@ -5,19 +5,21 @@
 
   / .play.glow_btn.col-md-1.col-xs-1
 
-  / DO SOME CACHING HERE -  
-  - groups = Group.all
-  - if groups.count > 1
-    %span.groups
-      - groups.each do |group| 
-        %i.icon-circle{"data-group-id" => "#{group.id}", :class => "album_btn"}
+  .row_above_tiles
+    / DO SOME CACHING HERE -  
+    - groups = Group.all
+    - if groups.count > 1
+      %span.groups
+        - groups.each do |group| 
+          %i.icon-circle{"data-group-id" => "#{group.id}", :class => "album_btn"}
 
 
-  .icons
-    %i.icon-facebook-sign
-    %i.icon-twitter
-    %i.icon-tumblr
-    %i.icon-cloud
+    .icons
+      %i.icon-facebook-sign
+      %i.icon-twitter
+      %i.icon-tumblr
+      %i.icon-cloud
+
 = render 'shared/loading'
 .tiles_area
 

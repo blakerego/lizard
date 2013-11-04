@@ -73,20 +73,10 @@ body.body
 		background-size: 80%;		
 	}
 
-	.groups
+	.row_above_tiles
 	{
-		// position: absolute;
-		i
-		{
-			cursor: pointer;			
-		}
-	}
-
-	.icons
-	{
-		float: right;
-		font-size: 25px;
 		position: absolute;
+		margin: 72px auto;
 		@media screen and (max-width: 769px)
 		{
 			display: none;
@@ -97,14 +87,30 @@ body.body
 		{
 			width: 1200px;
 		}
-		margin: 72px auto;
 		i
 		{
+			cursor: pointer;			
+		}
+
+		.groups
+		{
+			float: left;
+			@media screen and (min-width: 770px)
+			{
+				padding-left: 378px;
+			}			
+		}
+		.icons
+		{
 			float: right;
-			margin-right: 4px;
-			cursor: pointer;
-			-webkit-text-stroke: rgba(250, 250, 0, .6);
-			-webkit-text-stroke-width: 1.5px;
+			font-size: 25px;
+			i
+			{
+				float: right;
+				margin-right: 4px;
+				-webkit-text-stroke: rgba(250, 250, 0, .6);
+				-webkit-text-stroke-width: 1.5px;
+			}
 		}
 	}
 	.play

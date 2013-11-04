@@ -46,7 +46,12 @@ TILE_LAYOUT.prototype = {
 
     });
 
-    $('.tiles_area').html(markup + "</div>");
+    var tiles_area = $('.tiles_area');
+    tiles_area.fadeOut(500, function()
+    {
+      $(this).html(markup + "</div>")
+      tiles_area.fadeIn(500);
+    });
 
   },
 
@@ -68,7 +73,6 @@ TILE_LAYOUT.prototype = {
     $('.album_btn').on('click', function()
     {
       var group_id = $(this).data()["groupId"];
-      debugger;
       $this.switch_album_view(group_id);
     });
 
