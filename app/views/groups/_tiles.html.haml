@@ -7,7 +7,7 @@
 
   .row_above_tiles
     / DO SOME CACHING HERE -  
-    - groups = Group.all
+    - groups = Group.published
     - if groups.count > 1
       %span.groups
         - groups.each do |group| 

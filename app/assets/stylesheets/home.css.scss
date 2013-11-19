@@ -8,10 +8,7 @@ body.body
   // -moz-background-size: cover;
   // -o-background-size: cover;
   // background-size: cover;
-
-  // background: image-url("static.gif") repeat center ;
-  background: image-url("stars.gif") repeat center;
-  background: image-url("pink_background.png") repeat center;
+  background: image-url("pink_background.png") repeat;
   // background: image-url('http://kimasendorf.com/12c/images/12c-9_10_1_13_31%20Kopie.gif') repeat center;
   color: black;
 
@@ -90,6 +87,9 @@ body.body
 		i
 		{
 			cursor: pointer;			
+			margin-right: 4px;
+			-webkit-text-stroke: rgba(250, 250, 0, .6);
+			-webkit-text-stroke-width: 1.5px;
 		}
 
 		.groups
@@ -98,7 +98,11 @@ body.body
 			@media screen and (min-width: 770px)
 			{
 				padding-left: 378px;
-			}			
+			}
+			i
+			{
+				font-size: 20px;
+			}
 		}
 		.icons
 		{
@@ -107,9 +111,6 @@ body.body
 			i
 			{
 				float: right;
-				margin-right: 4px;
-				-webkit-text-stroke: rgba(250, 250, 0, .6);
-				-webkit-text-stroke-width: 1.5px;
 			}
 		}
 	}

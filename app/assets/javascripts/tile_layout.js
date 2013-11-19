@@ -92,7 +92,12 @@ TILE_LAYOUT.prototype = {
     {
       markup += "</div><div class='row tile-row'>"
     }
-    markup += "<div class='" + c + "' data-id='" + tile.id + "' data-media_url='" + tile.media_url + "' style='background-image: url(\"" + tile.thumb+ "\")'><div class='play_tile'>0<span class='play-icon'>0</span><div class='btm-row'><span class='expand-icon'></span></div></div></div>";
+    markup += "<div class='" + c + "' data-id='" + tile.id + "' data-media_url='" + tile.media_url;
+    if (typeof(tile.background_color) !== "undefined" && tile.background_color != null)
+    {
+      markup += "' data-background_color='" + tile.background_color;
+    }
+    markup += "' style='background-image: url(\"" + tile.thumb + "\")'><div class='play_tile'>0<span class='play-icon'>0</span>" + "<div class='btm-row'><span class='expand-icon'></span></div></div></div>";
     return markup;
   },
 
@@ -227,15 +232,15 @@ TILE_LAYOUT.prototype = {
       }
       else
       {
-        current_inst.on_tile_loaded(tile_markup, media_url, tile_id, autoplay);
+        current_inst.on_tile_loaded(tile_markup, media_url, tile_data, autoplay);
       }
     });
   },
 
-  on_tile_loaded: function(tile_markup, media_url, tile_id, autoplay)
+  on_tile_loaded: function(tile_markup, media_url, tile_data, autoplay)
   {
     this.update_rendering_strategy(tile_markup);
-    this.rendering_strategy.add_media_to_modal(media_url, autoplay, tile_id);
+    this.rendering_strategy.add_media_to_modal(media_url, autoplay, tile_data);
     this.media_control.reset_vimeo_wrapper(); 
     this.media_control.set_finish_callback(this.on_tile_finished.bind(this));
     this.rendering_strategy.adjust_size();
