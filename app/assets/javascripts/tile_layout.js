@@ -78,6 +78,7 @@ TILE_LAYOUT.prototype = {
 
     $('#full_tile_modal').on('hidden.bs.modal', function () {
     });
+
   },
 
   /**************************
@@ -176,6 +177,7 @@ TILE_LAYOUT.prototype = {
     // Show the full tile.
     var tile_data = tile.data();
     var current_tile_clicked = this.is_tile_clicked(tile, tile_data);
+    this.update_selected_tile(tile, current_tile_clicked);
     this.load_tile(tile_data, current_tile_clicked, false);
     $('#full_tile_modal').modal().show();
   },
@@ -244,6 +246,21 @@ TILE_LAYOUT.prototype = {
     this.media_control.reset_vimeo_wrapper(); 
     this.media_control.set_finish_callback(this.on_tile_finished.bind(this));
     this.rendering_strategy.adjust_size();
+
+    // var $this = this;
+    // debugger;
+    // $('span.play').on('click', function()
+    // {
+    //   $this.on_play_click($this.current_tile);
+    // });
+
+    $('span.play').unbind('click', this.modal_play_clicked)
+                  .bind('click', this.modal_play_clicked.bind(this));
+  },
+
+  modal_play_clicked: function()
+  {
+    this.on_play_click(this.current_tile);
   },
 
   on_tile_finished: function()

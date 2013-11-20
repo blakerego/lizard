@@ -82,6 +82,7 @@ VIMEO_WRAPPER.prototype = {
 
   add_play_progress_listener: function(callback)
   {
+    console.log('adding play progress listener');
     this.add_event_listener('playProgress', callback);
   },
 
@@ -165,7 +166,7 @@ VIMEO_WRAPPER.prototype = {
       console.log('Vimeo message received, but an error occurred trying to parse the event data.' + e.message);
     }
 
-    console.log("Vimeo message received: " + method);
+    // console.log("Vimeo message received: " + method);
 
     if (method == 'ready')
     {

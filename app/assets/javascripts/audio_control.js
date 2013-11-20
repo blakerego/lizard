@@ -72,7 +72,6 @@ AUDIO_CONTROL.prototype = {
 
   on_play_progress: function(data)
   {
-    console.log('on play progress'); 
     console.log(data['percent']);
   },
 

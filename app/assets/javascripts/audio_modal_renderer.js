@@ -46,7 +46,6 @@ AUDIO_MODAL_RENDERER.prototype = {
     {
 
       $('.modal-content').css('background-color', background_color);
-      /// set background color of modal
     }
     else
     {
