@@ -35,8 +35,8 @@
   var layout = new TILE_LAYOUT();
   var group_manager = new GROUP_MANAGER();
   $(function() {
-
-    group_manager.init('#{@tiles.to_a.to_json(:methods => :thumb, :except => [ :lyrics])}', "#{@group.id}");
+    var tile_data = JSON.parse('#{@tiles.to_a.to_json(:methods => :thumb, :except => [ :lyrics])}');
+    group_manager.init(tile_data, "#{@group.id}");
     media_control.init(); 
     layout.init(group_manager, media_control);
 

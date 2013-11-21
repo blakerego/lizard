@@ -243,7 +243,7 @@ TILE_LAYOUT.prototype = {
   {
     this.update_rendering_strategy(tile_markup);
     this.rendering_strategy.add_media_to_modal(media_url, autoplay, tile_data);
-    this.media_control.reset_vimeo_wrapper(); 
+    this.media_control.reset_vimeo_wrapper($('iframe#' + tile_data['id'])); 
     this.media_control.set_finish_callback(this.on_tile_finished.bind(this));
     this.rendering_strategy.adjust_size();
 

@@ -13,9 +13,11 @@ VIMEO_WRAPPER.prototype = {
 
   callback_queue: [],
 
-  init: function()
+  duration: null,
+
+  init: function(vimeo_selector)
   {
-    this.vimeo_frame = $('iframe');
+    this.vimeo_frame = vimeo_selector;
     this.url = this.vimeo_frame.attr('src').split('?')[0];
     this.status = 'initiated';
     this.player_ready = false;
@@ -65,6 +67,18 @@ VIMEO_WRAPPER.prototype = {
   {
     this.post('stop');
   }, 
+
+  get_duration: function(callback)
+  {
+    var target_id = this.url;
+    if (!this.eventCallbacks[target_id]) 
+    {
+      this.eventCallbacks[target_id] = {};
+    }
+    this.eventCallbacks[target_id]['getDuration'] = callback;
+    this.post( 'getDuration', null, this );
+
+  },
 
   add_event_listener: function(event_name, callback)
   {
@@ -153,6 +167,14 @@ VIMEO_WRAPPER.prototype = {
     }  
   },
 
+  ready_callback: null,
+
+  add_ready_listener: function(callback)
+  {
+    this.ready_callback = callback;
+  },
+
+
   on_message_received: function(event)
   {
     var data, method;
@@ -176,6 +198,11 @@ VIMEO_WRAPPER.prototype = {
         /// Dequeue events
         var event_name = this.callback_queue.shift();
         this.post('addEventListener', event_name, this.vimeo_frame);
+      }
+
+      if (this.ready_callback != null)
+      {
+        this.ready_callback.call();
       }
     }
     else 

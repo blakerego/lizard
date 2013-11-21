@@ -5,11 +5,13 @@ GROUP_MANAGER.prototype = {
 
   albums: {},
 
+  album_length: {},
+
   all_tiles: null,
 
   init: function(tile_data, default_group_id)
   {
-    this.all_tiles = JSON.parse(tile_data);
+    this.all_tiles = tile_data;
     this.default_group_id = default_group_id;
     this.albums = this.generate_album_hash(this.all_tiles)
 
