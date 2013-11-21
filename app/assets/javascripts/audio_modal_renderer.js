@@ -1,3 +1,4 @@
+//= require vimeo_template
 
 window.AUDIO_MODAL_RENDERER = function() {}
 AUDIO_MODAL_RENDERER.prototype = {
@@ -37,7 +38,7 @@ AUDIO_MODAL_RENDERER.prototype = {
   add_media_to_modal: function(media_url, autoplay, tile_data)
   {
     var tile_id = tile_data['id'];
-    $('.container').html('<iframe id="' + tile_id.toString() + '" src="' + media_url + '?autoplay=' + autoplay.toString() + '&api=1" width="100%" height="100%" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
+    $('.container').html((new VIMEO_TEMPLATE).build(media_url, autoplay, tile_id));
     $('.container').hide();
 
     var background_color = tile_data['background_color'];

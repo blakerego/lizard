@@ -7,8 +7,6 @@ GROUP_MANAGER.prototype = {
 
   albums: {},
 
-  album_length: {},
-
   all_tiles: null,
 
   init: function(tile_data, default_group_id)
@@ -16,7 +14,6 @@ GROUP_MANAGER.prototype = {
     this.all_tiles = tile_data;
     this.default_group_id = default_group_id;
     this.albums = this.generate_album_hash(this.all_tiles)
-
   },
 
   generate_album_hash: function(tiles)
@@ -37,10 +34,21 @@ GROUP_MANAGER.prototype = {
     return album_hash;
   },
 
+  default_group_tracks: function()
+  {
+    return this.albums[this.default_group_id].tracks;
+  },
+
+  tracks_for_group: function()
+  {
+    return this.albums[group_id]
+          .tracks;
+  },
+
   default_group_tiles: function()
   {
-    return this.albums[this.default_group_id]
-          .tracks.map(function(track)
+    return this.default_group_tracks()
+          .map(function(track)
           {
             return track.tile;
           });
@@ -48,11 +56,16 @@ GROUP_MANAGER.prototype = {
 
   tiles_for_group: function(group_id)
   {
-    return this.albums[group_id]
-          .tracks.map(function(track)
+    return this.tracks_for_group(group_id)
+          .map(function(track)
           {
             return track.tile;
           });
+  },
+
+  get_duration_data_for_groups: function()
+  {
+    this.albums[1].get_data_for_tracks();
   }
 
 }

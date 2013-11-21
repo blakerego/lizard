@@ -5,8 +5,6 @@ VIMEO_WRAPPER.prototype = {
 
   url: null,
 
-  status: 'uninitiated',
-
   eventCallbacks: {},
 
   player_ready: false, 
@@ -21,7 +19,6 @@ VIMEO_WRAPPER.prototype = {
     if (typeof(this.vimeo_frame.attr('src')) !== "undefined" )
     {
       this.url = this.vimeo_frame.attr('src').split('?')[0];
-      this.status = 'initiated';
       this.player_ready = false;
 
       if (window.addEventListener) 
@@ -48,7 +45,7 @@ VIMEO_WRAPPER.prototype = {
       data.value = value;
     }
 
-    if (this.vimeo_frame[0].contentWindow != null)
+    if (this.vimeo_frame[0].contentWindow != null && this.url != null && this.url != "null")
     {
       this.vimeo_frame[0].contentWindow.postMessage(JSON.stringify(data), this.url);
     }
@@ -79,7 +76,6 @@ VIMEO_WRAPPER.prototype = {
     }
     this.eventCallbacks[target_id]['getDuration'] = callback;
     this.post( 'getDuration', null, this );
-
   },
 
   add_event_listener: function(event_name, callback)
@@ -157,6 +153,11 @@ VIMEO_WRAPPER.prototype = {
     return true;
   },
 
+  remove_duration_callback: function()
+  {
+    this.eventCallbacks[this.url]['getDuration'] = null
+  },
+
   get_callback: function(event_name, target_id)
   {
     if (target_id) 
@@ -180,15 +181,8 @@ VIMEO_WRAPPER.prototype = {
   on_message_received: function(event)
   {
     var data, method;
-    try 
-    {
-      data = JSON.parse(event.data);
-      method = data.event || data.method;
-    }
-    catch(e)  
-    {
-      console.log('Vimeo message received, but an error occurred trying to parse the event data.' + e.message);
-    }
+    data = JSON.parse(event.data);
+    method = data.event || data.method;
 
     // console.log("Vimeo message received: " + method);
 
@@ -229,6 +223,15 @@ VIMEO_WRAPPER.prototype = {
         params.push(eventData);
       }
 
+      // if (method == 'getDuration')
+      // {
+      //   console.log('duration on ' + this.url + ' ' + value);
+      // }
+
+      if (this.url != null)
+      {
+        params.push(this.url)
+      }
       return params.length > 0 ? callback.apply(null, params) : callback.call();
     } 
   }

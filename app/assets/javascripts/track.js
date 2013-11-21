@@ -16,8 +16,6 @@ TRACK.prototype = {
 
     this.id = this.tile.id;
     this.url = this.tile.media_url;
-    this.data_fetcher = new VIMEO_FETCHER(); 
-    this.data_fetcher.init(this.url, $('iframe#loading_area'));
   },
 
   ready: function() 
@@ -25,9 +23,20 @@ TRACK.prototype = {
     return this.data_fetcher.duration != null;
   },
 
-  duration: function()
+  duration: null,
+
+  get_duration_data: function(callback)
   {
-    return this.data_fetcher.duration;
+    this.data_fetcher = new VIMEO_FETCHER(); 
+    this.data_fetcher.init(this.url, this.id, callback); 
+  },
+
+  unbind_fetcher: function()
+  {
+    this.data_fetcher.vimeo_wrapper.ready_callback = null;
+    this.data_fetcher.vimeo_wrapper.remove_duration_callback();
+    this.data_fetcher.vimeo_wrapper = null;
+    this.data_fetcher = null;
   }
 
 }
