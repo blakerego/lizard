@@ -18,20 +18,22 @@ VIMEO_WRAPPER.prototype = {
   init: function(vimeo_selector)
   {
     this.vimeo_frame = vimeo_selector;
-    this.url = this.vimeo_frame.attr('src').split('?')[0];
-    this.status = 'initiated';
-    this.player_ready = false;
-
-    if (window.addEventListener) 
+    if (typeof(this.vimeo_frame.attr('src')) !== "undefined" )
     {
-      window.addEventListener('message', this.on_message_received.bind(this), false)
-    }
-    else 
-    {
-      // IE
-      window.addEventListener('onmessage', this.on_message_received.bind(this));
-    }
+      this.url = this.vimeo_frame.attr('src').split('?')[0];
+      this.status = 'initiated';
+      this.player_ready = false;
 
+      if (window.addEventListener) 
+      {
+        window.addEventListener('message', this.on_message_received.bind(this), false)
+      }
+      else 
+      {
+        // IE
+        window.addEventListener('onmessage', this.on_message_received.bind(this));
+      }
+    }
   },
 
   post: function(action, value) 

@@ -33,6 +33,7 @@ TILE_LAYOUT.prototype = {
 
     $.each(tiles, function(index, tile)
     {
+      // var tile = track.tile;
       if (current_row_size + tile.size <= 12)
       {
         markup += current_inst.add_tile(tile, false);

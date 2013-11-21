@@ -1,7 +1,10 @@
+//= require vimeo_wrapper
+
 /*
   This will be responsible for fetching data for a given url 
   from vimeo_wrapper by loading it in a specified div.
 */
+
 window.VIMEO_FETCHER = function() {}
 
 VIMEO_FETCHER.prototype = {
