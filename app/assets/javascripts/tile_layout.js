@@ -26,7 +26,8 @@ TILE_LAYOUT.prototype = {
 
   initialize_layout: function(tiles)
   {
-    var current_inst = this;
+    var $this = this;
+
     var markup = "<div class='row tile-row'>";
     
     var current_row_size = 0; 
@@ -36,12 +37,12 @@ TILE_LAYOUT.prototype = {
       // var tile = track.tile;
       if (current_row_size + tile.size <= 12)
       {
-        markup += current_inst.add_tile(tile, false);
+        markup += $this.add_tile(tile, false);
         current_row_size += tile.size;
       }
       else 
       {
-        markup += current_inst.add_tile(tile, true);
+        markup += $this.add_tile(tile, true);
         current_row_size += tile.size - 12;
       }
 
@@ -52,6 +53,18 @@ TILE_LAYOUT.prototype = {
     {
       $(this).html(markup + "</div>")
       tiles_area.fadeIn(500);
+      $('span.play-icon').on('click', function()
+      {
+        var tile = $(this).closest('.tile');
+        $this.on_play_click(tile);
+      });
+
+      $('span.expand-icon').on('click', function()
+      {
+        var tile = $(this).closest('.tile');
+        $this.on_expand_click(tile);
+      });
+
     });
 
   },
@@ -59,22 +72,10 @@ TILE_LAYOUT.prototype = {
   initialize_handlers: function()
   {
     var $this = this;
-    $('span.play-icon').on('click', function()
-    {
-      var tile = $(this).closest('.tile');
-      $this.on_play_click(tile);
-    });
-
-    $('span.expand-icon').on('click', function()
-    {
-      var tile = $(this).closest('.tile');
-      $this.on_expand_click(tile);
-    });
-
     $('.album_btn').on('click', function()
     {
       var group_id = $(this).data()["groupId"];
-      $this.switch_album_view(group_id);
+      $this.switch_group_view(group_id);
     });
 
     $('#full_tile_modal').on('hidden.bs.modal', function () {
@@ -295,7 +296,7 @@ TILE_LAYOUT.prototype = {
     this.rendering_strategy = (new MODAL_RENDERER_FACTORY()).get(value);    
   }, 
 
-  switch_album_view: function(group_id)
+  switch_group_view: function(group_id)
   {
     this.initialize_layout(this.group_manager.tiles_for_group(group_id));
   }

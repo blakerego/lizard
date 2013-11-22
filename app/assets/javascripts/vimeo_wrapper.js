@@ -223,15 +223,11 @@ VIMEO_WRAPPER.prototype = {
         params.push(eventData);
       }
 
-      // if (method == 'getDuration')
-      // {
-      //   console.log('duration on ' + this.url + ' ' + value);
-      // }
-
-      if (this.url != null)
+      if (method == 'getDuration')
       {
-        params.push(this.url)
+        console.log('duration on ' + this.url + ' ' + value);
       }
+
       return params.length > 0 ? callback.apply(null, params) : callback.call();
     } 
   }
