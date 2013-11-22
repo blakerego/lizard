@@ -118,12 +118,17 @@ TILE_LAYOUT.prototype = {
     var tile_data = tile.data();
     var current_tile_clicked = this.is_tile_clicked(tile, tile_data);
     
-    this.toggle_playing(tile);
 
     if (!current_tile_clicked)
     {
+      // tile switch
+      this.toggle_playing(tile, true);
       this.update_selected_tile(tile);
       this.load_tile(tile_data, current_tile_clicked, true);
+    }
+    else 
+    {
+      this.toggle_playing(tile);
     }
 
   },
@@ -201,14 +206,23 @@ TILE_LAYOUT.prototype = {
       if (!current_tile_clicked)
       {
         this.current_tile.removeClass('selected');
+        this.current_tile.removeClass('playing');
       }
     }
     return current_tile_clicked;
   },
 
-  toggle_playing: function(tile)
+  toggle_playing: function(tile, is_playing)
   {
-    this.currently_playing = !this.currently_playing;
+    if (typeof is_playing !== 'undefined')
+    {
+      this.currently_playing =  is_playing;
+    }
+    else
+    {
+      this.currently_playing = !this.currently_playing;
+    }
+
     if (this.currently_playing)
     {
       this.media_control.play();

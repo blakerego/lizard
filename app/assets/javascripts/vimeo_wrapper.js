@@ -160,7 +160,7 @@ VIMEO_WRAPPER.prototype = {
 
   get_callback: function(event_name, target_id)
   {
-    if (target_id) 
+    if (target_id && typeof this.eventCallbacks[target_id] !== "undefined") 
     {
       return this.eventCallbacks[target_id][event_name];
     }
