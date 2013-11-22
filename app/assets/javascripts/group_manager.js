@@ -39,7 +39,7 @@ GROUP_MANAGER.prototype = {
     return this.albums[this.default_group_id].tracks;
   },
 
-  tracks_for_group: function()
+  tracks_for_group: function(group_id)
   {
     return this.albums[group_id]
           .tracks;
@@ -65,7 +65,8 @@ GROUP_MANAGER.prototype = {
 
   get_duration_data_for_groups: function()
   {
-    this.albums[1].get_data_for_tracks();
+    // this.albums[1].get_data_for_tracks();
+    this.albums[this.default_group_id].get_data_for_tracks();
   }
 
 }

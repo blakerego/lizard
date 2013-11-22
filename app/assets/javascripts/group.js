@@ -51,7 +51,7 @@ GROUP.prototype = {
     }
     else
     {
-      alert('finished loading!');
+      // alert('finished loading!');
     }
   }
 }

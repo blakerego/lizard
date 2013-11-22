@@ -121,11 +121,9 @@ body.body
 		{
 			content:"Play";
 		}
-		// background: image-url('play_glow.svg');
 		font-size: 10px;
 		&:hover
 		{
-			// background: image-url('hover_glow.svg');
 			cursor: pointer;
 		}
 		&:active
@@ -134,7 +132,6 @@ body.body
 		}
 		&.playing
 		{
-			// background: image-url('pause_glow.svg');
 			&:hover
 			{
 				// background: image-url('pause_hover_glow.svg');
@@ -283,10 +280,13 @@ body.body
 					}
 				}
 			}
+			.tile.selected
+			{
+				border: solid yellow 4.5px;
+			}
 			.tile.playing
 			{
 				// border: solid #26a9e0 4.5px;
-				border: solid yellow 4.5px;
 				&:hover
 				{
 					padding: 0; 

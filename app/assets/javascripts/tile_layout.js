@@ -117,12 +117,15 @@ TILE_LAYOUT.prototype = {
     // Play the song / video, but don't open up the dialog. 
     var tile_data = tile.data();
     var current_tile_clicked = this.is_tile_clicked(tile, tile_data);
-    this.update_selected_tile(tile, current_tile_clicked);
+    
+    this.toggle_playing(tile);
 
     if (!current_tile_clicked)
     {
+      this.update_selected_tile(tile);
       this.load_tile(tile_data, current_tile_clicked, true);
     }
+
   },
 
   play_next_tile: function()
@@ -178,7 +181,12 @@ TILE_LAYOUT.prototype = {
     // Show the full tile.
     var tile_data = tile.data();
     var current_tile_clicked = this.is_tile_clicked(tile, tile_data);
-    this.update_selected_tile(tile, current_tile_clicked);
+
+    if (!current_tile_clicked)
+    {
+      this.update_selected_tile(tile);
+    }
+
     this.load_tile(tile_data, current_tile_clicked, false);
     $('#full_tile_modal').modal().show();
   },
@@ -192,34 +200,31 @@ TILE_LAYOUT.prototype = {
       current_tile_clicked = $(this.current_tile).data()['id'] == tile_data['id'];
       if (!current_tile_clicked)
       {
-        this.current_tile.removeClass('playing');
+        this.current_tile.removeClass('selected');
       }
     }
     return current_tile_clicked;
   },
 
-  update_selected_tile: function(tile, current_tile_clicked)
+  toggle_playing: function(tile)
   {
-    if (current_tile_clicked)
+    this.currently_playing = !this.currently_playing;
+    if (this.currently_playing)
     {
-      this.currently_playing = !this.currently_playing;
-      if (this.currently_playing)
-      {
-        this.media_control.play();
-        tile.addClass('playing');
-      }
-      else 
-      {
-        this.media_control.pause();
-        tile.removeClass('playing');
-      }
-    }
-    else
-    {
-      this.currently_playing = true;
+      this.media_control.play();
       tile.addClass('playing');
-      this.current_tile = tile;
     }
+    else 
+    {
+      this.media_control.pause();
+      tile.removeClass('playing');
+    }
+  },
+
+  update_selected_tile: function(tile)
+  {
+    tile.addClass('selected');
+    this.current_tile = tile;
   },
 
   load_tile: function(tile_data, current_tile_clicked, autoplay)
