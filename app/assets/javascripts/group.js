@@ -23,8 +23,11 @@ GROUP.prototype = {
 
   iterator: 0,
 
-  get_data_for_tracks: function()
+  external_callback_duration: null,
+
+  get_data_for_tracks: function(callback)
   {
+    this.external_callback_duration = callback;
     this.iterator = 0;
     this.iterate();
   }, 
@@ -51,7 +54,8 @@ GROUP.prototype = {
     }
     else
     {
-      // alert('finished loading!');
+      /// All data is loaded. Broadcast the good news to the initial caller.
+      this.external_callback_duration.call(this, this.tracks);
     }
   }
 }

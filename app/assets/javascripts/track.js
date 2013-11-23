@@ -23,8 +23,6 @@ TRACK.prototype = {
     return this.data_fetcher.duration != null;
   },
 
-  duration: null,
-
   get_duration_data: function(callback)
   {
     this.data_fetcher = new VIMEO_FETCHER(); 

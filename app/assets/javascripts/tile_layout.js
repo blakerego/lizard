@@ -8,16 +8,23 @@ TILE_LAYOUT.prototype = {
 
   current_tile: null,
 
-  currently_playing: false,
+  currently_playing: null,
 
   rendering_strategy: null,
+
+  tile_selected_events: null,
+
+  track_progress_events: null,
 
   init: function(group_manager, media_control)
   {
     this.group_manager = group_manager;
     this.media_control = media_control;
+    this.currently_playing = false;
     this.initialize_layout(this.group_manager.default_group_tiles());
     this.initialize_handlers();
+    this.tile_selected_events = [];
+    this.track_progress_events = [];
   },
 
   /**************************
@@ -34,7 +41,6 @@ TILE_LAYOUT.prototype = {
 
     $.each(tiles, function(index, tile)
     {
-      // var tile = track.tile;
       if (current_row_size + tile.size <= 12)
       {
         markup += $this.add_tile(tile, false);
@@ -258,6 +264,13 @@ TILE_LAYOUT.prototype = {
         current_inst.on_tile_loaded(tile_markup, media_url, tile_data, autoplay);
       }
     });
+
+    var length = this.tile_selected_events.length; 
+    for(var i=0; i < length; i++)
+    {
+      this.tile_selected_events[i].call(this, this.current_tile);
+    }
+
   },
 
   on_tile_loaded: function(tile_markup, media_url, tile_data, autoplay)
@@ -265,18 +278,24 @@ TILE_LAYOUT.prototype = {
     this.update_rendering_strategy(tile_markup);
     this.rendering_strategy.add_media_to_modal(media_url, autoplay, tile_data);
     this.media_control.reset_vimeo_wrapper($('iframe#' + tile_data['id'])); 
+
+    this.media_control.vimeo_player.add_play_progress_listener(this.on_play_progress.bind(this));
+
     this.media_control.set_finish_callback(this.on_tile_finished.bind(this));
     this.rendering_strategy.adjust_size();
 
-    // var $this = this;
-    // debugger;
-    // $('span.play').on('click', function()
-    // {
-    //   $this.on_play_click($this.current_tile);
-    // });
-
     $('span.play').unbind('click', this.modal_play_clicked)
                   .bind('click', this.modal_play_clicked.bind(this));
+
+  },
+
+  on_play_progress: function(data)
+  {
+    var length = this.track_progress_events.length; 
+    for(var i=0; i < length; i++)
+    {
+      this.track_progress_events[i].call(this, data);
+    }
   },
 
   modal_play_clicked: function()
@@ -299,6 +318,18 @@ TILE_LAYOUT.prototype = {
   switch_group_view: function(group_id)
   {
     this.initialize_layout(this.group_manager.tiles_for_group(group_id));
+  },
+
+  bind: function(event_name, callback)
+  {
+    if (event_name == "tile_selected")
+    {
+      this.tile_selected_events.push(callback);
+    }
+    else if (event_name == "track_progress")
+    {
+      this.track_progress_events.push(callback);
+    }
   }
 
 }

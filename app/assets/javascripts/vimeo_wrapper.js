@@ -5,17 +5,20 @@ VIMEO_WRAPPER.prototype = {
 
   url: null,
 
-  eventCallbacks: {},
+  eventCallbacks: null,
 
   player_ready: false, 
 
-  callback_queue: [],
+  callback_queue: null,
 
   duration: null,
 
   init: function(vimeo_selector)
   {
     this.vimeo_frame = vimeo_selector;
+    this.eventCallbacks = {};
+    this.callback_queue = [];
+
     if (typeof(this.vimeo_frame.attr('src')) !== "undefined" )
     {
       this.url = this.vimeo_frame.attr('src').split('?')[0];
@@ -221,11 +224,6 @@ VIMEO_WRAPPER.prototype = {
       if (eventData) 
       {
         params.push(eventData);
-      }
-
-      if (method == 'getDuration')
-      {
-        console.log('duration on ' + this.url + ' ' + value);
       }
 
       return params.length > 0 ? callback.apply(null, params) : callback.call();

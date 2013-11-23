@@ -73,7 +73,7 @@ body.body
 	.row_above_tiles
 	{
 		position: absolute;
-		margin: 72px auto;
+		margin: 55px auto;
 		@media screen and (max-width: 769px)
 		{
 			display: none;
@@ -114,6 +114,34 @@ body.body
 			}
 		}
 	}
+
+	.progress_bar_container
+	{
+		display: none;
+		position: absolute;
+		height:8px; 
+		margin: 84px auto;
+		float: left;
+		background-color: black;
+		@media screen and (max-width: 769px)
+		{
+			display: none;
+			width: 100%;
+		}
+		
+		@media screen and (min-width: 770px)
+		{
+			width: 822px;
+			margin-left: 378px;
+		}
+		.progress_bar
+		{
+			width: 95%;
+			height: 100%;
+			background-color: #00d4ff;;
+		}	
+	}
+
 	.play
 	{
 		color: red;

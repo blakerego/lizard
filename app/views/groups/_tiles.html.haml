@@ -13,12 +13,14 @@
         - groups.each do |group| 
           %i.icon-circle{"data-group-id" => "#{group.id}", :class => "album_btn"}
 
-
     .icons
       %i.icon-facebook-sign
       %i.icon-twitter
       %i.icon-tumblr
       %i.icon-cloud
+
+  .progress_bar_container
+    .progress_bar
 
 = render 'shared/loading'
 .tiles_area
@@ -34,6 +36,8 @@
   var media_control = new AUDIO_CONTROL();
   var layout = new TILE_LAYOUT();
   var group_manager = new GROUP_MANAGER();
+  var progress_bar = new GROUP_PROGRESS_BAR();
+
   $(function() {
     var tile_data = JSON.parse('#{@tiles.to_a.to_json(:methods => :thumb, :except => [ :lyrics])}');
     group_manager.init(tile_data, "#{@group.id}");
@@ -43,6 +47,6 @@
     $('.loader').hide();
     $('.tiles_area').show();
 
-    group_manager.get_duration_data_for_groups();
-
+    progress_bar.init($('.progress_bar'), group_manager, layout);
+    
   });

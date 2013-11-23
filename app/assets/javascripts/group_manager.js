@@ -63,10 +63,9 @@ GROUP_MANAGER.prototype = {
           });
   },
 
-  get_duration_data_for_groups: function()
+  get_duration_data_for_groups: function(callback)
   {
-    // this.albums[1].get_data_for_tracks();
-    this.albums[this.default_group_id].get_data_for_tracks();
+    this.albums[this.default_group_id].get_data_for_tracks(callback);
   }
 
 }
