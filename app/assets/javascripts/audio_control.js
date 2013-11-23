@@ -11,6 +11,8 @@ AUDIO_CONTROL.prototype = {
 
   finish_callback: null,
 
+  track_percent: 0,
+
   init: function()
   {
     
@@ -59,11 +61,11 @@ AUDIO_CONTROL.prototype = {
     this.playing = current_inst.toggle($('.play'), false);    
   },
 
-  reset_vimeo_wrapper: function()
+  reset_vimeo_wrapper: function(vimeo_selector)
   {
     this.vimeo_player.stop();
-    this.vimeo_player = new VIMEO_WRAPPER();
-    this.vimeo_player.init();
+    this.vimeo_player = new VIMEO_WRAPPER;
+    this.vimeo_player.init(vimeo_selector);
     this.vimeo_player.add_play_progress_listener(this.on_play_progress);
     this.vimeo_player.add_play_listener(this.on_play); 
     this.vimeo_player.add_pause_listener(this.on_pause);
@@ -72,8 +74,8 @@ AUDIO_CONTROL.prototype = {
 
   on_play_progress: function(data)
   {
-    console.log('on play progress'); 
-    console.log(data['percent']);
+    this.track_percent = data['percent'];
+    console.log(this.track_percent);
   },
 
   on_play: function(data)

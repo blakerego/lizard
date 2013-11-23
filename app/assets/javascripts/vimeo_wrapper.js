@@ -5,30 +5,35 @@ VIMEO_WRAPPER.prototype = {
 
   url: null,
 
-  status: 'uninitiated',
-
-  eventCallbacks: {},
+  eventCallbacks: null,
 
   player_ready: false, 
 
-  callback_queue: [],
+  callback_queue: null,
 
-  init: function()
+  duration: null,
+
+  init: function(vimeo_selector)
   {
-    this.vimeo_frame = $('iframe');
-    this.url = this.vimeo_frame.attr('src').split('?')[0];
-    this.status = 'initiated';
+    this.vimeo_frame = vimeo_selector;
+    this.eventCallbacks = {};
+    this.callback_queue = [];
 
-    if (window.addEventListener) 
+    if (typeof(this.vimeo_frame.attr('src')) !== "undefined" )
     {
-      window.addEventListener('message', this.on_message_received.bind(this), false)
-    }
-    else 
-    {
-      // IE
-      window.addEventListener('onmessage', this.on_message_received.bind(this));
-    }
+      this.url = this.vimeo_frame.attr('src').split('?')[0];
+      this.player_ready = false;
 
+      if (window.addEventListener) 
+      {
+        window.addEventListener('message', this.on_message_received.bind(this), false)
+      }
+      else 
+      {
+        // IE
+        window.addEventListener('onmessage', this.on_message_received.bind(this));
+      }
+    }
   },
 
   post: function(action, value) 
@@ -43,7 +48,7 @@ VIMEO_WRAPPER.prototype = {
       data.value = value;
     }
 
-    if (this.vimeo_frame[0].contentWindow != null)
+    if (this.vimeo_frame[0].contentWindow != null && this.url != null && this.url != "null")
     {
       this.vimeo_frame[0].contentWindow.postMessage(JSON.stringify(data), this.url);
     }
@@ -65,6 +70,17 @@ VIMEO_WRAPPER.prototype = {
     this.post('stop');
   }, 
 
+  get_duration: function(callback)
+  {
+    var target_id = this.url;
+    if (!this.eventCallbacks[target_id]) 
+    {
+      this.eventCallbacks[target_id] = {};
+    }
+    this.eventCallbacks[target_id]['getDuration'] = callback;
+    this.post( 'getDuration', null, this );
+  },
+
   add_event_listener: function(event_name, callback)
   {
     this.add_callback(event_name, callback, this.url);
@@ -81,6 +97,7 @@ VIMEO_WRAPPER.prototype = {
 
   add_play_progress_listener: function(callback)
   {
+    console.log('adding play progress listener');
     this.add_event_listener('playProgress', callback);
   },
 
@@ -139,9 +156,14 @@ VIMEO_WRAPPER.prototype = {
     return true;
   },
 
+  remove_duration_callback: function()
+  {
+    this.eventCallbacks[this.url]['getDuration'] = null
+  },
+
   get_callback: function(event_name, target_id)
   {
-    if (target_id) 
+    if (target_id && typeof this.eventCallbacks[target_id] !== "undefined") 
     {
       return this.eventCallbacks[target_id][event_name];
     }
@@ -151,20 +173,21 @@ VIMEO_WRAPPER.prototype = {
     }  
   },
 
+  ready_callback: null,
+
+  add_ready_listener: function(callback)
+  {
+    this.ready_callback = callback;
+  },
+
+
   on_message_received: function(event)
   {
     var data, method;
-    try 
-    {
-      data = JSON.parse(event.data);
-      method = data.event || data.method;
-    }
-    catch(e)  
-    {
-      console.log('Vimeo message received, but an error occurred trying to parse the event data.' + e.message);
-    }
+    data = JSON.parse(event.data);
+    method = data.event || data.method;
 
-    console.log("Vimeo message received: " + method);
+    // console.log("Vimeo message received: " + method);
 
     if (method == 'ready')
     {
@@ -174,6 +197,11 @@ VIMEO_WRAPPER.prototype = {
         /// Dequeue events
         var event_name = this.callback_queue.shift();
         this.post('addEventListener', event_name, this.vimeo_frame);
+      }
+
+      if (this.ready_callback != null)
+      {
+        this.ready_callback.call();
       }
     }
     else 

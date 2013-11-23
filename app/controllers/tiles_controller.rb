@@ -43,7 +43,7 @@ class TilesController < ApplicationController
 
     respond_to do |format|
       if @tile.save
-        format.html { redirect_to @tile, notice: 'Tile was successfully created.' }
+        format.html { redirect_to :index, notice: 'Tile was successfully created.' }
         format.json { render action: 'show', status: :created, location: @tile }
       else
         format.html { render action: 'new' }
@@ -125,6 +125,8 @@ class TilesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def tile_params
-      params.require(:tile).permit(:name, :media_type, :position, :published, :vimeo_id, :size, :image, :lyrics)
+      params.require(:tile).permit( :name, :media_type, :position, :published, \
+                                    :vimeo_id, :size, :image, :lyrics, :group_id, \
+                                    :background_color)
     end
 end

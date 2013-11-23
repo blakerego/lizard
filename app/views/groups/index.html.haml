@@ -1,19 +1,14 @@
 .tile_admin
   %h1 Listing groups
 
-  %table
-    %tr
-      %th Name
-      %th
-      %th
-      %th
-
+  %ul.groups
     - @groups.each do |group|
-      %tr
-        %td= group.name
-        %td= link_to 'Show', group
-        %td= link_to 'Edit', edit_group_path(group)
-        %td= link_to 'Destroy', group, :method => :delete, :data => { :confirm => 'Are you sure?' }
+      %li.group.ui-state-default
+        %h4= group.name
+        %p= "Public: #{group.published.to_s}"
+        = link_to 'Show', group, :class => 'btn btn-xs'
+        = link_to 'Edit', edit_group_path(group), :class => 'btn btn-primary btn-xs'
+        = link_to 'Destroy', group, :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger btn-xs'
 
   %br
 

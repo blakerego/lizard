@@ -8,6 +8,7 @@
 
   = f.input :name
   = f.input :group_type, :as => :select, :collection => Group.group_types, :html => {:class => 'dropdown-toggle'}, :default => 'album'
+  = f.input :published, :default => @group.published
 
   .actions
     = f.submit 'Save', :class => 'btn btn-success'

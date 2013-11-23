@@ -51,4 +51,21 @@
 		background-color: #aaa;
 	}
 
+	ul.groups
+	{
+		width: 1000px;
+		list-style: none;
+		li
+		{
+			width: 230px;
+			h4.tile_name
+			{
+				text-decoration: underline;
+			}
+			height: 100%;
+			padding: 5px;
+			margin: 2px 0 2px 0;
+		}	
+	}
+
 }

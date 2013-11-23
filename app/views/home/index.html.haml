@@ -1,34 +1,4 @@
+= render "/groups/tiles", :group => @group
 
-.row.header
-	.logo.col-md-4.col-xs-10
-		ZE REP TILES
-
-	/ .play.glow_btn.col-md-1.col-xs-1
-	
-	.icons
-		%i.icon-facebook-sign
-		%i.icon-twitter
-		%i.icon-tumblr
-		%i.icon-cloud
-= render 'shared/loading'
-.tiles_area
-
-
-.modal{id: "full_tile_modal", "aria-hidden" => true, "tab-index" => "-1"}
-	.modal-dialog
-		.modal-content
-			.modal-body
-				= render 'shared/loading'
-
-:javascript
-	var CTRLS = new AUDIO_CONTROL();
-	var TILES = new TILE_LAYOUT();
-	$(function() {
-
-		
-		CTRLS.init(); 
-		TILES.init('#{@tiles.to_a.to_json(:methods => :thumb, :except => [ :lyrics])}', CTRLS);
-
-		$('.loader').hide();
-		$('.tiles_area').show();
-	})
+// Will be used to load & retrieve video information.
+#loading_area

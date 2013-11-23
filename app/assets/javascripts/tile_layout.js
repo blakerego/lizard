@@ -4,17 +4,27 @@ window.TILE_LAYOUT = function() {}
 TILE_LAYOUT.prototype = {
   media_control: null,
 
+  group_manager: null,
+
   current_tile: null,
 
-  currently_playing: false,
+  currently_playing: null,
 
   rendering_strategy: null,
 
-  init: function(tile_data, media_control)
+  tile_selected_events: null,
+
+  track_progress_events: null,
+
+  init: function(group_manager, media_control)
   {
+    this.group_manager = group_manager;
     this.media_control = media_control;
-    this.initialize_layout(JSON.parse(tile_data));
+    this.currently_playing = false;
+    this.initialize_layout(this.group_manager.default_group_tiles());
     this.initialize_handlers();
+    this.tile_selected_events = [];
+    this.track_progress_events = [];
   },
 
   /**************************
@@ -23,46 +33,60 @@ TILE_LAYOUT.prototype = {
 
   initialize_layout: function(tiles)
   {
-    var current_inst = this;
+    var $this = this;
+
     var markup = "<div class='row tile-row'>";
     
     var current_row_size = 0; 
+
     $.each(tiles, function(index, tile)
     {
       if (current_row_size + tile.size <= 12)
       {
-        markup += current_inst.add_tile(tile, false);
+        markup += $this.add_tile(tile, false);
         current_row_size += tile.size;
       }
       else 
       {
-        markup += current_inst.add_tile(tile, true);
+        markup += $this.add_tile(tile, true);
         current_row_size += tile.size - 12;
       }
 
     });
 
-    $('.tiles_area').html(markup + "</div>");
+    var tiles_area = $('.tiles_area');
+    tiles_area.fadeOut(500, function()
+    {
+      $(this).html(markup + "</div>")
+      tiles_area.fadeIn(500);
+      $('span.play-icon').on('click', function()
+      {
+        var tile = $(this).closest('.tile');
+        $this.on_play_click(tile);
+      });
+
+      $('span.expand-icon').on('click', function()
+      {
+        var tile = $(this).closest('.tile');
+        $this.on_expand_click(tile);
+      });
+
+    });
 
   },
 
   initialize_handlers: function()
   {
-    var current_inst = this;
-    $('span.play-icon').on('click', function()
+    var $this = this;
+    $('.album_btn').on('click', function()
     {
-      var tile = $(this).closest('.tile');
-      current_inst.on_play_click(tile);
+      var group_id = $(this).data()["groupId"];
+      $this.switch_group_view(group_id);
     });
-
-    $('span.expand-icon').on('click', function()
-    {
-      var tile = $(this).closest('.tile');
-      current_inst.on_expand_click(tile);
-    })
 
     $('#full_tile_modal').on('hidden.bs.modal', function () {
     });
+
   },
 
   /**************************
@@ -77,7 +101,12 @@ TILE_LAYOUT.prototype = {
     {
       markup += "</div><div class='row tile-row'>"
     }
-    markup += "<div class='" + c + "' data-id='" + tile.id + "' data-media_url='" + tile.media_url + "' style='background-image: url(\"" + tile.thumb+ "\")'><div class='play_tile'>0<span class='play-icon'>0</span><div class='btm-row'><span class='expand-icon'></span></div></div></div>";
+    markup += "<div class='" + c + "' data-id='" + tile.id + "' data-media_url='" + tile.media_url;
+    if (typeof(tile.background_color) !== "undefined" && tile.background_color != null)
+    {
+      markup += "' data-background_color='" + tile.background_color;
+    }
+    markup += "' style='background-image: url(\"" + tile.thumb + "\")'><div class='play_tile'>0<span class='play-icon'>0</span>" + "<div class='btm-row'><span class='expand-icon'></span></div></div></div>";
     return markup;
   },
 
@@ -95,12 +124,20 @@ TILE_LAYOUT.prototype = {
     // Play the song / video, but don't open up the dialog. 
     var tile_data = tile.data();
     var current_tile_clicked = this.is_tile_clicked(tile, tile_data);
-    this.update_selected_tile(tile, current_tile_clicked);
+    
 
     if (!current_tile_clicked)
     {
+      // tile switch
+      this.toggle_playing(tile, true);
+      this.update_selected_tile(tile);
       this.load_tile(tile_data, current_tile_clicked, true);
     }
+    else 
+    {
+      this.toggle_playing(tile);
+    }
+
   },
 
   play_next_tile: function()
@@ -156,6 +193,12 @@ TILE_LAYOUT.prototype = {
     // Show the full tile.
     var tile_data = tile.data();
     var current_tile_clicked = this.is_tile_clicked(tile, tile_data);
+
+    if (!current_tile_clicked)
+    {
+      this.update_selected_tile(tile);
+    }
+
     this.load_tile(tile_data, current_tile_clicked, false);
     $('#full_tile_modal').modal().show();
   },
@@ -169,34 +212,40 @@ TILE_LAYOUT.prototype = {
       current_tile_clicked = $(this.current_tile).data()['id'] == tile_data['id'];
       if (!current_tile_clicked)
       {
+        this.current_tile.removeClass('selected');
         this.current_tile.removeClass('playing');
       }
     }
     return current_tile_clicked;
   },
 
-  update_selected_tile: function(tile, current_tile_clicked)
+  toggle_playing: function(tile, is_playing)
   {
-    if (current_tile_clicked)
+    if (typeof is_playing !== 'undefined')
     {
-      this.currently_playing = !this.currently_playing;
-      if (this.currently_playing)
-      {
-        this.media_control.play();
-        tile.addClass('playing');
-      }
-      else 
-      {
-        this.media_control.pause();
-        tile.removeClass('playing');
-      }
+      this.currently_playing =  is_playing;
     }
     else
     {
-      this.currently_playing = true;
-      tile.addClass('playing');
-      this.current_tile = tile;
+      this.currently_playing = !this.currently_playing;
     }
+
+    if (this.currently_playing)
+    {
+      this.media_control.play();
+      tile.addClass('playing');
+    }
+    else 
+    {
+      this.media_control.pause();
+      tile.removeClass('playing');
+    }
+  },
+
+  update_selected_tile: function(tile)
+  {
+    tile.addClass('selected');
+    this.current_tile = tile;
   },
 
   load_tile: function(tile_data, current_tile_clicked, autoplay)
@@ -212,18 +261,46 @@ TILE_LAYOUT.prototype = {
       }
       else
       {
-        current_inst.on_tile_loaded(tile_markup, media_url, tile_id, autoplay);
+        current_inst.on_tile_loaded(tile_markup, media_url, tile_data, autoplay);
       }
     });
+
+    var length = this.tile_selected_events.length; 
+    for(var i=0; i < length; i++)
+    {
+      this.tile_selected_events[i].call(this, this.current_tile);
+    }
+
   },
 
-  on_tile_loaded: function(tile_markup, media_url, tile_id, autoplay)
+  on_tile_loaded: function(tile_markup, media_url, tile_data, autoplay)
   {
     this.update_rendering_strategy(tile_markup);
-    this.rendering_strategy.add_media_to_modal(media_url, autoplay, tile_id);
-    this.media_control.reset_vimeo_wrapper(); 
+    this.rendering_strategy.add_media_to_modal(media_url, autoplay, tile_data);
+    this.media_control.reset_vimeo_wrapper($('iframe#' + tile_data['id'])); 
+
+    this.media_control.vimeo_player.add_play_progress_listener(this.on_play_progress.bind(this));
+
     this.media_control.set_finish_callback(this.on_tile_finished.bind(this));
     this.rendering_strategy.adjust_size();
+
+    $('span.play').unbind('click', this.modal_play_clicked)
+                  .bind('click', this.modal_play_clicked.bind(this));
+
+  },
+
+  on_play_progress: function(data)
+  {
+    var length = this.track_progress_events.length; 
+    for(var i=0; i < length; i++)
+    {
+      this.track_progress_events[i].call(this, data);
+    }
+  },
+
+  modal_play_clicked: function()
+  {
+    this.on_play_click(this.current_tile);
   },
 
   on_tile_finished: function()
@@ -236,6 +313,23 @@ TILE_LAYOUT.prototype = {
     $('#full_tile_modal .modal-body').html(tile_markup + "<div class='container'></div>");
     var value = $('#media_type').data()['value'];
     this.rendering_strategy = (new MODAL_RENDERER_FACTORY()).get(value);    
+  }, 
+
+  switch_group_view: function(group_id)
+  {
+    this.initialize_layout(this.group_manager.tiles_for_group(group_id));
+  },
+
+  bind: function(event_name, callback)
+  {
+    if (event_name == "tile_selected")
+    {
+      this.tile_selected_events.push(callback);
+    }
+    else if (event_name == "track_progress")
+    {
+      this.track_progress_events.push(callback);
+    }
   }
 
 }

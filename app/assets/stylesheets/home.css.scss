@@ -8,10 +8,7 @@ body.body
   // -moz-background-size: cover;
   // -o-background-size: cover;
   // background-size: cover;
-
-  // background: image-url("static.gif") repeat center ;
-  background: image-url("stars.gif") repeat center;
-  background: image-url("pink_background.png") repeat center;
+  background: image-url("pink_background.png") repeat;
   // background: image-url('http://kimasendorf.com/12c/images/12c-9_10_1_13_31%20Kopie.gif') repeat center;
   color: black;
 
@@ -72,11 +69,11 @@ body.body
 		background-repeat: no-repeat;
 		background-size: 80%;		
 	}
-	.icons
+
+	.row_above_tiles
 	{
-		float: right;
-		font-size: 25px;
 		position: absolute;
+		margin: 55px auto;
 		@media screen and (max-width: 769px)
 		{
 			display: none;
@@ -87,34 +84,89 @@ body.body
 		{
 			width: 1200px;
 		}
-		margin: 72px auto;
 		i
 		{
-			float: right;
+			cursor: pointer;			
 			margin-right: 4px;
-			cursor: pointer;
 			-webkit-text-stroke: rgba(250, 250, 0, .6);
 			-webkit-text-stroke-width: 1.5px;
 		}
+
+		.groups
+		{
+			float: left;
+			@media screen and (min-width: 770px)
+			{
+				padding-left: 378px;
+			}
+			i
+			{
+				font-size: 20px;
+			}
+		}
+		.icons
+		{
+			float: right;
+			font-size: 25px;
+			i
+			{
+				float: right;
+			}
+		}
 	}
+
+	.progress_bar_container
+	{
+		display: none;
+		position: absolute;
+		height:8px; 
+		margin: 84px auto;
+		float: left;
+		background-color: black;
+		@media screen and (max-width: 769px)
+		{
+			display: none;
+			width: 100%;
+		}
+		
+		@media screen and (min-width: 770px)
+		{
+			width: 822px;
+			margin-left: 378px;
+		}
+		.progress_bar
+		{
+			height: 100%;
+			background-color: #00d4ff;;
+		}	
+	}
+
 	.play
 	{
-		background: image-url('play_glow.svg');
+		color: red;
+		&:after
+		{
+			content:"Play";
+		}
+		font-size: 10px;
 		&:hover
 		{
-			background: image-url('hover_glow.svg');
+			cursor: pointer;
 		}
 		&:active
 		{
-			background: image-url('hover_glow.svg');
+			// background: image-url('hover_glow.svg');
 		}
 		&.playing
 		{
-			background: image-url('pause_glow.svg');
 			&:hover
 			{
-				background: image-url('pause_hover_glow.svg');
+				// background: image-url('pause_hover_glow.svg');
 			}
+			&:after
+				{
+					content:"Pause";
+				}
 		}
 	}
 	.ff
@@ -255,10 +307,13 @@ body.body
 					}
 				}
 			}
+			.tile.selected
+			{
+				border: solid yellow 4.5px;
+			}
 			.tile.playing
 			{
 				// border: solid #26a9e0 4.5px;
-				border: solid yellow 4.5px;
 				&:hover
 				{
 					padding: 0; 
@@ -276,6 +331,11 @@ body.body
 				}
 			}
 		}
+	}
+
+	#loading_area
+	{
+		display: none;
 	}
 }
 

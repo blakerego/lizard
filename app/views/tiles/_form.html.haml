@@ -7,8 +7,14 @@
           %li= msg
   = f.input :name
   = f.input :media_type, :as => :select, :collection => Tile.media_types, :html => {:class => 'dropdown-toggle'}
+
+  = f.input :group_id, :as => :select, :collection => Group.all, :label_method => :name, :label => "Select Group", :include_blank => true, :html => {:class => 'dropdown-toggle'}
+
   = f.input :vimeo_id, :label => "Vimeo ID", :input_html => {:value => @tile.media_url.split('/').last } if @tile.present? and @tile.media_url.present? 
   = f.input :size, :as => :select, :collection => (1..12), :selected => (@tile.size.present? ? @tile.size : "3")
+
+  = f.input :background_color, :label => "Modal background color"
+
   = f.input :lyrics, :as => :ckeditor
   
   - if @tile.id.present?
