@@ -40,6 +40,7 @@ GROUP_PROGRESS_BAR.prototype = {
     this.group_duration_sum = this.duration_array
             .reduce(function(previousValue, currentValue, index, array) 
               { return previousValue + currentValue; }, 0);
+    this.handle_tile_selected(this.tile_layout.current_tile)
   },
 
   handle_tile_selected: function(tile)
@@ -50,7 +51,7 @@ GROUP_PROGRESS_BAR.prototype = {
                 .map(function(track) { return track.id; } )
                 .indexOf(tile.data()['id']);
       this.track_progress_percentage = 0;
-      // alert(this.sum_prev_track_duration());
+      this.update_progress_bar();
     }
   },
 
@@ -74,12 +75,25 @@ GROUP_PROGRESS_BAR.prototype = {
 
   calculate_current_progress: function()
   {
-    return 100 * (this.sum_prev_track_duration() + this.track_progress_seconds) / 
+    return 100*(this.sum_prev_track_duration() + this.track_progress_seconds) / 
       this.group_duration_sum;
   },
 
   update_progress_bar: function()
   {
-    this.selector.css('width', this.calculate_current_progress().toString() + "%")
+    var current_percentage = parseFloat(this.selector[0].style['width']);
+    var new_percentage = this.calculate_current_progress();
+    var diff = Math.abs(new_percentage - current_percentage);
+    var perc_string = new_percentage.toString() + "%";
+    if (diff > 5)
+    {
+      this.selector.animate({
+        width: perc_string
+      });
+    }
+    else
+    {
+      this.selector.css('width', perc_string);
+    }
   }
 }
