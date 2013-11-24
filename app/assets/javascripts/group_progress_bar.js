@@ -45,7 +45,7 @@ GROUP_PROGRESS_BAR.prototype = {
 
   handle_tile_selected: function(tile)
   {
-    if (this.tracks != null)
+    if (this.tracks != null && tile != null)
     {
       this.current_track_index = this.tracks
                 .map(function(track) { return track.id; } )

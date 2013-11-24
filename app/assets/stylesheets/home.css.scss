@@ -229,21 +229,23 @@ body.body
 		{
 			width: 1200px;
 		}
-		display: none;
+		// display: none;
 		margin: 0 auto;
 
-		.tile-row
-		{
-			.tile:first-child
-			{
-				margin-left: 0;
-			}
+		// .tile-row
+		// {
+			// .tile:first-child
+			// {
+			// 	margin-left: 0;
+			// }
 			.tile
 			{
 				font-size: 13px;
 				border: solid rgba(0,0,0,0) 4.5px;
 				padding: 20px;
-				height: 205px;
+				min-height: 205px;
+				// height: 205px;
+				// height: 100%;
 				display: inline-block;
 				background-repeat: no-repeat;
 				background-size: 100% 100%;
@@ -330,7 +332,7 @@ body.body
 					}
 				}
 			}
-		}
+		// }
 	}
 
 	#loading_area

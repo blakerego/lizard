@@ -22,8 +22,15 @@
   .progress_bar_container
     .progress_bar
 
-= render 'shared/loading'
+/ = render 'shared/loading'
 .tiles_area
+  - Tile.published.select{|tile| tile if (tile.group_id == 1) }.each do |tile| 
+    .tile.col-xs{"data-id" => "#{tile.id}", "data-media_url" => "#{tile.media_url}", :class => "col-md-#{tile.size}", "style" => "background-image: url(\"#{tile.thumb}\")"}
+      .play_tile
+        0
+        %span.play-icon
+        .btm-row
+          %span.expand-icon
 
 
 .modal{id: "full_tile_modal", "aria-hidden" => true, "tab-index" => "-1"}
@@ -38,7 +45,7 @@
   var group_manager = new GROUP_MANAGER();
   var progress_bar = new GROUP_PROGRESS_BAR();
 
-  $(function() {
+  $(window).load(function(){
     var tile_data = JSON.parse('#{@tiles.to_a.to_json(:methods => :thumb, :except => [ :lyrics])}');
     group_manager.init(tile_data, "#{@group.id}");
     media_control.init(); 

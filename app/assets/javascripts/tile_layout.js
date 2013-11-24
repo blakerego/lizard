@@ -35,43 +35,68 @@ TILE_LAYOUT.prototype = {
   {
     var $this = this;
 
-    var markup = "<div class='row tile-row'>";
+    // var markup = "<div class='row tile-row'>";
     
-    var current_row_size = 0; 
+    // var current_row_size = 0; 
 
-    $.each(tiles, function(index, tile)
-    {
-      if (current_row_size + tile.size <= 12)
-      {
-        markup += $this.add_tile(tile, false);
-        current_row_size += tile.size;
-      }
-      else 
-      {
-        markup += $this.add_tile(tile, true);
-        current_row_size += tile.size - 12;
-      }
+    // $.each(tiles, function(index, tile)
+    // {
+    //   if (current_row_size + tile.size <= 12)
+    //   {
+    //     markup += $this.add_tile(tile, false);
+    //     current_row_size += tile.size;
+    //   }
+    //   else 
+    //   {
+    //     markup += $this.add_tile(tile, true);
+    //     current_row_size += tile.size - 12;
+    //   }
 
-    });
+    // });
 
     var tiles_area = $('.tiles_area');
-    tiles_area.fadeOut(500, function()
+
+    // this.masonry_object = tiles_area.masonry(
+    // {
+    //   itemSelector: '.tile', 
+    //   // columnWidth: '.tile'
+    // });
+
+
+      // $('.remove_me').remove();
+      // $('.index_grid').css({'visibility': 'visible'})
+
+
+    $('span.play-icon').on('click', function()
     {
-      $(this).html(markup + "</div>")
-      tiles_area.fadeIn(500);
-      $('span.play-icon').on('click', function()
-      {
-        var tile = $(this).closest('.tile');
-        $this.on_play_click(tile);
-      });
-
-      $('span.expand-icon').on('click', function()
-      {
-        var tile = $(this).closest('.tile');
-        $this.on_expand_click(tile);
-      });
-
+      var tile = $(this).closest('.tile');
+      $this.on_play_click(tile);
     });
+
+    $('span.expand-icon').on('click', function()
+    {
+      var tile = $(this).closest('.tile');
+      $this.on_expand_click(tile);
+    });
+
+
+    // tiles_area.fadeOut(500, function()
+    // {
+    //   // $(this).html(markup + "</div>")
+    //   tiles_area.fadeIn(500);
+    //   $('span.play-icon').on('click', function()
+    //   {
+    //     var tile = $(this).closest('.tile');
+    //     $this.on_play_click(tile);
+    //   });
+
+    //   $('span.expand-icon').on('click', function()
+    //   {
+    //     var tile = $(this).closest('.tile');
+    //     $this.on_expand_click(tile);
+    //   });
+
+    // });
 
   },
 
