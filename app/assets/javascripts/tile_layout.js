@@ -2,19 +2,6 @@
 
 window.TILE_LAYOUT = function() {}
 TILE_LAYOUT.prototype = {
-  media_control: null,
-
-  group_manager: null,
-
-  current_tile: null,
-
-  currently_playing: null,
-
-  rendering_strategy: null,
-
-  tile_selected_events: null,
-
-  track_progress_events: null,
 
   init: function(group_manager, media_control)
   {
