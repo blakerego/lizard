@@ -309,6 +309,7 @@ TILE_LAYOUT.prototype = {
 
   on_tile_finished: function()
   {
+    console.log('next');
     this.play_next_tile();
   },
 

@@ -1,18 +1,6 @@
 window.VIMEO_WRAPPER = function() {}
 VIMEO_WRAPPER.prototype = {
   
-  vimeo_frame: null,
-
-  url: null,
-
-  eventCallbacks: null,
-
-  player_ready: false, 
-
-  callback_queue: null,
-
-  duration: null,
-
   init: function(vimeo_selector)
   {
     this.vimeo_frame = vimeo_selector;
@@ -97,25 +85,25 @@ VIMEO_WRAPPER.prototype = {
 
   add_play_progress_listener: function(callback)
   {
-    console.log('adding play progress listener');
+    // console.log('adding play progress listener');
     this.add_event_listener('playProgress', callback);
   },
 
   add_play_listener: function(callback)
   {
-    console.log('adding play listener');
+    // console.log('adding play listener');
     this.add_event_listener('play', callback);
   }, 
 
   add_pause_listener: function(callback)
   {
-    console.log('adding pause listener');
+    // console.log('adding pause listener');
     this.add_event_listener('pause', callback);
   },
 
   add_finish_listener: function(callback)
   {
-    console.log('adding finish listener'); 
+    // console.log('adding finish listener'); 
     this.add_event_listener('finish', callback);
   },
 
@@ -133,6 +121,12 @@ VIMEO_WRAPPER.prototype = {
     {
       this.eventCallbacks[event_name] = callback;
     }
+  },
+
+  clear_callbacks: function()
+  {
+    this.eventCallbacks = {};
+    this.callback_queue = [];
   },
 
   remove_callback: function(event_name, target_id)

@@ -64,6 +64,7 @@ AUDIO_CONTROL.prototype = {
   reset_vimeo_wrapper: function(vimeo_selector)
   {
     this.vimeo_player.stop();
+    this.vimeo_player.clear_callbacks();
     this.vimeo_player = new VIMEO_WRAPPER;
     this.vimeo_player.init(vimeo_selector);
     this.vimeo_player.add_play_progress_listener(this.on_play_progress);
@@ -90,7 +91,7 @@ AUDIO_CONTROL.prototype = {
 
   on_finish: function()
   {
-    console.log('vimeo video finish event fired');
+    // console.log('vimeo video finish event fired');
     if (this.finish_callback != null)
     {
       this.finish_callback();

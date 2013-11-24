@@ -15,3 +15,7 @@
 //= require turbolinks
 //= require ckeditor/init
 //= require_tree .
+
+$(document).on('click', '[data-href]', function() {
+  window.open($(this).data()['href']);
+});
