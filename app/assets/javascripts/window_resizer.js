@@ -16,17 +16,12 @@ WINDOW_RESIZER.prototype = {
     
     var width_ratio = 1;
     var height_ratio = 1; 
-
     if (width > 770)
     {
       width_ratio = width / 1205
     }
-
     height_ratio = height / 750
-    console.log(height_ratio);
-
     var ratio = width_ratio <= height_ratio ? width_ratio : height_ratio;
-    console.log(ratio)
     $('body').css('zoom', ratio );
 
   }

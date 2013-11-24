@@ -75,17 +75,17 @@ AUDIO_CONTROL.prototype = {
   on_play_progress: function(data)
   {
     this.track_percent = data['percent'];
-    console.log(this.track_percent);
+    // console.log(this.track_percent);
   },
 
   on_play: function(data)
   {
-    console.log('on play event fired!');
+    // console.log('on play event fired!');
   }, 
 
   on_pause: function(data)
   {
-    console.log('pause event fired!');
+    // console.log('pause event fired!');
   }, 
 
   on_finish: function()

@@ -267,9 +267,16 @@ TILE_LAYOUT.prototype = {
     this.media_control.reset_vimeo_wrapper($('iframe#' + tile_data['id'])); 
 
     this.media_control.vimeo_player.add_play_progress_listener(this.on_play_progress.bind(this));
+    this.media_control.vimeo_player.add_pause_listener(this.on_pause.bind(this));
+    this.media_control.vimeo_player.add_play_listener(this.on_play.bind(this));
 
     this.media_control.set_finish_callback(this.on_tile_finished.bind(this));
     this.rendering_strategy.adjust_size();
+
+    if (this.currently_playing)
+    {
+      $('span.play').addClass('playing')
+    }
 
     $('span.play').unbind('click', this.modal_play_clicked)
                   .bind('click', this.modal_play_clicked.bind(this));
@@ -283,6 +290,16 @@ TILE_LAYOUT.prototype = {
     {
       this.track_progress_events[i].call(this, data);
     }
+  },
+
+  on_pause: function()
+  {
+    this.toggle_playing(this.current_tile, false);
+  },
+
+  on_play: function()
+  {
+    this.toggle_playing(this.current_tile, true);
   },
 
   modal_play_clicked: function()
