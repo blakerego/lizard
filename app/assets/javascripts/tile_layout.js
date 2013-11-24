@@ -271,7 +271,12 @@ TILE_LAYOUT.prototype = {
     this.media_control.vimeo_player.add_play_listener(this.on_play.bind(this));
 
     this.media_control.set_finish_callback(this.on_tile_finished.bind(this));
-    this.rendering_strategy.adjust_size();
+    
+    var $this = this;
+    $('.modal-body img').on('load', function()
+    {
+      $this.rendering_strategy.adjust_size();  
+    });
 
     if (this.currently_playing)
     {
