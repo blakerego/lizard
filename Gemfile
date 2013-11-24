@@ -20,7 +20,6 @@ gem 'jquery-rails'
 gem "haml-rails"
 gem "simple_form"
 gem 'awesome_print'
-gem 'debugger'
 gem 'pry'
 gem 'better_errors'
 gem 'binding_of_caller'
@@ -51,6 +50,9 @@ gem 'ckeditor'
 
 gem "font-awesome-rails"
 
+group :development, :test do
+  gem 'debugger'
+end
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
