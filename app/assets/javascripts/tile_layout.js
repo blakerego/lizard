@@ -56,11 +56,11 @@ TILE_LAYOUT.prototype = {
 
     var tiles_area = $('.tiles_area');
 
-    // this.masonry_object = tiles_area.masonry(
-    // {
-    //   itemSelector: '.tile', 
-    //   // columnWidth: '.tile'
-    // });
+    this.masonry_object = tiles_area.masonry(
+    {
+      itemSelector: '.tile', 
+      // columnWidth: '.tile'
+    });
 
 
       // $('.remove_me').remove();
