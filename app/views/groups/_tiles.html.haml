@@ -14,17 +14,19 @@
         - groups.each do |group| 
           %i.icon-circle{"data-group-id" => "#{group.id}", :class => "album_btn"}
 
-    .icons
-      %i.icon-facebook-sign{"data-href" => "https://www.facebook.com/zereptiles"}
-      %i.icon-twitter{"data-href" => "https://twitter.com/zereptiles"}
-      %i.icon-tumblr{"data-href" => "http://zereptiles.tumblr.com/"}
-      / %i.icon-cloud
-
   .progress_bar_container
     .progress_bar
 
 = render 'shared/loading'
 .tiles_area
+
+.row_below_tiles
+  .icons
+    %i.icon-facebook{"data-href" => "https://www.facebook.com/zereptiles"}
+    %i.icon-twitter{"data-href" => "https://twitter.com/zereptiles"}
+    %i.icon-tumblr{"data-href" => "http://zereptiles.tumblr.com/"}
+    / %i.icon-cloud
+
 
 
 .modal{id: "full_tile_modal", "aria-hidden" => true, "tab-index" => "-1"}

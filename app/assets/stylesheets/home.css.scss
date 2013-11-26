@@ -104,15 +104,6 @@ body.body
 				font-size: 20px;
 			}
 		}
-		.icons
-		{
-			float: right;
-			font-size: 25px;
-			i
-			{
-				float: right;
-			}
-		}
 	}
 
 	.progress_bar_container
@@ -140,6 +131,40 @@ body.body
 			background-color: #00d4ff;;
 		}	
 	}
+
+	.row_below_tiles
+	{
+		margin: 0px auto;
+		@media screen and (max-width: 769px)
+		{
+			display: none;
+			width: 100%;
+		}
+		
+		@media screen and (min-width: 770px)
+		{
+			width: 1200px;
+		}
+		i
+		{
+			cursor: pointer;			
+			margin-left: 14px;
+			margin-right: 1px;
+			-webkit-text-stroke: rgba(250, 250, 0, .8);
+			-webkit-text-stroke-width: 1.5px;
+		}
+
+		.icons
+		{
+			float: right;
+			font-size: 25px;
+			i
+			{
+				float: right;
+			}
+		}
+	}
+
 
 	.play
 	{
