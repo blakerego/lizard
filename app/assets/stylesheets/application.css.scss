@@ -30,6 +30,17 @@
   src: font-url('PTC55F.ttf');
 }
 
+@font-face {
+  font-family: "Synchro";
+  src: font-url('SynchroLETPlain1.0.ttf');
+}
+
+@font-face 
+{
+  font-family: "ZapfDingbats";
+  src: font-url("ZapfDingbats.ttf");
+}
+
 #error_explanation
 {
 	ul

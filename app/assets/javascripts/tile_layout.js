@@ -71,6 +71,13 @@ TILE_LAYOUT.prototype = {
       $this.switch_group_view(group_id);
     });
 
+    $('.play_all').on('click', function()
+    {
+      if (this.current_tile == null)
+      {
+        
+      }
+    });
     $('#full_tile_modal').on('hidden.bs.modal', function () {
     });
 

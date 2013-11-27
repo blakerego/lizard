@@ -1,18 +1,20 @@
 
 
 .row.header
-  .logo.col-md-4.col-xs-10
+  .logo.col-md-5.col-xs-10
     ZE REP TILES
 
   / .play.glow_btn.col-md-1.col-xs-1
 
   .row_above_tiles
     / DO SOME CACHING HERE -  
-    - groups = Group.published
-    - if groups.count > 1
-      %span.groups
-        - groups.each do |group| 
-          %i.icon-circle{"data-group-id" => "#{group.id}", :class => "album_btn"}
+    / - groups = Group.published
+    / - if groups.count > 1
+    /   %span.groups
+    /     - groups.each do |group| 
+    /       %i.icon-circle{"data-group-id" => "#{group.id}", :class => "album_btn"}
+    .play_all
+      PLAY ALL
 
   .progress_bar_container
     .progress_bar

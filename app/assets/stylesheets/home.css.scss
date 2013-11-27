@@ -2,16 +2,8 @@
 body.body
 {
 
-  // background: image-url("background.png") no-repeat center center fixed;
-  // background: image-url("scratch_background.png") no-repeat center center fixed;
-  // -webkit-background-size: cover;
-  // -moz-background-size: cover;
-  // -o-background-size: cover;
-  // background-size: cover;
   background: image-url("pink_background.png") repeat;
-  // background: image-url('http://kimasendorf.com/12c/images/12c-9_10_1_13_31%20Kopie.gif') repeat center;
   color: black;
-
 
 	.logo 
 	{
@@ -22,13 +14,15 @@ body.body
 		}
 		@media screen and (min-width: 770px)
 		{
-	  	font-size: 120px; 
+	  	font-size: 140px; 
 		}
 	  letter-spacing: 2px; 
 	  font-family: "Single Sleeve"; 
 	  -webkit-text-stroke: 4px black;
 	  line-height: 88px;
 		text-shadow: 1px 3px 2px black, 7px 6px 9px #333;
+		margin-top: 4%; 
+		line-height: 100px;
 	}
 	.push_button
 	{
@@ -73,7 +67,7 @@ body.body
 	.row_above_tiles
 	{
 		position: absolute;
-		margin: 55px auto;
+		margin: 78px auto;
 		@media screen and (max-width: 769px)
 		{
 			display: none;
@@ -104,14 +98,31 @@ body.body
 				font-size: 20px;
 			}
 		}
+
+		.play_all
+		{
+			@media screen and (min-width: 770px)
+			{
+				padding-left: 378px;
+			}
+
+			font-family: "Synchro";
+		  color:#fffc00;
+		  margin: 0 auto;
+		  font-size: 25px; 
+		  text-align: center;
+		  letter-spacing: 2px;
+		  cursor: pointer;
+		  margin-top: 5%;
+		}
 	}
 
 	.progress_bar_container
 	{
 		display: none;
 		position: absolute;
-		height:8px; 
-		margin: 84px auto;
+		height:5px; 
+		margin: 6.8% auto;
 		float: left;
 		background-color: black;
 		@media screen and (max-width: 769px)
@@ -122,8 +133,8 @@ body.body
 		
 		@media screen and (min-width: 770px)
 		{
-			width: 822px;
-			margin-left: 378px;
+			width: 763px;
+			margin-left: 436px;
 		}
 		.progress_bar
 		{

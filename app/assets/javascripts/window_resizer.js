@@ -18,7 +18,7 @@ WINDOW_RESIZER.prototype = {
     var height_ratio = 1; 
     if (width > 770)
     {
-      width_ratio = width / 1205
+      width_ratio = width / 1650
     }
     height_ratio = height / 750
     var ratio = width_ratio <= height_ratio ? width_ratio : height_ratio;
