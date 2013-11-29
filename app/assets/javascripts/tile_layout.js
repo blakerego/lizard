@@ -8,7 +8,7 @@ TILE_LAYOUT.prototype = {
     this.group_manager = group_manager;
     this.media_control = media_control;
     this.currently_playing = false;
-    this.initialize_layout(this.group_manager.default_group_tiles());
+    this.initialize_layout(this.group_manager.current_group.tiles());
     this.initialize_handlers();
     this.tile_selected_events = [];
     this.track_progress_events = [];
@@ -25,7 +25,6 @@ TILE_LAYOUT.prototype = {
     var markup = "<div class='row tile-row'>";
     
     var current_row_size = 0; 
-
     $.each(tiles, function(index, tile)
     {
       if (current_row_size + tile.size <= 12)
@@ -73,10 +72,7 @@ TILE_LAYOUT.prototype = {
 
     $('.play_all').on('click', function()
     {
-      if (this.current_tile == null)
-      {
-        
-      }
+      $this.on_play_all();
     });
     $('#full_tile_modal').on('hidden.bs.modal', function () {
     });
@@ -122,7 +118,6 @@ TILE_LAYOUT.prototype = {
 
     if (!current_tile_clicked)
     {
-      // tile switch
       this.toggle_playing(tile, true);
       this.update_selected_tile(tile);
       this.load_tile(tile_data, current_tile_clicked, true);
@@ -132,6 +127,26 @@ TILE_LAYOUT.prototype = {
       this.toggle_playing(tile);
     }
 
+  },
+
+  on_play_all: function()
+  {
+    if (this.current_tile == null)
+    {
+      var tile_id = this.group_manager.current_group.tiles()[0].id;
+      var tile_element = $.map($('.tile'), function(t, index) 
+      {
+        if ($(t).data()['id'] == tile_id) 
+        {
+          return t; 
+        }
+        else 
+        { 
+          return null; 
+        }
+      });
+      this.on_play_click($(tile_element[0]));      
+    }
   },
 
   play_next_tile: function()
@@ -334,7 +349,7 @@ TILE_LAYOUT.prototype = {
 
   switch_group_view: function(group_id)
   {
-    this.initialize_layout(this.group_manager.tiles_for_group(group_id));
+    this.initialize_layout(this.group_manager.group.tiles());
   },
 
   bind: function(event_name, callback)

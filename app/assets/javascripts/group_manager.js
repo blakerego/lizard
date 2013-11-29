@@ -1,11 +1,14 @@
 //= require group
 
+/*
+  This class is responsible for switching between active groups.
+*/
 window.GROUP_MANAGER = function() {}
 GROUP_MANAGER.prototype = {
 
   default_group_id: null,
 
-  albums: {},
+  groups: {},
 
   all_tiles: null,
 
@@ -13,7 +16,8 @@ GROUP_MANAGER.prototype = {
   {
     this.all_tiles = tile_data;
     this.default_group_id = default_group_id;
-    this.albums = this.generate_album_hash(this.all_tiles)
+    this.groups = this.generate_album_hash(this.all_tiles);
+    this.current_group = this.groups[this.default_group_id];
   },
 
   generate_album_hash: function(tiles)
@@ -34,38 +38,9 @@ GROUP_MANAGER.prototype = {
     return album_hash;
   },
 
-  default_group_tracks: function()
-  {
-    return this.albums[this.default_group_id].tracks;
-  },
-
-  tracks_for_group: function(group_id)
-  {
-    return this.albums[group_id]
-          .tracks;
-  },
-
-  default_group_tiles: function()
-  {
-    return this.default_group_tracks()
-          .map(function(track)
-          {
-            return track.tile;
-          });
-  },
-
-  tiles_for_group: function(group_id)
-  {
-    return this.tracks_for_group(group_id)
-          .map(function(track)
-          {
-            return track.tile;
-          });
-  },
-
   get_duration_data_for_groups: function(callback)
   {
-    this.albums[this.default_group_id].get_data_for_tracks(callback);
+    this.groups[this.default_group_id].get_data_for_tracks(callback);
   }
 
 }

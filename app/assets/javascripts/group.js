@@ -38,6 +38,15 @@ GROUP.prototype = {
     track.get_duration_data(this.duration_callback_handler.bind(this));
   },
 
+  tiles: function()
+  {
+    return this.tracks
+          .map(function(track)
+          {
+            return track.tile;
+          });
+  },
+
   duration_callback_handler: function(duration, url)
   {
     var current_track = this.tracks[this.iterator];
