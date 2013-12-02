@@ -63,13 +63,13 @@ TILE_LAYOUT.prototype = {
 
   initialize_handlers: function()
   {
-    var $this = this;
-    $('.album_btn').on('click', function()
+    var $this = this; 
+    this.group_manager.bind('group_switch', function(group_id)
     {
-      var group_id = $(this).data()["groupId"];
       $this.switch_group_view(group_id);
     });
 
+    var $this = this;
     $('.play_all').on('click', function()
     {
       $this.on_play_all();
@@ -349,7 +349,7 @@ TILE_LAYOUT.prototype = {
 
   switch_group_view: function(group_id)
   {
-    this.initialize_layout(this.group_manager.group.tiles());
+    this.initialize_layout(this.group_manager.current_group.tiles());
   },
 
   bind: function(event_name, callback)

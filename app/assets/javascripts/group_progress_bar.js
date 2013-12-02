@@ -25,6 +25,7 @@ GROUP_PROGRESS_BAR.prototype = {
     /// Bind to layout events.
     this.tile_layout.bind('tile_selected', this.handle_tile_selected.bind(this));
     this.tile_layout.bind('track_progress', this.handle_track_progress.bind(this));
+    this.group_manager.bind('group_switch', this.handle_group_switch.bind(this));
   },
 
   progress_data_ready: function(tracks)
@@ -60,6 +61,11 @@ GROUP_PROGRESS_BAR.prototype = {
     this.track_progress_percentage = data['percentage'];
     this.track_progress_seconds = data['seconds'];
     this.update_progress_bar();
+  },
+
+  handle_group_switch: function(group_id)
+  {
+    debugger;
   },
 
   sum_prev_track_duration: function()

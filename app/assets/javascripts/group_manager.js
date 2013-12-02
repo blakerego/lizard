@@ -18,6 +18,15 @@ GROUP_MANAGER.prototype = {
     this.default_group_id = default_group_id;
     this.groups = this.generate_album_hash(this.all_tiles);
     this.current_group = this.groups[this.default_group_id];
+    this.group_switch_events = [];
+    var $this = this;
+    $('.album_btn').on('click', function()
+    {
+      var group_id = $(this).data()["groupId"];
+      $this.switch_group(group_id);
+    });
+
+
   },
 
   generate_album_hash: function(tiles)
@@ -41,6 +50,25 @@ GROUP_MANAGER.prototype = {
   get_duration_data_for_groups: function(callback)
   {
     this.groups[this.default_group_id].get_data_for_tracks(callback);
+  },
+
+  switch_group: function(group_id)
+  {
+    this.current_group = this.groups[group_id];
+    var length = this.group_switch_events.length; 
+    for(var i=0; i < length; i++)
+    {
+      this.group_switch_events[i].call(this, group_id);
+    }
+
+  },
+
+  bind: function(event_name, callback)
+  {
+    if (event_name == "group_switch")
+    {
+      this.group_switch_events.push(callback)
+    } 
   }
 
 }
