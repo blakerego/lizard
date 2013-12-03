@@ -49,7 +49,7 @@ GROUP_MANAGER.prototype = {
 
   get_duration_data_for_groups: function(callback)
   {
-    this.groups[this.default_group_id].get_data_for_tracks(callback);
+    this.groups[this.current_group.id].get_data_for_tracks(callback);
   },
 
   switch_group: function(group_id)
