@@ -65,7 +65,7 @@ GROUP_PROGRESS_BAR.prototype = {
 
   handle_group_switch: function(group_id)
   {
-    debugger;
+    this.group_manager.get_duration_data_for_groups(this.progress_data_ready.bind(this));
   },
 
   sum_prev_track_duration: function()

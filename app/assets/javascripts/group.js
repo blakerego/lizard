@@ -28,9 +28,34 @@ GROUP.prototype = {
   get_data_for_tracks: function(callback)
   {
     this.external_callback_duration = callback;
-    this.iterator = 0;
-    this.iterate();
+
+    if (this.duration_data_available())
+    {
+      /// If track data is already loaded, use the callback immediately. 
+      /// We do not want to load the same data multiple times.
+      this.external_callback_duration.call(this, this.tracks);
+    }
+    else 
+    {
+      /// Otherwise, iterate through the tracks to obtain duration values.
+      this.iterator = 0;
+      this.iterate();      
+    }
   }, 
+
+  duration_data_available: function()
+  {
+    var undefined_values_present = false;
+    var durations = this.tracks.map(function(track) 
+      {
+        if (typeof(track.duration) === "undefined")
+        {
+          undefined_values_present = true;
+        }
+        return track.duration 
+      } );
+    return !undefined_values_present;
+  },
 
   iterate: function()
   {
