@@ -64,6 +64,28 @@ body.body
 		background-size: 80%;		
 	}
 
+	.group
+	{
+		font-size: 80px;
+		position: absolute; 
+		top: 50%;
+		cursor: pointer;
+		margin: 0 40px;
+		color: #fffc00;
+		opacity: .5;
+		-webkit-text-stroke-width: 5px;
+   	-webkit-text-stroke-color: black;
+		&:hover
+		{
+			opacity: 1;
+		}
+	}
+
+	.next_group
+	{
+		right: 5px;
+	}
+
 	.row_above_tiles
 	{
 		position: absolute;
@@ -84,19 +106,6 @@ body.body
 			margin-right: 4px;
 			-webkit-text-stroke: rgba(250, 250, 0, .6);
 			-webkit-text-stroke-width: 1.5px;
-		}
-
-		.groups
-		{
-			float: left;
-			@media screen and (min-width: 770px)
-			{
-				padding-left: 378px;
-			}
-			i
-			{
-				font-size: 20px;
-			}
 		}
 
 		.play_all
