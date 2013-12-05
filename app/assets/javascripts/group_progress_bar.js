@@ -20,6 +20,7 @@ GROUP_PROGRESS_BAR.prototype = {
     this.group_duration_sum = -1;
     this.ready = false;
     this.group_changed = true;
+    this.track_changed = false;
 
     /// Load the necessary progress data and bind to callback.
     this.group_manager.get_duration_data_for_groups(this.progress_data_ready.bind(this));
@@ -43,26 +44,34 @@ GROUP_PROGRESS_BAR.prototype = {
     this.group_duration_sum = this.duration_array
             .reduce(function(previousValue, currentValue, index, array) 
               { return previousValue + currentValue; }, 0);
-    this.handle_tile_selected(this.tile_layout.current_tile)
+    this.update_track_index(this.tile_layout.current_tile)
   },
 
   handle_tile_selected: function(tile)
   {
+    var $this = this;
     if (this.tracks != null && tile != null)
     {
-      this.current_track_index = this.tracks
-                .map(function(track) { return track.id; } )
-                .indexOf(tile.data()['id']);
-      this.track_progress_percentage = 0;
-      this.update_progress_bar();
+      this.track_changed = true;
+      $this.update_track_index(tile);
     }
+  },
+
+  update_track_index: function(tile)
+  {
+    this.current_track_index = this.tracks
+              .map(function(track) { return track.id; } )
+              .indexOf(tile.data()['id']);
+    this.track_progress_percentage = 0;
+    this.update_progress_bar();
   },
 
   handle_track_progress: function(data)
   {
-    if (this.ready && this.group_changed)
+    if (this.ready && this.group_changed && this.track_changed)
     {
       this.group_changed = false;
+      this.track_changed = false;
       $('.progress_bar_container').fadeIn(500);
     }
     this.track_progress_percentage = data['percentage'];
@@ -72,6 +81,7 @@ GROUP_PROGRESS_BAR.prototype = {
 
   handle_group_switch: function(group_id)
   {
+    this.track_changed = false;
     this.group_changed = true;
     this.ready = false;
     $('.progress_bar_container').css('display', 'none');
