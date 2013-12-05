@@ -18,6 +18,8 @@ GROUP_PROGRESS_BAR.prototype = {
     this.track_progress_percentage = 0;
     this.track_progress_seconds = 0;
     this.group_duration_sum = -1;
+    this.ready = false;
+    this.group_changed = true;
 
     /// Load the necessary progress data and bind to callback.
     this.group_manager.get_duration_data_for_groups(this.progress_data_ready.bind(this));
@@ -33,7 +35,7 @@ GROUP_PROGRESS_BAR.prototype = {
     /// This signals that the data necessary is ready to go.
     this.tracks = tracks;
     this.selector.css('width', 0);
-    $('.progress_bar_container').fadeIn(500);
+    this.ready = true;
 
     this.duration_array = this.tracks
             .map(function(track) { return track.duration; } );
@@ -58,6 +60,11 @@ GROUP_PROGRESS_BAR.prototype = {
 
   handle_track_progress: function(data)
   {
+    if (this.ready && this.group_changed)
+    {
+      this.group_changed = false;
+      $('.progress_bar_container').fadeIn(500);
+    }
     this.track_progress_percentage = data['percentage'];
     this.track_progress_seconds = data['seconds'];
     this.update_progress_bar();
@@ -65,6 +72,9 @@ GROUP_PROGRESS_BAR.prototype = {
 
   handle_group_switch: function(group_id)
   {
+    this.group_changed = true;
+    this.ready = false;
+    $('.progress_bar_container').css('display', 'none');
     this.group_manager.get_duration_data_for_groups(this.progress_data_ready.bind(this));
   },
 

@@ -14,7 +14,7 @@ WINDOW_CENTERER.prototype = {
     if ($(window).width() < 770)
     {
       // This is the media breakpoint limit. 
-      // Do not resize under here.
+      // Do not center if window is smaller than this.
       return;
     }
     var window_height = $(window).height();
