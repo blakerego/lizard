@@ -40,6 +40,7 @@
   var group_manager = new GROUP_MANAGER();
   var progress_bar = new GROUP_PROGRESS_BAR();
   var resizer = new WINDOW_RESIZER(); 
+  var centerer = new WINDOW_CENTERER();
 
   $(function() {
     var tile_data = JSON.parse('#{@tiles.to_a.to_json(:methods => :thumb, :except => [ :lyrics])}');
@@ -53,5 +54,7 @@
     progress_bar.init($('.progress_bar'), group_manager, layout);
 
     resizer.init(); 
+    centerer.init();
     resizer.resize();
+    centerer.center_vertically();
   });

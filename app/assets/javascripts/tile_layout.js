@@ -1,4 +1,6 @@
 //= require modal_renderer_factory
+//= require window_centerer
+//= require window_resizer
 
 window.TILE_LAYOUT = function() {}
 TILE_LAYOUT.prototype = {
@@ -43,8 +45,13 @@ TILE_LAYOUT.prototype = {
     var tiles_area = $('.tiles_area');
     tiles_area.fadeOut(500, function()
     {
-      $(this).html(markup + "</div>")
-      tiles_area.fadeIn(500);
+      $(this).html(markup + "</div>");
+
+      tiles_area.fadeIn(500, function()
+        {
+          (new WINDOW_RESIZER()).resize();
+          (new WINDOW_CENTERER()).center_vertically();
+        });
       $('span.play-icon').on('click', function()
       {
         var tile = $(this).closest('.tile');
