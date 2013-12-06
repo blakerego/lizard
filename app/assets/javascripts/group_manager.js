@@ -1,4 +1,5 @@
 //= require group
+//= require group_button_utils
 
 /*
   This class is responsible for switching between active groups.
@@ -68,36 +69,17 @@ GROUP_MANAGER.prototype = {
   {
     var keys = Object.keys(this.groups);
     var length = keys.length;
-    var current_index = Object.keys(this.groups).indexOf(this.current_group.id.toString());
+    var current_index = keys.indexOf(this.current_group.id.toString());
 
-    if (current_index > 0)
-    {
-      /// Draw next group link.
-      var previousId = this.groups[keys[current_index - 1]].id;
-      var icon = "<icon class='icon-caret-left album_btn' data-group_id='" + 
-                    previousId.toString() + "'></icon>";
+    /// Create the generators, pass the generator into the drawer. 
+    var previous_button_generator = new BUTTON_MARKUP_GENERATOR();
+    previous_button_generator.init(this.groups[keys[current_index - 1]], "previous");
+    (new BUTTON_DRAWER()).draw(current_index, previous_button_generator, $('.previous_group'), length);
 
-      $('.previous_group').html(icon);
-    }
-    else
-    {
-      /// Remove previous group link.
-      $('.previous_group').html("");
-    }
+    var next_button_generator = new BUTTON_MARKUP_GENERATOR(); 
+    next_button_generator.init(this.groups[keys[current_index + 1]], "next");
+    (new BUTTON_DRAWER()).draw(current_index, next_button_generator, $('.next_group'), length);
 
-    if (current_index < length -1)
-    {
-      /// Draw next group link.
-      var nextId = this.groups[keys[current_index + 1]].id;
-      var icon = "<icon class='icon-caret-right album_btn' data-group_id='" + 
-                    nextId.toString() + "'></icon>";
-      $('.next_group').html(icon);
-    }
-    else 
-    {
-      /// Remove next group link.
-      $('.next_group').html("");
-    }
 
     var $this = this;
     $('.album_btn').on('click', function()
