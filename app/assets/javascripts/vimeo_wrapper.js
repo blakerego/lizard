@@ -152,7 +152,10 @@ VIMEO_WRAPPER.prototype = {
 
   remove_duration_callback: function()
   {
-    this.eventCallbacks[this.url]['getDuration'] = null
+    if (typeof(this.eventCallbacks[this.url]) !== "undefined")
+    {
+      this.eventCallbacks[this.url]['getDuration'] = null
+    }
   },
 
   get_callback: function(event_name, target_id)

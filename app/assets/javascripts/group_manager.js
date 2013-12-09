@@ -1,5 +1,6 @@
 //= require group
-//= require group_button_utils
+//= require button_drawer
+//= require group_state
 
 /*
   This class is responsible for switching between active groups.
@@ -67,18 +68,18 @@ GROUP_MANAGER.prototype = {
 
   modify_album_links: function()
   {
-    var keys = Object.keys(this.groups);
-    var length = keys.length;
-    var current_index = keys.indexOf(this.current_group.id.toString());
 
-    /// Create the generators, pass the generator into the drawer. 
+    var group_state = new GROUP_STATE(); 
+    group_state.init(this.groups, this.current_group);
+
+    /// Create the generators, pass the generator into the drawer for rendering. 
     var previous_button_generator = new BUTTON_MARKUP_GENERATOR();
-    previous_button_generator.init(this.groups[keys[current_index - 1]], "previous");
-    (new BUTTON_DRAWER()).draw(current_index, previous_button_generator, $('.previous_group'), length);
+    previous_button_generator.init(group_state, "previous");
+    (new BUTTON_DRAWER()).draw(previous_button_generator, $('.previous_group'));
 
     var next_button_generator = new BUTTON_MARKUP_GENERATOR(); 
-    next_button_generator.init(this.groups[keys[current_index + 1]], "next");
-    (new BUTTON_DRAWER()).draw(current_index, next_button_generator, $('.next_group'), length);
+    next_button_generator.init(group_state, "next");
+    (new BUTTON_DRAWER()).draw(next_button_generator, $('.next_group'));
 
 
     var $this = this;
